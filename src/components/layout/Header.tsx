@@ -1,12 +1,17 @@
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, User, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +34,24 @@ const Header = () => {
 
   const isActive = (path: string) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Wylogowano",
+        description: "Zostałeś pomyślnie wylogowany.",
+      });
+      navigate("/");
+      closeMenu();
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Błąd",
+        description: "Nie udało się wylogować. Spróbuj ponownie.",
+      });
+    }
   };
 
   return (
@@ -59,12 +82,32 @@ const Header = () => {
           <Link to="/contact" className={`nav-link ${isActive("/contact") ? "text-white after:scale-x-100" : ""}`}>
             Kontakt
           </Link>
-          <Link 
-            to="/register" 
-            className="bg-magenta hover:bg-magenta/90 text-white rounded-full px-5 py-2 font-medium transition-all duration-200 shadow-lg hover:shadow-magenta/20 hover:scale-105"
-          >
-            Dołącz
-          </Link>
+          
+          {user ? (
+            <div className="flex items-center space-x-4">
+              <Link 
+                to="/profile" 
+                className="bg-magenta/20 hover:bg-magenta/30 text-white rounded-full px-4 py-2 font-medium transition-all duration-200 flex items-center"
+              >
+                <User size={18} className="mr-2" />
+                Profil
+              </Link>
+              <button 
+                onClick={handleLogout}
+                className="text-white/70 hover:text-white flex items-center"
+              >
+                <LogOut size={18} className="mr-1" />
+                <span className="hidden lg:inline">Wyloguj</span>
+              </button>
+            </div>
+          ) : (
+            <Link 
+              to="/auth" 
+              className="bg-magenta hover:bg-magenta/90 text-white rounded-full px-5 py-2 font-medium transition-all duration-200 shadow-lg hover:shadow-magenta/20 hover:scale-105"
+            >
+              Dołącz
+            </Link>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -112,13 +155,37 @@ const Header = () => {
           >
             Kontakt
           </Link>
-          <Link
-            to="/register"
-            onClick={closeMenu}
-            className="bg-magenta hover:bg-magenta/90 text-white rounded-full px-6 py-3 font-medium transition-all duration-200 shadow-lg hover:shadow-magenta/20 mt-4"
-          >
-            Dołącz
-          </Link>
+          
+          {user ? (
+            <>
+              <Link
+                to="/profile"
+                onClick={closeMenu}
+                className="text-white flex items-center text-xl"
+              >
+                <User size={20} className="mr-2" />
+                Mój profil
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  closeMenu();
+                }}
+                className="bg-magenta/20 hover:bg-magenta/30 text-white rounded-full px-6 py-3 font-medium transition-all duration-200 mt-4 flex items-center"
+              >
+                <LogOut size={20} className="mr-2" />
+                Wyloguj się
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/auth"
+              onClick={closeMenu}
+              className="bg-magenta hover:bg-magenta/90 text-white rounded-full px-6 py-3 font-medium transition-all duration-200 shadow-lg hover:shadow-magenta/20 mt-4"
+            >
+              Dołącz
+            </Link>
+          )}
         </nav>
       </div>
     </header>
