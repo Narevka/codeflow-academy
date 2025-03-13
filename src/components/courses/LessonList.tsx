@@ -12,14 +12,10 @@ interface LessonListProps {
 }
 
 const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = false }: LessonListProps) => {
-  if (collapsed) {
-    return null; // Don't render when sidebar is collapsed
-  }
-  
   return (
-    <div className={`space-y-2 mt-4 transition-all duration-1000 ease-in-out ${
+    <div className={`space-y-2 mt-4 overflow-hidden transition-all duration-1000 ease-in-out ${
       collapsed 
-        ? 'opacity-0 max-h-0 overflow-hidden' 
+        ? 'opacity-0 max-h-0' 
         : 'opacity-100 max-h-[2000px]'
     }`}>
       {lessons.map((lesson) => (

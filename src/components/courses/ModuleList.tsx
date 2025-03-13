@@ -31,7 +31,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
                   : "hover:bg-white/5 border-l-4 border-transparent"
             }`}
           >
-            <div className={`${collapsed ? "" : "mr-3"} text-lg relative z-10 transition-transform duration-500 ${
+            <div className={`${collapsed ? "" : "mr-3"} text-lg relative z-10 transition-transform duration-1000 ease-in-out ${
               collapsed ? "scale-90 hover:scale-110" : ""
             }`}>
               {module.completed ? (
@@ -41,13 +41,11 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
               )}
             </div>
             
-            {!collapsed && (
-              <div className="flex-1 transition-opacity duration-1000 ease-in-out">
-                <span className={`text-sm ${module.id === activeModuleId ? "text-white font-medium" : "text-white/80"}`}>
-                  {module.title}
-                </span>
-              </div>
-            )}
+            <div className={`flex-1 transition-opacity duration-1000 ease-in-out ${collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'}`}>
+              <span className={`text-sm ${module.id === activeModuleId ? "text-white font-medium" : "text-white/80"}`}>
+                {module.title}
+              </span>
+            </div>
           </Link>
           
           {/* Connection line between modules when collapsed */}
