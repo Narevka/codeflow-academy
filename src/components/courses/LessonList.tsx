@@ -12,27 +12,31 @@ interface LessonListProps {
 }
 
 const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = false }: LessonListProps) => {
+  if (collapsed) {
+    return null; // Don't render when sidebar is collapsed
+  }
+  
   return (
-    <div className={`space-y-1 mt-2 overflow-hidden transition-all duration-1000 ease-in-out ${
+    <div className={`space-y-2 mt-4 transition-all duration-1000 ${
       collapsed 
-        ? 'opacity-0 max-h-0' 
+        ? 'opacity-0 max-h-0 overflow-hidden' 
         : 'opacity-100 max-h-[2000px]'
     }`}>
       {lessons.map((lesson) => (
         <Link
           key={lesson.id}
           to={`/my-courses/${courseId}/${moduleId}/${lesson.id}`}
-          className={`flex items-center p-2 rounded-md transition-all duration-1000 ease-in-out ${
+          className={`flex items-center p-3 rounded-md transition-all duration-500 ${
             lesson.id === activeLessonId
-              ? "bg-magenta/20"
-              : "hover:bg-white/5"
+              ? "bg-magenta/20 transform translate-x-1"
+              : "hover:bg-white/5 hover:translate-x-1"
           }`}
         >
-          <div className="mr-3 transition-transform duration-500 ease-in-out">
+          <div className="mr-3 transition-transform duration-300">
             {lesson.completed ? (
-              <CheckCircle size={16} className="text-green-500" />
+              <CheckCircle size={18} className="text-green-500" />
             ) : (
-              <Circle size={16} className="text-white/40" />
+              <Circle size={18} className="text-white/40" />
             )}
           </div>
           <div className="flex-1">
@@ -41,7 +45,7 @@ const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = f
             </span>
           </div>
           {lesson.videoUrl && (
-            <Play size={14} className="text-magenta ml-2" />
+            <Play size={16} className="text-magenta ml-2" />
           )}
         </Link>
       ))}
