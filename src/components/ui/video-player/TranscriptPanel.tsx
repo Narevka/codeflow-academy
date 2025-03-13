@@ -45,7 +45,7 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
           <p className="text-gray-300">Pobieranie transkrypcji...</p>
         </div>
       ) : transcript.length > 0 ? (
-        <div className="space-y-2 flex-grow overflow-y-auto">
+        <div className="space-y-2 flex-grow overflow-y-auto h-[calc(100%-40px)]">
           {transcript.map((segment, index) => (
             <div 
               key={index}

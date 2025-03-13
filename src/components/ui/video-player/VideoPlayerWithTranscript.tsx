@@ -1,3 +1,4 @@
+
 import MuxPlayer from "@mux/mux-player-react";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -118,7 +119,7 @@ const VideoPlayerWithTranscript = ({
       <div className={cn(
         "aspect-video relative",
         isFullscreen ? "w-full h-full flex items-center" : 
-        transcriptVisible ? "lg:col-span-8" : "lg:col-span-12"
+        transcriptVisible ? "lg:col-span-7" : "lg:col-span-12"
       )}>
         {isMuxVideo ? (
           <MuxPlayer
@@ -197,7 +198,7 @@ const VideoPlayerWithTranscript = ({
       {transcriptVisible && (
         <div 
           className={cn(
-            "lg:col-span-4 glass-card p-4 aspect-video",
+            "lg:col-span-5 glass-card p-4 aspect-video h-full",
             isFullscreen ? "" : ""
           )}
           ref={transcriptRef}
