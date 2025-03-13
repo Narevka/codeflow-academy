@@ -36,7 +36,7 @@ const Auth = () => {
         description: "Zalogowano pomyślnie!",
       });
       
-      navigate("/");
+      navigate("/my-courses");
     } catch (error: any) {
       toast({
         variant: "destructive",
