@@ -4,6 +4,7 @@ export interface Lesson {
   title: string;
   description?: string;
   videoUrl?: string;
+  thumbnailUrl?: string;
   completed: boolean;
 }
 
