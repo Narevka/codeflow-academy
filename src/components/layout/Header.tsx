@@ -75,8 +75,12 @@ const Header = () => {
     >
       <div className="container px-4 mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center transition-transform duration-300 hover:scale-105">
+          <img 
+            src="/lovable-uploads/f64a3252-7933-4dfb-b697-21e384387f01.png" 
+            alt="ToKnowAI Logo" 
+            className="h-8 md:h-10 mr-2"
+          />
           <span className="text-white text-2xl font-bold flex items-center">
-            <span className="bg-magenta text-white p-1 rounded mr-2">AI</span>
             ToKnowAI
           </span>
         </Link>
