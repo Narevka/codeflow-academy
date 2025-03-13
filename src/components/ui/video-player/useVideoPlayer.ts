@@ -118,6 +118,7 @@ export const useVideoPlayer = () => {
     volume,
     isMuted,
     isControlsVisible,
+    setIsControlsVisible,
     togglePlay,
     handleTimeUpdate,
     handleLoadedMetadata,

@@ -4,7 +4,7 @@ import CourseFeatures from "../components/home/CourseFeatures";
 import CourseProgram from "../components/home/CourseProgram";
 import Faq from "../components/home/Faq";
 import CallToAction from "../components/home/CallToAction";
-import VideoPlayer from "../components/ui/VideoPlayer";
+import { VideoPlayer } from "../components/ui/video-player";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { ArrowRight, Check } from "lucide-react";

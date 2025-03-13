@@ -19,6 +19,7 @@ const VideoPlayer = ({ src, poster, title }: VideoPlayerProps) => {
     volume,
     isMuted,
     isControlsVisible,
+    setIsControlsVisible,
     togglePlay,
     handleTimeUpdate,
     handleLoadedMetadata,
