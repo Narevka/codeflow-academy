@@ -1,6 +1,6 @@
 
 import { Lesson } from "@/types/course";
-import VideoPlayer from "@/components/ui/VideoPlayer";
+import { VideoPlayer } from "@/components/ui/video-player";
 
 interface LessonContentProps {
   lesson: Lesson;
