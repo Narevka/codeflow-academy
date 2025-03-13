@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut, Settings, Book } from "lucide-react";
@@ -80,12 +81,14 @@ const Header = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation - Animated */}
+        {/* Desktop Navigation - Updated Style */}
         <nav 
           className="hidden md:block"
-          onMouseLeave={() => setNavPosition((prev) => ({ ...prev, opacity: 0 }))}
         >
-          <ul className="relative flex items-center rounded-full border border-white/20 bg-black/40 backdrop-blur-md p-1">
+          <ul 
+            className="relative flex items-center mx-auto w-fit rounded-full border border-white/20 bg-white/5 backdrop-blur-md p-1"
+            onMouseLeave={() => setNavPosition((prev) => ({ ...prev, opacity: 0 }))}
+          >
             <NavItem path="/" label="Start" setPosition={setNavPosition} isActive={isActive("/")} />
             <NavItem path="/blog" label="Blog" setPosition={setNavPosition} isActive={isActive("/blog")} />
             <NavItem path="/offer" label="Oferta" setPosition={setNavPosition} isActive={isActive("/offer")} />
@@ -219,7 +222,7 @@ const Header = () => {
   );
 };
 
-// NavItem component
+// NavItem component - Updated for mix-blend-difference effect
 const NavItem = ({ 
   path, 
   label, 
@@ -268,12 +271,12 @@ const NavItem = ({
   );
 };
 
-// NavCursor component for the animated background
+// NavCursor component - Changed to black background
 const NavCursor = ({ position }: { position: { left: number; width: number; opacity: number } }) => {
   return (
     <motion.div
       animate={position}
-      className="absolute z-0 h-8 rounded-full bg-magenta"
+      className="absolute z-0 h-8 rounded-full bg-black"
       transition={{ type: "spring", stiffness: 350, damping: 25 }}
     />
   );
