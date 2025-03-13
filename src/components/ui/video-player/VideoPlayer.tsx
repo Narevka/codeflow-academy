@@ -31,6 +31,9 @@ const VideoPlayer = ({ src, poster, title }: VideoPlayerProps) => {
     setIsPlaying
   } = useVideoPlayer();
 
+  // Handle local video files and remote URLs
+  const videoSrc = src.startsWith('http') ? src : src;
+
   return (
     <div 
       className="relative rounded-xl overflow-hidden bg-black/80 w-full aspect-video max-w-4xl mx-auto group"
@@ -45,13 +48,14 @@ const VideoPlayer = ({ src, poster, title }: VideoPlayerProps) => {
       
       <video
         ref={videoRef}
-        src={src}
+        src={videoSrc}
         poster={poster}
         className="w-full h-full object-contain"
         onClick={togglePlay}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
+        controlsList="nodownload"
       />
       
       {/* Video controls */}
