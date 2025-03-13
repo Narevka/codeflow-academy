@@ -20,14 +20,16 @@ interface CourseContentProps {
 
 const CourseContent = ({ course, activeModule, activeLesson, prev, next }: CourseContentProps) => {
   return (
-    <div className="glass-card p-6 min-h-[500px] w-full">
+    <div className="glass-card p-6 min-h-[600px] w-full h-full flex flex-col">
       {activeLesson ? (
         <>
-          <LessonContent lesson={activeLesson} />
+          <div className="flex-1">
+            <LessonContent lesson={activeLesson} />
+          </div>
           <CourseNavigation prev={prev} next={next} courseId={course.id} />
         </>
       ) : (
-        <div className="text-center py-20">
+        <div className="text-center py-20 flex-1">
           <p>Wybierz lekcję z menu, aby rozpocząć naukę.</p>
         </div>
       )}
