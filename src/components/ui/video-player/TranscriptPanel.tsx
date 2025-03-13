@@ -11,7 +11,7 @@ interface TranscriptPanelProps {
   isFullscreen?: boolean;
 }
 
-// Formatowanie czasu w formacie MM:SS
+// Format time as MM:SS
 const formatTime = (timeInSeconds: number): string => {
   const minutes = Math.floor(timeInSeconds / 60);
   const seconds = Math.floor(timeInSeconds % 60);

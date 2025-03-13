@@ -2,29 +2,29 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.5.0";
 
-// Nagłówki CORS
+// CORS headers
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Konfiguracja klienta Supabase
+// Supabase client configuration
 const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
 const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 
 serve(async (req) => {
-  // Obsługa zapytań CORS preflight
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-    const { playbackId, segments, language } = await req.json();
+    const { playbackId, segments, rawData, language } = await req.json();
 
-    if (!playbackId || !segments) {
+    if (!playbackId) {
       return new Response(
-        JSON.stringify({ error: "Brak wymaganych danych (playbackId lub segments)" }),
+        JSON.stringify({ error: "Missing required data (playbackId)" }),
         {
           headers: { ...corsHeaders, "Content-Type": "application/json" },
           status: 400,
@@ -32,9 +32,9 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Aktualizacja transkrypcji dla playbackId: ${playbackId}`);
+    console.log(`Updating transcript for playbackId: ${playbackId}`);
 
-    // Sprawdź, czy transkrypcja już istnieje
+    // Check if transcript already exists
     const { data: existingData, error: fetchError } = await supabase
       .from("transcripts")
       .select("*")
@@ -43,13 +43,15 @@ serve(async (req) => {
 
     let result;
     if (existingData) {
-      // Aktualizuj istniejącą transkrypcję
+      // Update existing transcript
+      const updateData: any = {};
+      if (segments) updateData.segments = segments;
+      if (rawData) updateData.raw_data = rawData;
+      if (language) updateData.language = language;
+      
       const { data, error } = await supabase
         .from("transcripts")
-        .update({
-          segments,
-          language: language || existingData.language,
-        })
+        .update(updateData)
         .eq("playback_id", playbackId)
         .select()
         .single();
@@ -57,14 +59,15 @@ serve(async (req) => {
       if (error) throw error;
       result = { data, operation: "update" };
     } else {
-      // Utwórz nową transkrypcję
+      // Create new transcript
+      const insertData: any = { playback_id: playbackId };
+      if (segments) insertData.segments = segments;
+      if (rawData) insertData.raw_data = rawData;
+      if (language) insertData.language = language || "pl";
+      
       const { data, error } = await supabase
         .from("transcripts")
-        .insert({
-          playback_id: playbackId,
-          segments,
-          language: language || "pl",
-        })
+        .insert(insertData)
         .select()
         .single();
 
@@ -80,7 +83,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error("Błąd:", error.message);
+    console.error("Error:", error.message);
     return new Response(
       JSON.stringify({ error: error.message }),
       {
