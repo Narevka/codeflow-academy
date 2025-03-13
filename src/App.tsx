@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import MyCourses from "./pages/MyCourses";
 import NotFound from "./pages/NotFound";
 import Offer from "./pages/Offer";
+import Checkout from "./pages/Checkout";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +30,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/my-courses" element={<MyCourses />} />
             <Route path="/offer" element={<Offer />} />
-            <Route path="/checkout" element={<NotFound />} /> {/* Placeholder for checkout page */}
+            <Route path="/checkout" element={<Checkout />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

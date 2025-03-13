@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 interface PricingFeature {
   text: string;
@@ -29,6 +31,8 @@ interface PricingPlan {
 
 const Offer = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
 
   const pricingPlans: PricingPlan[] = [
@@ -115,7 +119,7 @@ const Offer = () => {
   ];
 
   const handlePlanSelection = (planId: string) => {
-    // Here you would implement your purchase flow
+    // Navigate to checkout page with plan information
     navigate(`/checkout?plan=${planId}&billing=${billingCycle}`);
   };
 
