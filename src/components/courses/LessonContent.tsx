@@ -31,7 +31,8 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
             src={lesson.videoUrl}
             poster={lesson.thumbnailUrl}
             title={lesson.title}
-            transcript={lesson.transcript}
+            transcript={lesson.transcript || []}
+            showTranscript={true}
           />
         </div>
       )}
