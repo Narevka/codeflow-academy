@@ -35,6 +35,63 @@ const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProp
 
   // Dla filmów Mux, używamy HLS.js do obsługi odtwarzania
   const hlsRef = useRef<any>(null);
+  
+  // Referencja do div'a ochronnego
+  const protectionLayerRef = useRef<HTMLDivElement>(null);
+
+  // Efekt do śledzenia kursora dla warstwy ochronnej
+  useEffect(() => {
+    const protectionLayer = protectionLayerRef.current;
+    const container = protectionLayer?.parentElement;
+    
+    if (!protectionLayer || !container) return;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      // Oblicz pozycję kursora wewnątrz kontenera
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Przesuń warstwę ochronną aby jej centrum podążało za kursorem
+      // Wykorzystujemy nieprzezroczystą warstwę wokół kursora
+      protectionLayer.style.background = `
+        radial-gradient(
+          circle 100px at ${x}px ${y}px, 
+          transparent 10%, 
+          rgba(0, 0, 0, 0.5) 60%
+        )
+      `;
+    };
+    
+    container.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      container.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [isPlaying]);
+
+  // Efekt do blokowania skrótów klawiszowych przechwytywania ekranu
+  useEffect(() => {
+    const preventScreenCapture = (e: KeyboardEvent) => {
+      // Blokowanie typowych kombinacji do przechwytywania ekranu
+      if (
+        (e.key === 'PrintScreen') || 
+        (e.ctrlKey && e.key === 'p') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'p') ||
+        (e.ctrlKey && e.key === 's') ||
+        (e.metaKey && e.key === 's')
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    };
+    
+    document.addEventListener('keydown', preventScreenCapture);
+    
+    return () => {
+      document.removeEventListener('keydown', preventScreenCapture);
+    };
+  }, []);
 
   useEffect(() => {
     // Funkcja do inicjalizacji HLS dla filmów z Mux
@@ -108,7 +165,19 @@ const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProp
       className="relative rounded-xl overflow-hidden bg-black/80 w-full aspect-video max-w-4xl mx-auto group"
       onMouseMove={showControls}
       onMouseLeave={() => isPlaying && setIsControlsVisible(false)}
+      onContextMenu={(e) => e.preventDefault()} // Blokowanie menu kontekstowego
     >
+      {/* Warstwa ochronna przed zrzutami ekranu */}
+      <div 
+        ref={protectionLayerRef}
+        className="absolute inset-0 z-10 pointer-events-none select-none"
+        style={{ 
+          mixBlendMode: 'overlay',
+          userSelect: 'none',
+          WebkitUserSelect: 'none'
+        }}
+      />
+      
       <VideoPlayerOverlay 
         isPlaying={isPlaying} 
         title={title} 
@@ -117,14 +186,21 @@ const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProp
       
       <video
         ref={videoRef}
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain select-none"
         onClick={togglePlay}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
-        controlsList="nodownload"
+        controlsList="nodownload nofullscreen noremoteplayback"
+        disablePictureInPicture
+        disableRemotePlayback
         playsInline
         poster={poster}
+        style={{ 
+          pointerEvents: 'auto',
+          userSelect: 'none',
+          WebkitUserSelect: 'none'
+        }}
       />
       
       {/* Video controls */}
