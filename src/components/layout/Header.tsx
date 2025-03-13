@@ -1,9 +1,9 @@
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut, Settings, Book } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,11 @@ import {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [navPosition, setNavPosition] = useState({
+    left: 0,
+    width: 0,
+    opacity: 0,
+  });
   const location = useLocation();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -75,45 +80,45 @@ const Header = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className={`nav-link ${isActive("/") ? "text-white after:scale-x-100" : ""}`}>
-            Start
-          </Link>
-          <Link to="/blog" className={`nav-link ${isActive("/blog") ? "text-white after:scale-x-100" : ""}`}>
-            Blog
-          </Link>
-          <Link to="/offer" className={`nav-link ${isActive("/offer") ? "text-white after:scale-x-100" : ""}`}>
-            Oferta
-          </Link>
-          <Link to="/contact" className={`nav-link ${isActive("/contact") ? "text-white after:scale-x-100" : ""}`}>
-            Kontakt
-          </Link>
-          
+        {/* Desktop Navigation - Animated */}
+        <nav 
+          className="hidden md:block"
+          onMouseLeave={() => setNavPosition((prev) => ({ ...prev, opacity: 0 }))}
+        >
+          <ul className="relative flex items-center rounded-full border border-white/20 bg-black/40 backdrop-blur-md p-1">
+            <NavItem path="/" label="Start" setPosition={setNavPosition} isActive={isActive("/")} />
+            <NavItem path="/blog" label="Blog" setPosition={setNavPosition} isActive={isActive("/blog")} />
+            <NavItem path="/offer" label="Oferta" setPosition={setNavPosition} isActive={isActive("/offer")} />
+            <NavItem path="/contact" label="Kontakt" setPosition={setNavPosition} isActive={isActive("/contact")} />
+            
+            <NavCursor position={navPosition} />
+          </ul>
+        </nav>
+
+        {/* User Profile / Login Button */}
+        <div className="hidden md:flex items-center ml-8">
           {user ? (
-            <div className="flex items-center space-x-4">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="bg-magenta/20 hover:bg-magenta/30 text-white rounded-full px-4 py-2 font-medium transition-all duration-200 flex items-center">
-                  <User size={18} className="mr-2" />
-                  Profil
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-black/90 border-white/10 text-white">
-                  <DropdownMenuItem className="hover:bg-white/10 cursor-pointer" onClick={() => navigate("/profile")}>
-                    <Settings size={16} className="mr-2" />
-                    Ustawienia
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="hover:bg-white/10 cursor-pointer" onClick={() => navigate("/my-courses")}>
-                    <Book size={16} className="mr-2" />
-                    Moje kursy
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-white/10" />
-                  <DropdownMenuItem className="hover:bg-white/10 cursor-pointer text-red-400" onClick={handleLogout}>
-                    <LogOut size={16} className="mr-2" />
-                    Wyloguj
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="bg-magenta/20 hover:bg-magenta/30 text-white rounded-full px-4 py-2 font-medium transition-all duration-200 flex items-center">
+                <User size={18} className="mr-2" />
+                Profil
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-black/90 border-white/10 text-white">
+                <DropdownMenuItem className="hover:bg-white/10 cursor-pointer" onClick={() => navigate("/profile")}>
+                  <Settings size={16} className="mr-2" />
+                  Ustawienia
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-white/10 cursor-pointer" onClick={() => navigate("/my-courses")}>
+                  <Book size={16} className="mr-2" />
+                  Moje kursy
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem className="hover:bg-white/10 cursor-pointer text-red-400" onClick={handleLogout}>
+                  <LogOut size={16} className="mr-2" />
+                  Wyloguj
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Link 
               to="/auth" 
@@ -122,7 +127,7 @@ const Header = () => {
               Dołącz
             </Link>
           )}
-        </nav>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -211,6 +216,66 @@ const Header = () => {
         </nav>
       </div>
     </header>
+  );
+};
+
+// NavItem component
+const NavItem = ({ 
+  path, 
+  label, 
+  setPosition, 
+  isActive 
+}: { 
+  path: string; 
+  label: string; 
+  setPosition: React.Dispatch<React.SetStateAction<{left: number; width: number; opacity: number}>>;
+  isActive: boolean;
+}) => {
+  const ref = useRef<HTMLLIElement>(null);
+  
+  useEffect(() => {
+    if (isActive && ref.current) {
+      const { width } = ref.current.getBoundingClientRect();
+      setPosition({
+        width,
+        opacity: 1,
+        left: ref.current.offsetLeft,
+      });
+    }
+  }, [isActive, setPosition]);
+
+  return (
+    <li
+      ref={ref}
+      onMouseEnter={() => {
+        if (!ref.current) return;
+        const { width } = ref.current.getBoundingClientRect();
+        setPosition({
+          width,
+          opacity: 1,
+          left: ref.current.offsetLeft,
+        });
+      }}
+      className="relative z-10"
+    >
+      <Link
+        to={path}
+        className="relative z-10 block cursor-pointer px-4 py-2 text-sm font-medium uppercase text-white mix-blend-difference"
+      >
+        {label}
+      </Link>
+    </li>
+  );
+};
+
+// NavCursor component for the animated background
+const NavCursor = ({ position }: { position: { left: number; width: number; opacity: number } }) => {
+  return (
+    <motion.div
+      animate={position}
+      className="absolute z-0 h-8 rounded-full bg-magenta"
+      transition={{ type: "spring", stiffness: 350, damping: 25 }}
+    />
   );
 };
 
