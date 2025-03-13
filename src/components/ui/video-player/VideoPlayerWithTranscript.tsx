@@ -6,6 +6,7 @@ import { TranscriptSegment } from "@/types/course";
 import { useTranscript } from "@/hooks/useTranscript";
 import TranscriptPanel from "./TranscriptPanel";
 import { toast } from "sonner";
+import { ChevronLeft, ChevronRight, SlidersHorizontal } from "lucide-react";
 
 interface VideoPlayerWithTranscriptProps {
   src: string;
@@ -230,12 +231,22 @@ const VideoPlayerWithTranscript = ({
 
         <button
           className={cn(
-            "absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+            "absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full flex items-center gap-2 text-sm font-medium transition-all",
             transcriptVisible ? "bg-blue-600 text-white" : "bg-gray-800/70 text-white hover:bg-gray-700/80"
           )}
           onClick={toggleTranscript}
         >
-          {transcriptVisible ? "Ukryj transkrypcję" : "Pokaż transkrypcję"}
+          {transcriptVisible ? (
+            <>
+              Ukryj transkrypcję 
+              <ChevronRight size={16} className="ml-1" />
+            </>
+          ) : (
+            <>
+              <ChevronLeft size={16} className="mr-1" /> 
+              Pokaż transkrypcję
+            </>
+          )}
         </button>
       </div>
       

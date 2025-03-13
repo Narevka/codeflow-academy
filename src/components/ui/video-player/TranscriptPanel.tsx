@@ -74,7 +74,7 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
             <p className="text-amber-400 font-medium">Brak dostępnej transkrypcji dla tego wideo</p>
             <p className="text-gray-400 text-sm">
               {errorMessage || 
-                "Transkrypcja nie została wygenerowana dla tego materiału wideo. Transkrypcje muszą być włączone podczas tworzenia zasobu w Mux lub dodane retroaktywnie."}
+                "Transkrypcja nie została wygenerowana dla tego materiału wideo lub wystąpił błąd podczas jej pobierania."}
             </p>
           </div>
         </div>

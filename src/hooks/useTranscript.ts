@@ -81,6 +81,16 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<{
 
     // Sprawdź i bezpiecznie zwróć dane transkrypcji
     if (data) {
+      // Jeśli mamy error typu "not_found", oznacza to, że Mux nie ma transkrypcji dla tego wideo
+      if (data.error && data.error.includes("not_found")) {
+        console.log("Mux nie ma transkrypcji dla tego wideo");
+        return {
+          segments: [],
+          error: data.error,
+          message: "Transkrypcja niedostępna dla tego wideo"
+        };
+      }
+      
       return { 
         segments: validateTranscriptSegments(data.transcript),
         error: data.error,

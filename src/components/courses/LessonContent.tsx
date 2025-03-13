@@ -12,6 +12,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
   const [isMuxVideo, setIsMuxVideo] = useState(false);
   const [playbackId, setPlaybackId] = useState<string>("");
   const [videoError, setVideoError] = useState<string | null>(null);
+  const [useEmbeddedTranscript, setUseEmbeddedTranscript] = useState(false);
   
   // Set up the video source based on the videoUrl format
   useEffect(() => {
@@ -20,13 +21,17 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       // Remove the 'mux:' prefix to get the actual playback ID
       setPlaybackId(lesson.videoUrl.replace('mux:', ''));
       setVideoError(null);
+      // Use embedded transcript if available
+      setUseEmbeddedTranscript(Array.isArray(lesson.transcript) && lesson.transcript.length > 0);
     } else if (lesson.videoUrl) {
       setIsMuxVideo(false);
       setVideoError(null);
+      setUseEmbeddedTranscript(Array.isArray(lesson.transcript) && lesson.transcript.length > 0);
     } else {
       setVideoError("Brak materiału wideo dla tej lekcji");
+      setUseEmbeddedTranscript(false);
     }
-  }, [lesson.videoUrl]);
+  }, [lesson.videoUrl, lesson.transcript]);
 
   const handleVideoError = (error: string) => {
     setVideoError(error);
@@ -49,7 +54,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
               src={isMuxVideo ? playbackId : lesson.videoUrl}
               poster={lesson.thumbnailUrl}
               title={lesson.title}
-              transcript={lesson.transcript || []}
+              transcript={useEmbeddedTranscript ? lesson.transcript : []}
               showTranscript={true}
               onError={handleVideoError}
               isMuxVideo={isMuxVideo}

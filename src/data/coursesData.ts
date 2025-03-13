@@ -1,3 +1,4 @@
+
 import { Course } from "@/types/course";
 
 export const flowiseCourse: Course = {
@@ -21,18 +22,43 @@ export const flowiseCourse: Course = {
           transcript: [
             {
               startTime: 0,
-              endTime: 10,
+              endTime: 5,
               text: "Witaj w kursie Flowise AI. W tym wprowadzeniu dowiesz się, jak tworzyć aplikacje z dużymi modelami językowymi bez kodowania."
             },
             {
-              startTime: 10,
-              endTime: 20,
+              startTime: 5,
+              endTime: 10,
               text: "Flowise to potężne narzędzie, które umożliwia osobom bez zaawansowanej wiedzy programistycznej budowanie interaktywnych chatbotów i aplikacji AI."
             },
             {
+              startTime: 10,
+              endTime: 15,
+              text: "Flowise to narzędzie, które rewolucjonizuje tworzenie aplikacji opartych na sztucznej inteligencji, szczególnie tych korzystających z dużych modeli językowych."
+            },
+            {
+              startTime: 15,
+              endTime: 20,
+              text: "Dzięki wizualnemu interfejsowi można szybko prototypować i budować aplikacje oparte na AI."
+            },
+            {
               startTime: 20,
-              endTime: 30,
+              endTime: 25,
               text: "W tym kursie nauczysz się, jak efektywnie wykorzystywać Flowise do tworzenia aplikacji opartych na sztucznej inteligencji."
+            },
+            {
+              startTime: 25,
+              endTime: 30,
+              text: "Flowise pozwala na projektowanie interfejsów graficznych, integrację z różnymi modelami oraz efektywne zarządzanie danymi."
+            },
+            {
+              startTime: 30,
+              endTime: 35,
+              text: "W tym kursie znajdziesz wszystko, czego potrzebujesz, by zacząć swoją przygodę z Flowise."
+            },
+            {
+              startTime: 35,
+              endTime: 40,
+              text: "Dołącz do nas i odkryj nowe możliwości tworzenia aplikacji AI bez pisania kodu!"
             }
           ]
         }
