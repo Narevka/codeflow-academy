@@ -18,28 +18,30 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   };
   
   let lastWordEnd = 0;
+  let currentSentence = "";
+  let sentenceStartTime = 0;
   
   // Process only word type entries (skip spacing)
   muxTranscript.words.forEach((item: any, index: number) => {
     if (item.type === "word") {
-      // If this is a new sentence (more than 2 seconds from last word)
+      // If this is a new sentence (more than 0.8 seconds from last word)
       // or if this is the first word
-      if (index === 0 || item.start - lastWordEnd > 2) {
-        // If we already have text in the current segment, save it
-        if (currentSegment.text.length > 0) {
-          currentSegment.endTime = lastWordEnd;
-          segments.push(currentSegment);
+      if (index === 0 || item.start - lastWordEnd > 0.8) {
+        // If we already have text in the current sentence, save it as a segment
+        if (currentSentence.length > 0) {
+          segments.push({
+            text: currentSentence.trim(),
+            startTime: sentenceStartTime,
+            endTime: lastWordEnd
+          });
         }
         
-        // Start a new segment
-        currentSegment = {
-          text: item.text,
-          startTime: item.start,
-          endTime: item.end
-        };
+        // Start a new sentence
+        currentSentence = item.text;
+        sentenceStartTime = item.start;
       } else {
-        // Add to the current segment
-        currentSegment.text += (currentSegment.text.length > 0 ? " " : "") + item.text;
+        // Add to the current sentence
+        currentSentence += " " + item.text;
       }
       
       lastWordEnd = item.end;
@@ -47,9 +49,12 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   });
   
   // Add the last segment if it has content
-  if (currentSegment.text.length > 0) {
-    currentSegment.endTime = lastWordEnd;
-    segments.push(currentSegment);
+  if (currentSentence.length > 0) {
+    segments.push({
+      text: currentSentence.trim(),
+      startTime: sentenceStartTime,
+      endTime: lastWordEnd
+    });
   }
   
   return segments;
