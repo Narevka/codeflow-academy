@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { Navigate, useParams, Link } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -8,10 +8,9 @@ import { userCourses } from "@/data/coursesData";
 import { Lesson, Module } from "@/types/course";
 import ModuleList from "@/components/courses/ModuleList";
 import LessonList from "@/components/courses/LessonList";
-import LessonContent from "@/components/courses/LessonContent";
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import CourseHeader from "@/components/courses/CourseHeader";
+import CourseContent from "@/components/courses/CourseContent";
+import { useCourseNavigation } from "@/hooks/useCourseNavigation";
 
 const CourseView = () => {
   const { user, loading } = useAuth();
@@ -53,61 +52,7 @@ const CourseView = () => {
     }
   }, [course, moduleId, lessonId]);
 
-  // Find next and previous lessons for navigation
-  const getNavigation = () => {
-    if (!course || !activeModule || !activeLesson) return { prev: null, next: null };
-    
-    // Find current module index
-    const currentModuleIndex = course.modules.findIndex(m => m.id === activeModule.id);
-    // Find current lesson index
-    const currentLessonIndex = activeModule.lessons.findIndex(l => l.id === activeLesson.id);
-    
-    // Previous lesson
-    let prev = null;
-    if (currentLessonIndex > 0) {
-      // Previous lesson in same module
-      const prevLesson = activeModule.lessons[currentLessonIndex - 1];
-      prev = {
-        moduleId: activeModule.id,
-        lessonId: prevLesson.id,
-        title: prevLesson.title
-      };
-    } else if (currentModuleIndex > 0) {
-      // Last lesson of previous module
-      const prevModule = course.modules[currentModuleIndex - 1];
-      const prevLesson = prevModule.lessons[prevModule.lessons.length - 1];
-      prev = {
-        moduleId: prevModule.id,
-        lessonId: prevLesson.id,
-        title: prevLesson.title
-      };
-    }
-    
-    // Next lesson
-    let next = null;
-    if (currentLessonIndex < activeModule.lessons.length - 1) {
-      // Next lesson in same module
-      const nextLesson = activeModule.lessons[currentLessonIndex + 1];
-      next = {
-        moduleId: activeModule.id,
-        lessonId: nextLesson.id,
-        title: nextLesson.title
-      };
-    } else if (currentModuleIndex < course.modules.length - 1) {
-      // First lesson of next module
-      const nextModule = course.modules[currentModuleIndex + 1];
-      const nextLesson = nextModule.lessons[0];
-      next = {
-        moduleId: nextModule.id,
-        lessonId: nextLesson.id,
-        title: nextLesson.title
-      };
-    }
-    
-    return { prev, next };
-  };
-
-  const { prev, next } = getNavigation();
+  const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
   return (
     <div className="min-h-screen bg-dark-purple text-white flex flex-col">
@@ -115,52 +60,13 @@ const CourseView = () => {
       
       <main className="flex-1 py-10 px-4">
         <div className="container mx-auto">
-          <div className="mb-6">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Start</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/my-courses">Moje kursy</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href={`/my-courses/${courseId}`}>{course?.title}</BreadcrumbLink>
-                </BreadcrumbItem>
-                {moduleId && (
-                  <>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <BreadcrumbLink href={`/my-courses/${courseId}/${moduleId}`}>
-                        {activeModule?.title}
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                  </>
-                )}
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-          
-          <div className="mb-6">
-            <Link to="/my-courses" className="flex items-center text-white/80 hover:text-white">
-              <ArrowLeft size={16} className="mr-2" />
-              <span>Powrót do Twoich kursów</span>
-            </Link>
-          </div>
-          
           {course && (
             <>
-              <div className="mb-6">
-                <h1 className="text-3xl font-bold gradient-text">{course.title}</h1>
-                <div className="flex items-center mt-3">
-                  <div className="w-full mr-4">
-                    <Progress value={course.progress} className="h-2 bg-white/10" />
-                  </div>
-                  <div className="text-sm whitespace-nowrap">{course.progress}% ukończono</div>
-                </div>
-              </div>
+              <CourseHeader 
+                course={course} 
+                moduleId={moduleId} 
+                activeModule={activeModule || undefined} 
+              />
               
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Sidebar - modules and lessons */}
@@ -185,48 +91,13 @@ const CourseView = () => {
                 
                 {/* Main content - lesson */}
                 <div className="lg:col-span-8 xl:col-span-9">
-                  <div className="glass-card p-6">
-                    {activeLesson ? (
-                      <>
-                        <LessonContent lesson={activeLesson} />
-                        
-                        {/* Navigation buttons */}
-                        <div className="mt-12 flex justify-between">
-                          {prev ? (
-                            <Link
-                              to={`/my-courses/${courseId}/${prev.moduleId}/${prev.lessonId}`}
-                              className="flex items-center text-white/80 hover:text-white"
-                            >
-                              <ChevronLeft size={20} className="mr-2" />
-                              <div>
-                                <div className="text-xs text-white/60">Poprzednia lekcja</div>
-                                <div className="text-sm">{prev.title}</div>
-                              </div>
-                            </Link>
-                          ) : (
-                            <div></div>
-                          )}
-                          
-                          {next && (
-                            <Link
-                              to={`/my-courses/${courseId}/${next.moduleId}/${next.lessonId}`}
-                              className="flex items-center text-white/80 hover:text-white text-right"
-                            >
-                              <div>
-                                <div className="text-xs text-white/60">Następna lekcja</div>
-                                <div className="text-sm">{next.title}</div>
-                              </div>
-                              <ChevronRight size={20} className="ml-2" />
-                            </Link>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      <div className="text-center py-20">
-                        <p>Wybierz lekcję z menu, aby rozpocząć naukę.</p>
-                      </div>
-                    )}
-                  </div>
+                  <CourseContent 
+                    course={course}
+                    activeModule={activeModule}
+                    activeLesson={activeLesson}
+                    prev={prev}
+                    next={next}
+                  />
                 </div>
               </div>
             </>
