@@ -81,10 +81,10 @@ const CourseView = () => {
       <Header />
       
       <main className="flex-1 py-8">
-        <div className="mx-auto w-full max-w-[2000px]">
+        <div className="mx-auto w-full max-w-[1920px] px-1 md:px-3">
           {course && (
             <>
-              <div className="px-4 lg:px-6 mb-4">
+              <div className="px-3 lg:px-4 mb-4">
                 <CourseHeader 
                   course={course} 
                   moduleId={moduleId} 
@@ -92,12 +92,12 @@ const CourseView = () => {
                 />
               </div>
               
-              <div className="flex w-full">
+              <div className="flex w-full gap-1">
                 {/* Collapsible Sidebar - modules and lessons */}
                 <div
                   className={cn(
                     "transition-all duration-300 ease-in-out",
-                    sidebarExpanded ? "w-[300px] lg:w-[320px]" : "w-10 lg:w-12"
+                    sidebarExpanded ? "w-[280px] lg:w-[300px]" : "w-10 lg:w-12"
                   )}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
@@ -135,8 +135,8 @@ const CourseView = () => {
                 </div>
                 
                 {/* Main content - lesson */}
-                <div className="transition-all duration-300 flex-1">
-                  <div className="glass-card rounded-l-lg rounded-r-none border-r-0 h-[calc(100vh-12rem)] overflow-auto">
+                <div className="transition-all duration-300 flex-1 pr-1">
+                  <div className="glass-card rounded-l-lg rounded-r-sm border-r h-[calc(100vh-12rem)] overflow-auto">
                     <CourseContent 
                       course={course}
                       activeModule={activeModule}

@@ -122,7 +122,7 @@ const VideoPlayerWithTranscript = ({
     <div 
       className={cn(
         "relative",
-        isFullscreen ? "fixed inset-0 z-50 bg-black flex" : "grid grid-cols-1 lg:grid-cols-12 gap-4 w-full max-w-6xl mx-auto"
+        isFullscreen ? "fixed inset-0 z-50 bg-black flex" : "grid grid-cols-1 lg:grid-cols-12 gap-2 w-full max-w-6xl mx-auto"
       )}
       ref={containerRef}
     >
@@ -211,8 +211,8 @@ const VideoPlayerWithTranscript = ({
       {transcriptVisible && (
         <div 
           className={cn(
-            "lg:col-span-4 glass-card p-4",
-            isFullscreen ? "" : ""
+            "lg:col-span-4 glass-card p-4 overflow-hidden",
+            isFullscreen ? "fixed right-0 top-0 h-full w-1/4" : "aspect-video"
           )}
           ref={transcriptRef}
         >
