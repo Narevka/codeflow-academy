@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import MyCourses from "./pages/MyCourses";
 import NotFound from "./pages/NotFound";
+import Offer from "./pages/Offer";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,8 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/my-courses" element={<MyCourses />} />
+            <Route path="/offer" element={<Offer />} />
+            <Route path="/checkout" element={<NotFound />} /> {/* Placeholder for checkout page */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
