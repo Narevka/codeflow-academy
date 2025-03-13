@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
@@ -88,9 +89,20 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
       return [];
     }
 
-    if (dbData && dbData.segments && dbData.segments.length > 0) {
-      console.log("Using transcript from database");
-      return dbData.segments as TranscriptSegment[];
+    if (dbData && dbData.segments) {
+      // Type check and conversion - fix for the TypeScript error
+      const segments = dbData.segments;
+      
+      // Make sure segments is an array
+      if (Array.isArray(segments) && segments.length > 0) {
+        console.log("Using transcript from database");
+        // Ensure the data matches our TranscriptSegment type
+        return segments.map((segment: any) => ({
+          text: segment.text || "",
+          startTime: Number(segment.startTime) || 0,
+          endTime: Number(segment.endTime) || 0
+        }));
+      }
     }
 
     console.log("No transcript found anywhere");
