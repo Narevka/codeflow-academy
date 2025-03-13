@@ -16,7 +16,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     : lesson.videoUrl;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 no-select fairplay-protected-content">
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.title}</h1>
       
       {lesson.videoUrl && (

@@ -39,7 +39,7 @@ const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProp
   // For Mux videos, we use the official MuxPlayer component
   if (showMuxPlayer) {
     return (
-      <div className="relative rounded-xl overflow-hidden bg-black/80 w-full aspect-video max-w-4xl mx-auto">
+      <div className="relative rounded-xl overflow-hidden bg-black/80 w-full aspect-video max-w-4xl mx-auto video-protected">
         <MuxPlayer
           streamType="on-demand"
           playbackId={src} // src is the Mux playback ID
@@ -60,22 +60,51 @@ const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProp
             '--container-max-width': '100%',
           } as React.CSSProperties}
           // Advanced security features
-          streamTypeOverride="on-demand-mp4"
-          startTime={0}
           preload="auto"
           disableCookies={true}
-          crossOriginPolicy="anonymous"
+          // FairPlay DRM configuration
+          drm={{
+            fairplay: {
+              certificateUrl: '/fairplay-license/certificate',
+              licenseUrl: '/fairplay-license/license'
+            }
+          }}
         />
       </div>
     );
   }
 
-  // For standard videos, we use our custom player
+  // Enhanced protection for standard video player
+  useEffect(() => {
+    const handleCapture = (e: KeyboardEvent) => {
+      // Block screenshot keyboard shortcuts
+      if (
+        (e.key === 'PrintScreen') || 
+        (e.ctrlKey && (e.key === 'p' || e.key === 'P')) ||
+        (e.metaKey && (e.key === 'p' || e.key === 'P')) ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'i' || e.key === 'I')) ||
+        (e.metaKey && e.altKey && (e.key === 'i' || e.key === 'I'))
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // Add event listeners for capture protection
+    window.addEventListener('keydown', handleCapture);
+    
+    return () => {
+      window.removeEventListener('keydown', handleCapture);
+    };
+  }, []);
+
+  // For standard videos, we use our custom player with enhanced protection
   return (
     <div 
-      className="relative rounded-xl overflow-hidden bg-black/80 w-full aspect-video max-w-4xl mx-auto group"
+      className="relative rounded-xl overflow-hidden bg-black/80 w-full aspect-video max-w-4xl mx-auto group video-protected"
       onMouseMove={showControls}
       onMouseLeave={() => isPlaying && setIsControlsVisible(false)}
+      onContextMenu={(e) => e.preventDefault()} // Prevent right-click menu
     >
       <VideoPlayerOverlay 
         isPlaying={isPlaying} 
@@ -90,7 +119,7 @@ const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProp
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
-        controlsList="nodownload"
+        controlsList="nodownload nofullscreen noremoteplayback"
         playsInline
         poster={poster}
         // Additional security attributes
@@ -98,6 +127,8 @@ const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProp
         disablePictureInPicture
         // @ts-ignore - This is a valid attribute but TypeScript doesn't recognize it
         disableRemotePlayback="true"
+        // @ts-ignore - Not standard but helps in some browsers
+        x-webkit-airplay="deny"
       >
         {!isMuxVideo && src && <source src={src} type="video/mp4" />}
       </video>
