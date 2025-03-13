@@ -15,7 +15,8 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
   useEffect(() => {
     if (lesson.videoUrl?.startsWith('mux:')) {
       setIsMuxVideo(true);
-      setPlaybackId(lesson.videoUrl);
+      // Remove the 'mux:' prefix to get the actual playback ID
+      setPlaybackId(lesson.videoUrl.replace('mux:', ''));
     } else {
       setIsMuxVideo(false);
     }
