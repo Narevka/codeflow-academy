@@ -13,11 +13,11 @@ interface LessonListProps {
 
 const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = false }: LessonListProps) => {
   if (collapsed) {
-    return null; // Don't show lessons when sidebar is collapsed
+    return null; // Don't render when sidebar is collapsed
   }
   
   return (
-    <div className="space-y-2 mt-4">
+    <div className={`space-y-2 mt-4 transition-opacity duration-300 ${collapsed ? 'opacity-0' : 'opacity-100'}`}>
       {lessons.map((lesson) => (
         <Link
           key={lesson.id}

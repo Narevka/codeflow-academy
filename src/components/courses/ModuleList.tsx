@@ -12,45 +12,49 @@ interface ModuleListProps {
 
 const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: ModuleListProps) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 relative">
       {modules.map((module, index) => (
-        <Link
-          key={module.id}
-          to={`/my-courses/${courseId}/${module.id}`}
-          className={`flex items-center transition-colors ${
-            collapsed 
-              ? "p-2 justify-center" 
-              : "p-3"
-          } rounded-md ${
-            module.id === activeModuleId
-              ? collapsed 
-                ? "bg-magenta/20" 
-                : "bg-magenta/20 border-l-4 border-magenta"
-              : collapsed 
-                ? "hover:bg-white/5" 
-                : "hover:bg-white/5 border-l-4 border-transparent"
-          }`}
-        >
-          <div className={`${collapsed ? "" : "mr-3"} text-lg`}>
-            {module.completed ? (
-              <CheckCircle size={collapsed ? 16 : 20} className="text-green-500" />
-            ) : (
-              <Circle size={collapsed ? 16 : 20} className="text-white/40" />
-            )}
-          </div>
-          
-          {!collapsed && (
-            <div className="flex-1">
-              <span className={`text-sm ${module.id === activeModuleId ? "text-white font-medium" : "text-white/80"}`}>
-                {module.title}
-              </span>
+        <div key={module.id} className="relative">
+          <Link
+            to={`/my-courses/${courseId}/${module.id}`}
+            className={`flex items-center transition-all duration-300 ${
+              collapsed 
+                ? "p-2 justify-center" 
+                : "p-3"
+            } rounded-md ${
+              module.id === activeModuleId
+                ? collapsed 
+                  ? "bg-magenta/20" 
+                  : "bg-magenta/20 border-l-4 border-magenta"
+                : collapsed 
+                  ? "hover:bg-white/5" 
+                  : "hover:bg-white/5 border-l-4 border-transparent"
+            }`}
+          >
+            <div className={`${collapsed ? "" : "mr-3"} text-lg relative z-10`}>
+              {module.completed ? (
+                <CheckCircle size={collapsed ? 16 : 20} className="text-green-500" />
+              ) : (
+                <Circle size={collapsed ? 16 : 20} className="text-white/40" />
+              )}
             </div>
-          )}
+            
+            {!collapsed && (
+              <div className="flex-1">
+                <span className={`text-sm ${module.id === activeModuleId ? "text-white font-medium" : "text-white/80"}`}>
+                  {module.title}
+                </span>
+              </div>
+            )}
+          </Link>
           
+          {/* Connection line between modules when collapsed */}
           {collapsed && index < modules.length - 1 && (
-            <div className="w-0.5 h-4 bg-white/20 absolute -bottom-4"></div>
+            <div className={`absolute left-1/2 top-[calc(100%_-_8px)] h-10 w-0.5 ${
+              module.completed ? "bg-green-500/70" : "bg-white/20"
+            } transform -translate-x-1/2 transition-all duration-300`}></div>
           )}
-        </Link>
+        </div>
       ))}
     </div>
   );
