@@ -7,10 +7,10 @@ interface LessonContentProps {
 }
 
 const LessonContent = ({ lesson }: LessonContentProps) => {
-  // Sprawdź, czy URL wideo jest ID Mux 
+  // Check if the video URL is a Mux ID
   const isMuxVideo = lesson.videoUrl?.startsWith('mux:');
   
-  // Jeśli to Mux video, usuń prefiks "mux:" aby uzyskać samo ID
+  // If it's a Mux video, remove the "mux:" prefix to get just the ID
   const videoSrc = isMuxVideo 
     ? lesson.videoUrl.replace('mux:', '') 
     : lesson.videoUrl;
@@ -25,6 +25,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
             src={videoSrc || ''} 
             title={lesson.title}
             isMuxVideo={isMuxVideo}
+            poster={lesson.thumbnailUrl}
           />
         </div>
       )}
@@ -39,4 +40,3 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
 };
 
 export default LessonContent;
-

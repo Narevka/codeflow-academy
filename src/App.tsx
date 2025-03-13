@@ -15,12 +15,37 @@ import NotFound from "./pages/NotFound";
 import Offer from "./pages/Offer";
 import Checkout from "./pages/Checkout";
 
+// Add style to prevent screen capture
+const screenCaptureProtection = `
+  .video-protected {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  @media screen and (min-width: 0px) {
+    #screen-capture-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
+  }
+`;
+
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
+        <style>{screenCaptureProtection}</style>
+        <div id="screen-capture-overlay"></div>
         <Toaster />
         <Sonner />
         <BrowserRouter>
