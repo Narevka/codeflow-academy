@@ -13,7 +13,7 @@ const MyCourses = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-dark-purple text-white flex flex-col">
       <Header />
       
       <main className="flex-1 py-20 px-4">

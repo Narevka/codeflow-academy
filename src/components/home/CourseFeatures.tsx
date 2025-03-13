@@ -25,8 +25,8 @@ const FeatureCard = ({
 
 const CourseFeatures = () => {
   return (
-    <section className="py-20 bg-black relative">
-      <div className="absolute inset-0 bg-network-pattern bg-cover bg-fixed opacity-10" />
+    <section className="py-20 bg-dark-purple relative">
+      <div className="absolute inset-0 opacity-10" />
       
       <div className="container mx-auto px-4 relative">
         <div className="text-center max-w-2xl mx-auto mb-16">

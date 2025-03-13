@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <section className="py-20 bg-black relative overflow-hidden">
+    <section className="py-20 bg-dark-purple relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-primary opacity-20" />
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple/20 rounded-full filter blur-3xl animate-pulse-slow" />
