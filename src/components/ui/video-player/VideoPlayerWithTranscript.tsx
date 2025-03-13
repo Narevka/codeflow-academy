@@ -33,12 +33,13 @@ const VideoPlayerWithTranscript = ({
   const transcriptRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Pobierz transkrypcję za pomocą useTranscript
+  // Get transcript from JSON file
   const { 
     data: autoTranscript, 
     isLoading: isLoadingTranscript 
   } = useTranscript(
-    isMuxVideo && providedTranscript.length === 0 ? playbackId : undefined
+    // Always try to get transcript for Mux videos
+    isMuxVideo ? playbackId : undefined
   );
   
   // Set up the video source based on the src format
@@ -51,11 +52,13 @@ const VideoPlayerWithTranscript = ({
     }
   }, [src]);
 
-  // Ustaw transkrypcję na podstawie dostępnych danych
+  // Set transcript based on available data
   useEffect(() => {
     if (providedTranscript && providedTranscript.length > 0) {
+      console.log("Using provided transcript with length:", providedTranscript.length);
       setTranscript(providedTranscript);
     } else if (autoTranscript && autoTranscript.length > 0) {
+      console.log("Using auto transcript with length:", autoTranscript.length);
       setTranscript(autoTranscript);
     }
   }, [providedTranscript, autoTranscript]);
@@ -155,7 +158,7 @@ const VideoPlayerWithTranscript = ({
             }}
           />
         ) : (
-          // Fallback dla filmów spoza Mux
+          // Fallback for non-Mux videos
           <video
             ref={videoRef}
             src={src}

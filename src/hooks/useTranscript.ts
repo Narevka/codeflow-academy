@@ -1,7 +1,7 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
+import transcriptData from "../trans/1.json";
 
 // Helper function to convert Mux transcript format to our app format
 const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[] => {
@@ -21,9 +21,9 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   // Process only word type entries (skip spacing)
   muxTranscript.words.forEach((item: any, index: number) => {
     if (item.type === "word") {
-      // If this is a new sentence (more than 4 seconds from last word)
+      // If this is a new sentence (more than 2 seconds from last word)
       // or if this is the first word
-      if (index === 0 || item.start - lastWordEnd > 4) {
+      if (index === 0 || item.start - lastWordEnd > 2) {
         // If we already have text in the current segment, save it
         if (currentSegment.text.length > 0) {
           currentSegment.endTime = lastWordEnd;
@@ -54,6 +54,12 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   return segments;
 };
 
+// Function to get local transcript from src/trans/1.json
+const getLocalTranscript = (playbackId: string | undefined): TranscriptSegment[] => {
+  // Convert the transcript data to segments
+  return convertMuxTranscriptToSegments(transcriptData);
+};
+
 // Function to fetch transcript
 const fetchTranscript = async (playbackId: string | undefined): Promise<TranscriptSegment[]> => {
   if (!playbackId) {
@@ -61,49 +67,33 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
   }
 
   try {
-    // First try to get from database
-    const { data: transcriptData, error } = await supabase
+    // First try to get from local JSON file
+    const localTranscript = getLocalTranscript(playbackId);
+    if (localTranscript && localTranscript.length > 0) {
+      console.log("Using local transcript file");
+      return localTranscript;
+    }
+
+    // Otherwise try database or other fallback methods
+    console.log("No local transcript available, checking database...");
+    
+    const { data: dbData, error } = await supabase
       .from("transcripts")
-      .select("segments, raw_data")
+      .select("*")
       .eq("playback_id", playbackId)
       .single();
 
-    if (transcriptData) {
-      console.log("Transcript fetched from database");
-      
-      // If we have segments already processed, use them
-      if (transcriptData.segments && transcriptData.segments.length > 0) {
-        return transcriptData.segments as TranscriptSegment[];
-      }
-      
-      // If we have raw data but no segments, convert it
-      if (transcriptData.raw_data) {
-        console.log("Converting raw transcript data to segments");
-        return convertMuxTranscriptToSegments(transcriptData.raw_data);
-      }
+    if (error) {
+      console.log("Error or no data in database:", error);
+      return [];
     }
 
-    // If not in database, fetch from edge function
-    console.log("Fetching transcript from edge function");
-    const { data, error: fnError } = await supabase.functions.invoke("get-mux-transcript", {
-      body: { playbackId },
-    });
-
-    if (fnError) {
-      console.error("Error fetching transcript:", fnError);
-      throw fnError;
+    if (dbData && dbData.segments && dbData.segments.length > 0) {
+      console.log("Using transcript from database");
+      return dbData.segments as TranscriptSegment[];
     }
 
-    if (data && data.transcript) {
-      // If the data is in our expected format, return it directly
-      if (Array.isArray(data.transcript)) {
-        return data.transcript as TranscriptSegment[];
-      }
-      
-      // If it's in Mux format, convert it
-      return convertMuxTranscriptToSegments(data.transcript);
-    }
-    
+    console.log("No transcript found anywhere");
     return [];
   } catch (error) {
     console.error("useTranscript error:", error);
