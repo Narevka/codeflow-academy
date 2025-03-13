@@ -11,23 +11,25 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   }
 
   const segments: TranscriptSegment[] = [];
-  let currentSegment: TranscriptSegment = {
-    text: "",
-    startTime: 0,
-    endTime: 0
-  };
   
   let lastWordEnd = 0;
   let currentSentence = "";
   let sentenceStartTime = 0;
+  let wordCount = 0;
+  const MAX_WORDS_PER_SEGMENT = 15; // Maximum words per segment for readability
   
   // Process only word type entries (skip spacing)
   muxTranscript.words.forEach((item: any, index: number) => {
     if (item.type === "word") {
-      // If this is a new sentence (more than 0.8 seconds from last word)
-      // or if this is the first word
-      if (index === 0 || item.start - lastWordEnd > 0.8) {
-        // If we already have text in the current sentence, save it as a segment
+      // Create a new segment if:
+      // 1. This is the first word, OR
+      // 2. There's a pause of more than 0.5 seconds, OR
+      // 3. We've reached the maximum word count for a segment
+      if (index === 0 || 
+          item.start - lastWordEnd > 0.5 || 
+          wordCount >= MAX_WORDS_PER_SEGMENT) {
+          
+        // Save the current sentence if it's not empty
         if (currentSentence.length > 0) {
           segments.push({
             text: currentSentence.trim(),
@@ -39,9 +41,11 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
         // Start a new sentence
         currentSentence = item.text;
         sentenceStartTime = item.start;
+        wordCount = 1;
       } else {
         // Add to the current sentence
         currentSentence += " " + item.text;
+        wordCount++;
       }
       
       lastWordEnd = item.end;
@@ -57,7 +61,27 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
     });
   }
   
-  return segments;
+  // Further refine segments - merge very short segments with the next one
+  const refinedSegments: TranscriptSegment[] = [];
+  for (let i = 0; i < segments.length; i++) {
+    const currentSegment = segments[i];
+    const nextSegment = i < segments.length - 1 ? segments[i + 1] : null;
+    
+    // If current segment is very short and there's a next segment close in time
+    if (currentSegment.text.split(' ').length <= 3 && nextSegment && 
+        nextSegment.startTime - currentSegment.endTime < 0.3) {
+      // If there's a next segment, merge with it and skip the next iteration
+      if (nextSegment) {
+        nextSegment.text = currentSegment.text + " " + nextSegment.text;
+        nextSegment.startTime = currentSegment.startTime;
+        continue; // Skip adding this segment separately
+      }
+    }
+    
+    refinedSegments.push(currentSegment);
+  }
+  
+  return refinedSegments;
 };
 
 // Function to get local transcript from src/trans/1.json
@@ -77,6 +101,7 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
     const localTranscript = getLocalTranscript(playbackId);
     if (localTranscript && localTranscript.length > 0) {
       console.log("Using local transcript file");
+      console.log(`Generated ${localTranscript.length} transcript segments`);
       return localTranscript;
     }
 

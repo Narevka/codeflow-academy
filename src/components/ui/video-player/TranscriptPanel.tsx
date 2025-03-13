@@ -33,6 +33,9 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
     )}>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-medium text-white">Transkrypcja</h3>
+        <div className="text-xs text-gray-400">
+          {transcript.length} segmentów
+        </div>
       </div>
       
       {isLoadingTranscript ? (
