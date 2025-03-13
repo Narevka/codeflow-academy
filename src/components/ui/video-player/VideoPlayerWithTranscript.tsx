@@ -2,12 +2,7 @@
 import MuxPlayer from "@mux/mux-player-react";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-
-interface TranscriptSegment {
-  text: string;
-  startTime: number; // in seconds
-  endTime: number; // in seconds
-}
+import { TranscriptSegment } from "@/types/course";
 
 interface VideoPlayerWithTranscriptProps {
   src: string;
@@ -28,9 +23,12 @@ const VideoPlayerWithTranscript = ({
   const [playbackId, setPlaybackId] = useState<string>("");
   const [currentTime, setCurrentTime] = useState(0);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number>(-1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [transcriptVisible, setTranscriptVisible] = useState(showTranscript);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const muxPlayerRef = useRef<any>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
   // Set up the video source based on the src format
   useEffect(() => {
@@ -41,6 +39,18 @@ const VideoPlayerWithTranscript = ({
       setIsMuxVideo(false);
     }
   }, [src]);
+
+  // Setup fullscreen change detection
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);
 
   // Handle time updates
   const handleTimeUpdate = (event: any) => {
@@ -80,11 +90,23 @@ const VideoPlayerWithTranscript = ({
     }
   };
 
+  // Toggle transcript visibility
+  const toggleTranscript = () => {
+    setTranscriptVisible(prev => !prev);
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 w-full max-w-6xl mx-auto">
+    <div 
+      className={cn(
+        "relative",
+        isFullscreen ? "fixed inset-0 z-50 bg-black flex" : "grid grid-cols-1 lg:grid-cols-12 gap-4 w-full max-w-6xl mx-auto"
+      )}
+      ref={containerRef}
+    >
       <div className={cn(
         "aspect-video relative",
-        showTranscript ? "lg:col-span-8" : "lg:col-span-12"
+        isFullscreen ? "w-full h-full flex items-center" : 
+        transcriptVisible ? "lg:col-span-8" : "lg:col-span-12"
       )}>
         {isMuxVideo ? (
           <MuxPlayer
@@ -104,10 +126,11 @@ const VideoPlayerWithTranscript = ({
             nohotkeys={true}
             style={{
               position: "relative",
-              aspectRatio: "16/9",
+              aspectRatio: isFullscreen ? "unset" : "16/9",
               backgroundColor: "#000",
               width: "100%",
-              borderRadius: "0.75rem",
+              height: isFullscreen ? "100%" : "auto",
+              borderRadius: isFullscreen ? "0" : "0.75rem",
               overflow: "hidden",
             }}
           />
@@ -117,14 +140,17 @@ const VideoPlayerWithTranscript = ({
             ref={videoRef}
             src={src}
             controls
-            className="w-full h-full rounded-xl"
+            className={cn(
+              "w-full rounded-xl",
+              isFullscreen ? "h-full object-contain" : "h-full"
+            )}
             poster={poster}
             onTimeUpdate={handleTimeUpdate}
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
             onContextMenu={(e) => e.preventDefault()}
             style={{
-              aspectRatio: "16/9",
+              aspectRatio: isFullscreen ? "unset" : "16/9",
               backgroundColor: "#000",
             }}
           />
@@ -146,16 +172,42 @@ const VideoPlayerWithTranscript = ({
             target.style.setProperty('--y', `${e.clientY - rect.top}px`);
           }}
         />
+
+        {/* Floating transcript toggle button (always visible) */}
+        <button
+          className={cn(
+            "absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+            transcriptVisible ? "bg-blue-600 text-white" : "bg-gray-800/70 text-white hover:bg-gray-700/80"
+          )}
+          onClick={toggleTranscript}
+        >
+          {transcriptVisible ? "Ukryj transkrypcję" : "Pokaż transkrypcję"}
+        </button>
       </div>
       
-      {showTranscript && transcript.length > 0 && (
-        <div className="lg:col-span-4 glass-card p-4 h-[calc(9/16*100%)] overflow-y-auto" ref={transcriptRef}>
+      {transcriptVisible && transcript.length > 0 && (
+        <div 
+          className={cn(
+            isFullscreen 
+              ? "fixed right-0 top-0 h-full w-1/4 bg-black/90 p-4 overflow-y-auto z-50" 
+              : "lg:col-span-4 glass-card p-4 h-[calc(9/16*100%)] overflow-y-auto"
+          )}
+          ref={transcriptRef}
+        >
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-medium text-white">Transkrypcja</h3>
             <div className="relative inline-block w-12 h-6">
-              <input type="checkbox" className="sr-only" checked />
+              <input 
+                type="checkbox" 
+                className="sr-only" 
+                checked={transcriptVisible} 
+                readOnly 
+              />
               <span className="block rounded-full bg-blue-600 w-12 h-6"></span>
-              <span className="absolute left-6 top-1 bg-white rounded-full w-4 h-4 transition-transform"></span>
+              <span className={cn(
+                "absolute top-1 bg-white rounded-full w-4 h-4 transition-transform",
+                transcriptVisible ? "left-6" : "left-1"
+              )}></span>
             </div>
           </div>
           
