@@ -20,7 +20,6 @@ const CourseView = () => {
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const collapseTimeoutRef = useRef<number | null>(null);
 
   // Find the current course
   const course = userCourses.find(c => c.id === courseId);
@@ -56,41 +55,6 @@ const CourseView = () => {
     }
   }, [course, moduleId, lessonId]);
 
-  // Handle sidebar auto-collapse with immediate start but longer animation
-  useEffect(() => {
-    const handleMouseEnter = () => {
-      if (collapseTimeoutRef.current) {
-        window.clearTimeout(collapseTimeoutRef.current);
-        collapseTimeoutRef.current = null;
-      }
-      setSidebarCollapsed(false);
-    };
-
-    const handleMouseLeave = () => {
-      // Start collapsing immediately when mouse leaves
-      collapseTimeoutRef.current = window.setTimeout(() => {
-        setSidebarCollapsed(true);
-      }, 300); // Short delay before starting to collapse
-    };
-
-    const sidebarElement = sidebarRef.current;
-    if (sidebarElement) {
-      sidebarElement.addEventListener('mouseenter', handleMouseEnter);
-      sidebarElement.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    return () => {
-      if (sidebarElement) {
-        sidebarElement.removeEventListener('mouseenter', handleMouseEnter);
-        sidebarElement.removeEventListener('mouseleave', handleMouseLeave);
-      }
-      
-      if (collapseTimeoutRef.current) {
-        window.clearTimeout(collapseTimeoutRef.current);
-      }
-    };
-  }, []);
-
   const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
   const toggleSidebar = () => {
@@ -101,7 +65,7 @@ const CourseView = () => {
     <div className="min-h-screen bg-dark-purple text-white flex flex-col">
       <Header />
       
-      <main className="flex-1 py-10 px-4">
+      <main className="flex-1 py-6 px-4">
         <div className="container mx-auto">
           {course && (
             <>
@@ -111,33 +75,18 @@ const CourseView = () => {
                 activeModule={activeModule || undefined} 
               />
               
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="grid grid-cols-12 gap-6">
                 {/* Sidebar - modules and lessons */}
                 <div 
                   ref={sidebarRef}
-                  className={`lg:col-span-${sidebarCollapsed ? '1' : '4'} xl:col-span-${sidebarCollapsed ? '1' : '3'} transition-all duration-1000 ease-in-out group relative`}
+                  className={`col-span-12 lg:col-span-4 xl:col-span-3`}
                 >
-                  <div 
-                    className={`glass-card ${sidebarCollapsed ? 'p-2' : 'p-4'} sticky top-24 transition-all duration-1000 ease-in-out ${
-                      sidebarCollapsed ? 'opacity-80 hover:opacity-100' : 'opacity-100'
-                    } transform ${
-                      sidebarCollapsed ? 'scale-95' : 'scale-100'
-                    }`}
-                  >
-                    {sidebarCollapsed && (
-                      <button 
-                        onClick={toggleSidebar}
-                        className="absolute -right-3 top-1/2 -translate-y-1/2 bg-magenta rounded-full p-1 shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </button>
-                    )}
-                    
+                  <div className="glass-card p-4 sticky top-24">
                     <ModuleList 
                       modules={course.modules} 
                       courseId={course.id} 
                       activeModuleId={activeModule?.id}
-                      collapsed={sidebarCollapsed}
+                      collapsed={false}
                     />
                     
                     {activeModule && (
@@ -146,24 +95,14 @@ const CourseView = () => {
                         courseId={course.id}
                         moduleId={activeModule.id}
                         activeLessonId={activeLesson?.id}
-                        collapsed={sidebarCollapsed}
+                        collapsed={false}
                       />
-                    )}
-                    
-                    {!sidebarCollapsed && (
-                      <button 
-                        onClick={toggleSidebar}
-                        className="mt-4 w-full text-center text-xs text-white/60 hover:text-white transition-colors flex items-center justify-center gap-1"
-                      >
-                        <span>Minimize sidebar</span>
-                        <ChevronRight className="h-3 w-3 rotate-180" />
-                      </button>
                     )}
                   </div>
                 </div>
                 
                 {/* Main content - lesson */}
-                <div className={`lg:col-span-${sidebarCollapsed ? '11' : '8'} xl:col-span-${sidebarCollapsed ? '11' : '9'} transition-all duration-1000 ease-in-out`}>
+                <div className="col-span-12 lg:col-span-8 xl:col-span-9">
                   <CourseContent 
                     course={course}
                     activeModule={activeModule}
