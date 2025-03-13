@@ -7,9 +7,10 @@ interface VideoPlayerProps {
   src: string;
   poster?: string;
   title?: string;
+  isMuxVideo?: boolean; // Nowy prop do rozpoznania filmów z Mux
 }
 
-const VideoPlayer = ({ src, poster, title }: VideoPlayerProps) => {
+const VideoPlayer = ({ src, poster, title, isMuxVideo = false }: VideoPlayerProps) => {
   const {
     videoRef,
     isPlaying,
@@ -31,8 +32,13 @@ const VideoPlayer = ({ src, poster, title }: VideoPlayerProps) => {
     setIsPlaying
   } = useVideoPlayer();
 
-  // Handle local video files and remote URLs
-  const videoSrc = src.startsWith('http') ? src : src;
+  // Określ źródło wideo - lokalne, zdalne URL lub Mux
+  let videoSrc = src;
+  
+  // Jeśli to film z Mux, dodaj odpowiedni format
+  if (isMuxVideo && src) {
+    videoSrc = `https://stream.mux.com/${src}.m3u8`;
+  }
 
   return (
     <div 
@@ -56,7 +62,15 @@ const VideoPlayer = ({ src, poster, title }: VideoPlayerProps) => {
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
         controlsList="nodownload"
-      />
+        playsInline
+      >
+        {isMuxVideo && (
+          <>
+            <source src={videoSrc} type="application/x-mpegURL" />
+            <p>Twoja przeglądarka nie obsługuje odtwarzania wideo HLS.</p>
+          </>
+        )}
+      </video>
       
       {/* Video controls */}
       <div className={`${isControlsVisible || !isPlaying ? 'opacity-100' : 'opacity-0'}`}>
@@ -79,3 +93,4 @@ const VideoPlayer = ({ src, poster, title }: VideoPlayerProps) => {
 };
 
 export default VideoPlayer;
+

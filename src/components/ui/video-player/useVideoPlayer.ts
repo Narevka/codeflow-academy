@@ -19,7 +19,19 @@ export const useVideoPlayer = () => {
     if (isPlaying) {
       videoRef.current.pause();
     } else {
-      videoRef.current.play();
+      // Dodaj obsługę błędów odtwarzania
+      const playPromise = videoRef.current.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Odtwarzanie rozpoczęte pomyślnie
+          })
+          .catch(error => {
+            console.error("Błąd odtwarzania:", error);
+            // Możesz tutaj dodać obsługę błędów, np. powiadomienie dla użytkownika
+          });
+      }
     }
     setIsPlaying(!isPlaying);
   };
@@ -30,21 +42,30 @@ export const useVideoPlayer = () => {
     
     const current = videoRef.current.currentTime;
     const duration = videoRef.current.duration;
-    const progressPercent = (current / duration) * 100;
     
-    setProgress(progressPercent);
+    // Sprawdź, czy duration to poprawna liczba (nie NaN)
+    if (!isNaN(duration) && duration > 0) {
+      const progressPercent = (current / duration) * 100;
+      setProgress(progressPercent);
+    }
+    
     setCurrentTime(current);
   };
 
   // Handle video loading metadata
   const handleLoadedMetadata = () => {
     if (!videoRef.current) return;
-    setDuration(videoRef.current.duration);
+    const videoDuration = videoRef.current.duration;
+    
+    // Sprawdź, czy duration to poprawna liczba (nie NaN lub Infinity)
+    if (!isNaN(videoDuration) && isFinite(videoDuration)) {
+      setDuration(videoDuration);
+    }
   };
 
   // Handle progress bar click
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || isNaN(videoRef.current.duration)) return;
     
     const progressBar = e.currentTarget;
     const rect = progressBar.getBoundingClientRect();
@@ -79,9 +100,13 @@ export const useVideoPlayer = () => {
     if (!videoRef.current) return;
     
     if (document.fullscreenElement) {
-      document.exitFullscreen();
+      document.exitFullscreen().catch(err => {
+        console.error("Błąd podczas wychodzenia z trybu pełnoekranowego:", err);
+      });
     } else {
-      videoRef.current.requestFullscreen();
+      videoRef.current.requestFullscreen().catch(err => {
+        console.error("Błąd podczas wchodzenia w tryb pełnoekranowy:", err);
+      });
     }
   };
 
@@ -109,6 +134,26 @@ export const useVideoPlayer = () => {
     };
   }, []);
 
+  // Dodaj efekt do nasłuchiwania zdarzeń błędów
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    
+    const handleError = (e: Event) => {
+      console.error("Błąd odtwarzania wideo:", (e as any).error || e);
+      setIsPlaying(false);
+    };
+    
+    if (videoElement) {
+      videoElement.addEventListener('error', handleError);
+    }
+    
+    return () => {
+      if (videoElement) {
+        videoElement.removeEventListener('error', handleError);
+      }
+    };
+  }, []);
+
   return {
     videoRef,
     isPlaying,
@@ -130,3 +175,4 @@ export const useVideoPlayer = () => {
     setIsPlaying
   };
 };
+
