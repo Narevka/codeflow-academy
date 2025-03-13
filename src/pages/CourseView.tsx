@@ -78,32 +78,34 @@ const CourseView = () => {
     <div className="min-h-screen bg-dark-purple text-white flex flex-col">
       <Header />
       
-      <main className="flex-1 py-10 px-4">
-        <div className="container mx-auto">
+      <main className="flex-1 py-10 px-0">
+        <div className="mx-auto w-full max-w-[1800px]">
           {course && (
             <>
-              <CourseHeader 
-                course={course} 
-                moduleId={moduleId} 
-                activeModule={activeModule || undefined} 
-              />
+              <div className="px-4">
+                <CourseHeader 
+                  course={course} 
+                  moduleId={moduleId} 
+                  activeModule={activeModule || undefined} 
+                />
+              </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="flex w-full">
                 {/* Collapsible Sidebar - modules and lessons */}
                 <div
                   className={cn(
-                    "lg:col-span-1 xl:col-span-1 transition-all duration-300 ease-in-out",
-                    sidebarExpanded ? "lg:col-span-4 xl:col-span-3" : "lg:col-span-1 xl:col-span-1"
+                    "transition-all duration-300 ease-in-out",
+                    sidebarExpanded ? "w-[320px]" : "w-12"
                   )}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
                   <div className={cn(
-                    "glass-card p-4 sticky top-24 h-[calc(100vh-12rem)] overflow-hidden transition-all duration-300",
+                    "glass-card sticky top-24 h-[calc(100vh-12rem)] overflow-hidden transition-all duration-300 rounded-r-lg rounded-l-none border-l-0",
                     sidebarExpanded ? "w-full" : "w-12"
                   )}>
                     {sidebarExpanded ? (
-                      <>
+                      <div className="p-4">
                         <ModuleList 
                           modules={course.modules} 
                           courseId={course.id} 
@@ -118,7 +120,7 @@ const CourseView = () => {
                             activeLessonId={activeLesson?.id}
                           />
                         )}
-                      </>
+                      </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full">
                         <div className="rotate-90 text-white/70 text-sm font-medium whitespace-nowrap">
@@ -132,18 +134,17 @@ const CourseView = () => {
                 
                 {/* Main content - lesson */}
                 <div className={cn(
-                  "transition-all duration-300",
-                  sidebarExpanded 
-                    ? "lg:col-span-8 xl:col-span-9" 
-                    : "lg:col-span-11 xl:col-span-11"
+                  "transition-all duration-300 flex-1 pr-0",
                 )}>
-                  <CourseContent 
-                    course={course}
-                    activeModule={activeModule}
-                    activeLesson={activeLesson}
-                    prev={prev}
-                    next={next}
-                  />
+                  <div className="glass-card rounded-l-lg rounded-r-none border-r-0 h-[calc(100vh-12rem)] overflow-auto">
+                    <CourseContent 
+                      course={course}
+                      activeModule={activeModule}
+                      activeLesson={activeLesson}
+                      prev={prev}
+                      next={next}
+                    />
+                  </div>
                 </div>
               </div>
             </>
