@@ -27,9 +27,10 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
 }) => {
   return (
     <div className={cn(
+      "h-full flex flex-col",
       isFullscreen 
-        ? "fixed right-0 top-0 h-full w-1/4 bg-black/90 p-4 overflow-y-auto z-50" 
-        : "h-[calc(9/16*100%)] overflow-y-auto"
+        ? "fixed right-0 top-0 w-1/4 bg-black/90 p-4 overflow-y-auto z-50" 
+        : "overflow-y-auto"
     )}>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-medium text-white">Transkrypcja</h3>
@@ -44,7 +45,7 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
           <p className="text-gray-300">Pobieranie transkrypcji...</p>
         </div>
       ) : transcript.length > 0 ? (
-        <div className="space-y-2">
+        <div className="space-y-2 flex-grow overflow-y-auto">
           {transcript.map((segment, index) => (
             <div 
               key={index}

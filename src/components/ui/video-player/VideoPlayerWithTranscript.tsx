@@ -1,4 +1,3 @@
-
 import MuxPlayer from "@mux/mux-player-react";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -33,16 +32,13 @@ const VideoPlayerWithTranscript = ({
   const transcriptRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Get transcript from JSON file
   const { 
     data: autoTranscript, 
     isLoading: isLoadingTranscript 
   } = useTranscript(
-    // Always try to get transcript for Mux videos
     isMuxVideo ? playbackId : undefined
   );
   
-  // Set up the video source based on the src format
   useEffect(() => {
     if (src?.startsWith('mux:')) {
       setIsMuxVideo(true);
@@ -52,7 +48,6 @@ const VideoPlayerWithTranscript = ({
     }
   }, [src]);
 
-  // Set transcript based on available data
   useEffect(() => {
     if (providedTranscript && providedTranscript.length > 0) {
       console.log("Using provided transcript with length:", providedTranscript.length);
@@ -63,7 +58,6 @@ const VideoPlayerWithTranscript = ({
     }
   }, [providedTranscript, autoTranscript]);
 
-  // Setup fullscreen change detection
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -75,7 +69,6 @@ const VideoPlayerWithTranscript = ({
     };
   }, []);
 
-  // Handle time updates
   const handleTimeUpdate = (event: any) => {
     const time = isMuxVideo 
       ? muxPlayerRef.current?.currentTime || 0
@@ -83,7 +76,6 @@ const VideoPlayerWithTranscript = ({
     
     setCurrentTime(time);
     
-    // Find the current segment
     const index = transcript.findIndex(
       segment => time >= segment.startTime && time <= segment.endTime
     );
@@ -91,7 +83,6 @@ const VideoPlayerWithTranscript = ({
     if (index !== activeSegmentIndex) {
       setActiveSegmentIndex(index);
       
-      // Scroll to the active segment
       if (index >= 0 && transcriptRef.current) {
         const segmentElements = transcriptRef.current.querySelectorAll('.transcript-segment');
         if (segmentElements[index]) {
@@ -104,7 +95,6 @@ const VideoPlayerWithTranscript = ({
     }
   };
 
-  // Jump to specific time when clicking on transcript
   const handleTranscriptClick = (startTime: number) => {
     if (isMuxVideo && muxPlayerRef.current) {
       muxPlayerRef.current.currentTime = startTime;
@@ -113,7 +103,6 @@ const VideoPlayerWithTranscript = ({
     }
   };
 
-  // Toggle transcript visibility
   const toggleTranscript = () => {
     setTranscriptVisible(prev => !prev);
   };
@@ -158,7 +147,6 @@ const VideoPlayerWithTranscript = ({
             }}
           />
         ) : (
-          // Fallback for non-Mux videos
           <video
             ref={videoRef}
             src={src}
@@ -179,7 +167,6 @@ const VideoPlayerWithTranscript = ({
           />
         )}
         
-        {/* Add protection layer to prevent screen capture */}
         <div 
           className="absolute inset-0 pointer-events-none select-none"
           style={{
@@ -196,7 +183,6 @@ const VideoPlayerWithTranscript = ({
           }}
         />
 
-        {/* Floating transcript toggle button (always visible) */}
         <button
           className={cn(
             "absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full text-xs font-medium transition-all",
@@ -211,7 +197,7 @@ const VideoPlayerWithTranscript = ({
       {transcriptVisible && (
         <div 
           className={cn(
-            "lg:col-span-4 glass-card p-4",
+            "lg:col-span-4 glass-card p-4 aspect-video",
             isFullscreen ? "" : ""
           )}
           ref={transcriptRef}
