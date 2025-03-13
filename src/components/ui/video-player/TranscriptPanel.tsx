@@ -9,6 +9,7 @@ interface TranscriptPanelProps {
   isLoadingTranscript: boolean;
   onSegmentClick: (startTime: number) => void;
   isFullscreen?: boolean;
+  errorMessage?: string;
 }
 
 // Formatowanie czasu w formacie MM:SS
@@ -23,7 +24,8 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
   activeSegmentIndex,
   isLoadingTranscript,
   onSegmentClick,
-  isFullscreen = false
+  isFullscreen = false,
+  errorMessage
 }) => {
   return (
     <div className={cn(
@@ -64,7 +66,14 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-40">
-          <p className="text-gray-300">Brak dostępnej transkrypcji dla tego wideo.</p>
+          {errorMessage ? (
+            <div className="text-center">
+              <p className="text-amber-400 mb-2">ℹ️ {errorMessage}</p>
+              <p className="text-gray-400 text-sm">Transkrypcja nie jest dostępna dla tego wideo.</p>
+            </div>
+          ) : (
+            <p className="text-gray-300">Brak dostępnej transkrypcji dla tego wideo.</p>
+          )}
         </div>
       )}
     </div>

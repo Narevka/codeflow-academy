@@ -1,4 +1,3 @@
-
 import MuxPlayer from "@mux/mux-player-react";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -28,20 +27,19 @@ const VideoPlayerWithTranscript = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [transcriptVisible, setTranscriptVisible] = useState(showTranscript);
   const [transcript, setTranscript] = useState<TranscriptSegment[]>(providedTranscript);
+  const [transcriptError, setTranscriptError] = useState<string | undefined>(undefined);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const muxPlayerRef = useRef<any>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Pobierz transkrypcję za pomocą useTranscript
   const { 
-    data: autoTranscript, 
+    data: transcriptData, 
     isLoading: isLoadingTranscript 
   } = useTranscript(
     isMuxVideo && providedTranscript.length === 0 ? playbackId : undefined
   );
   
-  // Set up the video source based on the src format
   useEffect(() => {
     if (src?.startsWith('mux:')) {
       setIsMuxVideo(true);
@@ -51,16 +49,16 @@ const VideoPlayerWithTranscript = ({
     }
   }, [src]);
 
-  // Ustaw transkrypcję na podstawie dostępnych danych
   useEffect(() => {
     if (providedTranscript && providedTranscript.length > 0) {
       setTranscript(providedTranscript);
-    } else if (autoTranscript && autoTranscript.length > 0) {
-      setTranscript(autoTranscript);
+      setTranscriptError(undefined);
+    } else if (transcriptData) {
+      setTranscript(transcriptData.segments);
+      setTranscriptError(transcriptData.message);
     }
-  }, [providedTranscript, autoTranscript]);
+  }, [providedTranscript, transcriptData]);
 
-  // Setup fullscreen change detection
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -72,7 +70,6 @@ const VideoPlayerWithTranscript = ({
     };
   }, []);
 
-  // Handle time updates
   const handleTimeUpdate = (event: any) => {
     const time = isMuxVideo 
       ? muxPlayerRef.current?.currentTime || 0
@@ -80,7 +77,6 @@ const VideoPlayerWithTranscript = ({
     
     setCurrentTime(time);
     
-    // Find the current segment
     const index = transcript.findIndex(
       segment => time >= segment.startTime && time <= segment.endTime
     );
@@ -88,7 +84,6 @@ const VideoPlayerWithTranscript = ({
     if (index !== activeSegmentIndex) {
       setActiveSegmentIndex(index);
       
-      // Scroll to the active segment
       if (index >= 0 && transcriptRef.current) {
         const segmentElements = transcriptRef.current.querySelectorAll('.transcript-segment');
         if (segmentElements[index]) {
@@ -101,7 +96,6 @@ const VideoPlayerWithTranscript = ({
     }
   };
 
-  // Jump to specific time when clicking on transcript
   const handleTranscriptClick = (startTime: number) => {
     if (isMuxVideo && muxPlayerRef.current) {
       muxPlayerRef.current.currentTime = startTime;
@@ -110,7 +104,6 @@ const VideoPlayerWithTranscript = ({
     }
   };
 
-  // Toggle transcript visibility
   const toggleTranscript = () => {
     setTranscriptVisible(prev => !prev);
   };
@@ -155,7 +148,6 @@ const VideoPlayerWithTranscript = ({
             }}
           />
         ) : (
-          // Fallback dla filmów spoza Mux
           <video
             ref={videoRef}
             src={src}
@@ -176,7 +168,6 @@ const VideoPlayerWithTranscript = ({
           />
         )}
         
-        {/* Add protection layer to prevent screen capture */}
         <div 
           className="absolute inset-0 pointer-events-none select-none"
           style={{
@@ -193,7 +184,6 @@ const VideoPlayerWithTranscript = ({
           }}
         />
 
-        {/* Floating transcript toggle button (always visible) */}
         <button
           className={cn(
             "absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full text-xs font-medium transition-all",
@@ -219,6 +209,7 @@ const VideoPlayerWithTranscript = ({
             isLoadingTranscript={isLoadingTranscript}
             onSegmentClick={handleTranscriptClick}
             isFullscreen={isFullscreen}
+            errorMessage={transcriptError}
           />
         </div>
       )}

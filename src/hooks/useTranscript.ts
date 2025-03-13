@@ -31,10 +31,22 @@ const validateTranscriptSegments = (data: any): TranscriptSegment[] => {
   return validSegments;
 };
 
+// Typ odpowiedzi z funkcji edge
+interface TranscriptResponse {
+  transcript: any[];
+  source: string;
+  error?: string;
+  message?: string;
+}
+
 // Funkcja do pobierania transkrypcji
-const fetchTranscript = async (playbackId: string | undefined): Promise<TranscriptSegment[]> => {
+const fetchTranscript = async (playbackId: string | undefined): Promise<{ 
+  segments: TranscriptSegment[]; 
+  error?: string;
+  message?: string;
+}> => {
   if (!playbackId) {
-    return [];
+    return { segments: [] };
   }
 
   try {
@@ -47,29 +59,43 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
 
     if (transcriptData) {
       console.log("Transkrypcja pobrana z bazy danych");
-      return validateTranscriptSegments(transcriptData.segments);
+      return { 
+        segments: validateTranscriptSegments(transcriptData.segments) 
+      };
     }
 
     // Jeśli nie ma w bazie, pobierz z edge function
     console.log("Pobieranie transkrypcji z edge function");
-    const { data, error: fnError } = await supabase.functions.invoke("get-mux-transcript", {
+    const { data, error: fnError } = await supabase.functions.invoke<TranscriptResponse>("get-mux-transcript", {
       body: { playbackId },
     });
 
     if (fnError) {
       console.error("Błąd podczas pobierania transkrypcji:", fnError);
-      throw fnError;
+      return { 
+        segments: [],
+        error: fnError.message,
+        message: "Nie udało się pobrać transkrypcji"
+      };
     }
 
     // Sprawdź i bezpiecznie zwróć dane transkrypcji
-    if (data && data.transcript) {
-      return validateTranscriptSegments(data.transcript);
+    if (data) {
+      return { 
+        segments: validateTranscriptSegments(data.transcript),
+        error: data.error,
+        message: data.message
+      };
     }
     
-    return [];
+    return { segments: [] };
   } catch (error) {
     console.error("Błąd useTranscript:", error);
-    return [];
+    return { 
+      segments: [],
+      error: error instanceof Error ? error.message : String(error),
+      message: "Wystąpił błąd podczas pobierania transkrypcji"
+    };
   }
 };
 
