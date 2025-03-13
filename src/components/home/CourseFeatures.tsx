@@ -1,5 +1,5 @@
 
-import { Brain, Robot, Code, Target, Rocket, Lightbulb } from "lucide-react";
+import { Brain, Bot, Code, Target, Rocket, Lightbulb } from "lucide-react";
 
 const FeatureCard = ({ 
   icon: Icon, 
@@ -65,7 +65,7 @@ const CourseFeatures = () => {
             delay="animate-delay-100"
           />
           <FeatureCard 
-            icon={Robot} 
+            icon={Bot} 
             title="Automatyzacja procesów" 
             description="Naucz się automatyzować zadania i procesy wykorzystując możliwości sztucznej inteligencji."
             delay="animate-delay-200"
