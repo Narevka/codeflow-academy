@@ -2,7 +2,6 @@
 import { cn } from "@/lib/utils";
 import { TranscriptSegment } from "@/types/course";
 import { FC } from "react";
-import { Info } from "lucide-react";
 
 interface TranscriptPanelProps {
   transcript: TranscriptSegment[];
@@ -10,7 +9,6 @@ interface TranscriptPanelProps {
   isLoadingTranscript: boolean;
   onSegmentClick: (startTime: number) => void;
   isFullscreen?: boolean;
-  errorMessage?: string;
 }
 
 // Formatowanie czasu w formacie MM:SS
@@ -21,12 +19,11 @@ const formatTime = (timeInSeconds: number): string => {
 };
 
 const TranscriptPanel: FC<TranscriptPanelProps> = ({
-  transcript = [],
+  transcript,
   activeSegmentIndex,
   isLoadingTranscript,
   onSegmentClick,
-  isFullscreen = false,
-  errorMessage
+  isFullscreen = false
 }) => {
   return (
     <div className={cn(
@@ -43,7 +40,7 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mb-4"></div>
           <p className="text-gray-300">Pobieranie transkrypcji...</p>
         </div>
-      ) : transcript && transcript.length > 0 ? (
+      ) : transcript.length > 0 ? (
         <div className="space-y-2">
           {transcript.map((segment, index) => (
             <div 
@@ -66,17 +63,8 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center h-40 px-4">
-          <div className="text-center space-y-4">
-            <div className="bg-amber-400/20 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
-              <Info size={24} className="text-amber-400" />
-            </div>
-            <p className="text-amber-400 font-medium">Brak dostępnej transkrypcji dla tego wideo</p>
-            <p className="text-gray-400 text-sm">
-              {errorMessage || 
-                "Transkrypcja nie została wygenerowana dla tego materiału wideo lub wystąpił błąd podczas jej pobierania."}
-            </p>
-          </div>
+        <div className="flex flex-col items-center justify-center h-40">
+          <p className="text-gray-300">Brak dostępnej transkrypcji dla tego wideo.</p>
         </div>
       )}
     </div>

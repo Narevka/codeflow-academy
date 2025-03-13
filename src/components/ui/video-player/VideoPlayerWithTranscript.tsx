@@ -5,8 +5,6 @@ import { cn } from "@/lib/utils";
 import { TranscriptSegment } from "@/types/course";
 import { useTranscript } from "@/hooks/useTranscript";
 import TranscriptPanel from "./TranscriptPanel";
-import { toast } from "sonner";
-import { ChevronLeft, ChevronRight, SlidersHorizontal } from "lucide-react";
 
 interface VideoPlayerWithTranscriptProps {
   src: string;
@@ -14,8 +12,6 @@ interface VideoPlayerWithTranscriptProps {
   title?: string;
   transcript?: TranscriptSegment[];
   showTranscript?: boolean;
-  onError?: (error: string) => void;
-  isMuxVideo?: boolean;
 }
 
 const VideoPlayerWithTranscript = ({
@@ -24,54 +20,47 @@ const VideoPlayerWithTranscript = ({
   title,
   transcript: providedTranscript = [],
   showTranscript = true,
-  onError,
-  isMuxVideo = false,
 }: VideoPlayerWithTranscriptProps) => {
+  const [isMuxVideo, setIsMuxVideo] = useState(false);
+  const [playbackId, setPlaybackId] = useState<string>("");
   const [currentTime, setCurrentTime] = useState(0);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number>(-1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [transcriptVisible, setTranscriptVisible] = useState(showTranscript);
   const [transcript, setTranscript] = useState<TranscriptSegment[]>(providedTranscript);
-  const [transcriptError, setTranscriptError] = useState<string | undefined>(undefined);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const muxPlayerRef = useRef<any>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Only fetch transcript from API if none is provided
-  const shouldFetchTranscript = isMuxVideo && providedTranscript.length === 0;
-  
+  // Pobierz transkrypcję za pomocą useTranscript
   const { 
-    data: transcriptData, 
-    isLoading: isLoadingTranscript,
-    error: transcriptFetchError
-  } = useTranscript(shouldFetchTranscript ? src : undefined);
+    data: autoTranscript, 
+    isLoading: isLoadingTranscript 
+  } = useTranscript(
+    isMuxVideo && providedTranscript.length === 0 ? playbackId : undefined
+  );
   
+  // Set up the video source based on the src format
+  useEffect(() => {
+    if (src?.startsWith('mux:')) {
+      setIsMuxVideo(true);
+      setPlaybackId(src);
+    } else {
+      setIsMuxVideo(false);
+    }
+  }, [src]);
+
+  // Ustaw transkrypcję na podstawie dostępnych danych
   useEffect(() => {
     if (providedTranscript && providedTranscript.length > 0) {
       setTranscript(providedTranscript);
-      setTranscriptError(undefined);
-    } else if (transcriptData) {
-      if (transcriptData.segments.length > 0) {
-        setTranscript(transcriptData.segments);
-        setTranscriptError(undefined);
-      } else {
-        setTranscript([]);
-        setTranscriptError(transcriptData.message || "Brak dostępnej transkrypcji dla tego wideo");
-      }
+    } else if (autoTranscript && autoTranscript.length > 0) {
+      setTranscript(autoTranscript);
     }
-  }, [providedTranscript, transcriptData]);
+  }, [providedTranscript, autoTranscript]);
 
-  useEffect(() => {
-    if (transcriptFetchError) {
-      console.error("Error fetching transcript:", transcriptFetchError);
-      setTranscriptError("Błąd podczas pobierania transkrypcji");
-      toast.error("Nie udało się pobrać transkrypcji", {
-        description: "Spróbuj odświeżyć stronę lub skontaktuj się z administratorem"
-      });
-    }
-  }, [transcriptFetchError]);
-
+  // Setup fullscreen change detection
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -83,6 +72,7 @@ const VideoPlayerWithTranscript = ({
     };
   }, []);
 
+  // Handle time updates
   const handleTimeUpdate = (event: any) => {
     const time = isMuxVideo 
       ? muxPlayerRef.current?.currentTime || 0
@@ -90,27 +80,28 @@ const VideoPlayerWithTranscript = ({
     
     setCurrentTime(time);
     
-    if (transcript.length > 0) {
-      const index = transcript.findIndex(
-        segment => time >= segment.startTime && time <= segment.endTime
-      );
+    // Find the current segment
+    const index = transcript.findIndex(
+      segment => time >= segment.startTime && time <= segment.endTime
+    );
+    
+    if (index !== activeSegmentIndex) {
+      setActiveSegmentIndex(index);
       
-      if (index !== activeSegmentIndex) {
-        setActiveSegmentIndex(index);
-        
-        if (index >= 0 && transcriptRef.current) {
-          const segmentElements = transcriptRef.current.querySelectorAll('.transcript-segment');
-          if (segmentElements[index]) {
-            segmentElements[index].scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'center' 
-            });
-          }
+      // Scroll to the active segment
+      if (index >= 0 && transcriptRef.current) {
+        const segmentElements = transcriptRef.current.querySelectorAll('.transcript-segment');
+        if (segmentElements[index]) {
+          segmentElements[index].scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
         }
       }
     }
   };
 
+  // Jump to specific time when clicking on transcript
   const handleTranscriptClick = (startTime: number) => {
     if (isMuxVideo && muxPlayerRef.current) {
       muxPlayerRef.current.currentTime = startTime;
@@ -119,36 +110,9 @@ const VideoPlayerWithTranscript = ({
     }
   };
 
+  // Toggle transcript visibility
   const toggleTranscript = () => {
     setTranscriptVisible(prev => !prev);
-  };
-
-  const handleMuxError = (event: any) => {
-    const errorDetail = event.detail;
-    console.error("Mux player error:", errorDetail);
-    
-    if (errorDetail?.message?.includes("not exist") || errorDetail?.code === 404) {
-      const errorMsg = "Nie znaleziono materiału wideo. Sprawdź, czy identyfikator wideo jest prawidłowy.";
-      onError?.(errorMsg);
-      toast.error("Problem z odtwarzaniem wideo", {
-        description: errorMsg
-      });
-    } else {
-      const errorMsg = "Wystąpił błąd podczas ładowania wideo. Spróbuj ponownie później.";
-      onError?.(errorMsg);
-      toast.error("Problem z odtwarzaniem wideo", {
-        description: errorMsg
-      });
-    }
-  };
-
-  const handleVideoError = (event: any) => {
-    console.error("Video error:", event);
-    const errorMsg = "Nie można załadować wideo. Sprawdź połączenie z internetem lub spróbuj ponownie później.";
-    onError?.(errorMsg);
-    toast.error("Problem z odtwarzaniem wideo", {
-      description: errorMsg
-    });
   };
 
   return (
@@ -168,13 +132,12 @@ const VideoPlayerWithTranscript = ({
           <MuxPlayer
             ref={muxPlayerRef}
             streamType="on-demand"
-            playbackId={src}
+            playbackId={playbackId.replace('mux:', '')}
             metadata={{
               video_title: title || "Video",
               player_name: "Mux Player",
             }}
             onTimeUpdate={handleTimeUpdate}
-            onError={handleMuxError}
             thumbnailTime={0}
             poster={poster}
             className="w-full h-full"
@@ -192,6 +155,7 @@ const VideoPlayerWithTranscript = ({
             }}
           />
         ) : (
+          // Fallback dla filmów spoza Mux
           <video
             ref={videoRef}
             src={src}
@@ -202,7 +166,6 @@ const VideoPlayerWithTranscript = ({
             )}
             poster={poster}
             onTimeUpdate={handleTimeUpdate}
-            onError={handleVideoError}
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
             onContextMenu={(e) => e.preventDefault()}
@@ -213,6 +176,7 @@ const VideoPlayerWithTranscript = ({
           />
         )}
         
+        {/* Add protection layer to prevent screen capture */}
         <div 
           className="absolute inset-0 pointer-events-none select-none"
           style={{
@@ -229,24 +193,15 @@ const VideoPlayerWithTranscript = ({
           }}
         />
 
+        {/* Floating transcript toggle button (always visible) */}
         <button
           className={cn(
-            "absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full flex items-center gap-2 text-sm font-medium transition-all",
+            "absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full text-xs font-medium transition-all",
             transcriptVisible ? "bg-blue-600 text-white" : "bg-gray-800/70 text-white hover:bg-gray-700/80"
           )}
           onClick={toggleTranscript}
         >
-          {transcriptVisible ? (
-            <>
-              Ukryj transkrypcję 
-              <ChevronRight size={16} className="ml-1" />
-            </>
-          ) : (
-            <>
-              <ChevronLeft size={16} className="mr-1" /> 
-              Pokaż transkrypcję
-            </>
-          )}
+          {transcriptVisible ? "Ukryj transkrypcję" : "Pokaż transkrypcję"}
         </button>
       </div>
       
@@ -264,7 +219,6 @@ const VideoPlayerWithTranscript = ({
             isLoadingTranscript={isLoadingTranscript}
             onSegmentClick={handleTranscriptClick}
             isFullscreen={isFullscreen}
-            errorMessage={transcriptError}
           />
         </div>
       )}
