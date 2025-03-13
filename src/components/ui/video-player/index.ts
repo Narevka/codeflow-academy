@@ -1,3 +1,3 @@
 
-// This file is kept as a placeholder for potential future video player components
-// VideoPlayer has been replaced with the official Mux Player
+// Export the VideoPlayer component that now uses Mux Player under the hood
+export { default as VideoPlayer } from "./VideoPlayer";
