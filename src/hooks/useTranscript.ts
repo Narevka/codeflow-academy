@@ -3,6 +3,34 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
 
+// Funkcja do walidacji struktury segmentu transkrypcji
+const isValidTranscriptSegment = (segment: any): segment is TranscriptSegment => {
+  return (
+    segment &&
+    typeof segment === 'object' &&
+    typeof segment.text === 'string' &&
+    typeof segment.startTime === 'number' &&
+    typeof segment.endTime === 'number'
+  );
+};
+
+// Funkcja do walidacji tablicy segmentów
+const validateTranscriptSegments = (data: any): TranscriptSegment[] => {
+  if (!Array.isArray(data)) {
+    console.warn('Otrzymano nieprawidłowe dane transkrypcji (nie jest tablicą)');
+    return [];
+  }
+
+  // Sprawdź, czy wszystkie elementy mają poprawną strukturę
+  const validSegments = data.filter(isValidTranscriptSegment);
+  
+  if (validSegments.length !== data.length) {
+    console.warn(`Niektóre segmenty transkrypcji (${data.length - validSegments.length}) miały nieprawidłową strukturę i zostały pominięte`);
+  }
+  
+  return validSegments;
+};
+
 // Funkcja do pobierania transkrypcji
 const fetchTranscript = async (playbackId: string | undefined): Promise<TranscriptSegment[]> => {
   if (!playbackId) {
@@ -19,13 +47,7 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
 
     if (transcriptData) {
       console.log("Transkrypcja pobrana z bazy danych");
-      // Explicit type casting with type safety
-      const segments = transcriptData.segments as unknown;
-      // Verify that segments is an array before returning
-      if (Array.isArray(segments)) {
-        return segments as TranscriptSegment[];
-      }
-      return [];
+      return validateTranscriptSegments(transcriptData.segments);
     }
 
     // Jeśli nie ma w bazie, pobierz z edge function
@@ -39,9 +61,9 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
       throw fnError;
     }
 
-    // Verify and safely cast the transcript data
-    if (data && data.transcript && Array.isArray(data.transcript)) {
-      return data.transcript as TranscriptSegment[];
+    // Sprawdź i bezpiecznie zwróć dane transkrypcji
+    if (data && data.transcript) {
+      return validateTranscriptSegments(data.transcript);
     }
     
     return [];

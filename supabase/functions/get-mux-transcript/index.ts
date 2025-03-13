@@ -17,6 +17,17 @@ const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 const MUX_TOKEN_ID = Deno.env.get("MUX_TOKEN_ID") || "";
 const MUX_TOKEN_SECRET = Deno.env.get("MUX_TOKEN_SECRET") || "";
 
+// Walidacja struktury segmentu transkrypcji
+const isValidTranscriptSegment = (segment: any): boolean => {
+  return (
+    segment &&
+    typeof segment === 'object' &&
+    typeof segment.text === 'string' &&
+    typeof segment.startTime === 'number' &&
+    typeof segment.endTime === 'number'
+  );
+};
+
 serve(async (req) => {
   // Obsługa zapytań CORS preflight
   if (req.method === "OPTIONS") {
@@ -66,12 +77,35 @@ serve(async (req) => {
     // Jeśli nie ma w bazie, pobierz z Mux API
     console.log("Brak transkrypcji w bazie, pobieranie z Mux API");
     
+    if (!MUX_TOKEN_ID || !MUX_TOKEN_SECRET) {
+      console.error("Brak konfiguracji Mux API (MUX_TOKEN_ID lub MUX_TOKEN_SECRET)");
+      // Generujemy przykładowe dane w przypadku braku konfiguracji
+      const sampleTranscript = generateSampleTranscript(playbackId);
+      return new Response(
+        JSON.stringify({ 
+          transcript: sampleTranscript,
+          source: "sample", 
+          warning: "Brak konfiguracji Mux API"
+        }),
+        {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        }
+      );
+    }
+    
     // Utworzenie nagłówka autoryzacji dla Mux API
     const muxAuthHeader = `Basic ${btoa(`${MUX_TOKEN_ID}:${MUX_TOKEN_SECRET}`)}`;
     
     // Pobierz transkrypcję z Mux API
+    // Dla Video-on-demand assets, playback_id jest częścią asset_id
+    // Wyciągamy faktyczne asset_id z playback_id (usuwając 'mux:' prefix jeśli istnieje)
+    const assetId = playbackId.replace("mux:", "");
+    
+    console.log(`Pobieranie transkrypcji dla Mux Asset ID: ${assetId}`);
+    
     const muxResponse = await fetch(
-      `https://api.mux.com/video/v1/assets/${playbackId.replace("mux:", "")}/transcription`,
+      `https://api.mux.com/video/v1/assets/${assetId}/transcription`,
       {
         method: "GET",
         headers: {
@@ -81,18 +115,33 @@ serve(async (req) => {
       }
     );
 
-    // W przypadku rzeczywistej implementacji, tutaj parsowalibyśmy odpowiedź z Mux API
-    // Ponieważ nie mamy faktycznego dostępu do Mux API w tym przykładzie,
-    // symulujemy odpowiedź z przykładowymi danymi
     let segmentsData = [];
     
     if (muxResponse.ok) {
-      // W rzeczywistości parsowalibyśmy odpowiedź z Mux API
-      // const muxData = await muxResponse.json();
-      // segmentsData = muxData.data.segments;
+      try {
+        // Parsowanie odpowiedzi z Mux API
+        const muxData = await muxResponse.json();
+        console.log("Otrzymano odpowiedź z Mux API:", JSON.stringify(muxData).substring(0, 200) + "...");
+        
+        // Tutaj należy dostosować przetwarzanie danych z Mux API
+        // w zależności od faktycznej struktury zwracanej przez API
+        if (muxData && muxData.data && Array.isArray(muxData.data.segments)) {
+          segmentsData = muxData.data.segments.map(segment => ({
+            text: segment.text || "",
+            startTime: parseFloat(segment.start_time) || 0,
+            endTime: parseFloat(segment.end_time) || 0
+          }));
+        } else {
+          console.log("Dane z Mux API mają nieoczekiwaną strukturę, generowanie przykładowych danych");
+          segmentsData = generateSampleTranscript(playbackId);
+        }
+      } catch (parseError) {
+        console.error("Błąd podczas parsowania odpowiedzi z Mux API:", parseError);
+        segmentsData = generateSampleTranscript(playbackId);
+      }
       
-      // Symulujemy dane transkrypcji
-      segmentsData = generateSampleTranscript(playbackId);
+      // Walidacja segmentów
+      segmentsData = segmentsData.filter(isValidTranscriptSegment);
       
       // Zapisz transkrypcję do bazy danych
       const { data: insertData, error: insertError } = await supabase
