@@ -1,5 +1,15 @@
 
-import { VideoPlayer } from "../ui/video-player";
+import { VideoPlayerWithTranscript } from "../ui/video-player";
+
+// Sample transcript for the trailer
+const trailerTranscript = [
+  { text: "Witaj w świecie Flowise AI i LangChain!", startTime: 0, endTime: 3 },
+  { text: "W tym kursie nauczysz się, jak tworzyć zaawansowane aplikacje AI bez konieczności pisania kodu.", startTime: 3, endTime: 8 },
+  { text: "Flowise pozwala na łatwe projektowanie interfejsów graficznych i integrację z różnymi modelami.", startTime: 8, endTime: 13 },
+  { text: "Dzięki wizualnemu interfejsowi można szybko prototypować i budować aplikacje oparte na AI.", startTime: 13, endTime: 18 },
+  { text: "W tym kursie znajdziesz wszystko, czego potrzebujesz, by zacząć swoją przygodę z Flowise.", startTime: 18, endTime: 23 },
+  { text: "Dołącz do nas i odkryj nowe możliwości tworzenia aplikacji AI!", startTime: 23, endTime: 28 },
+];
 
 const CourseTrailer = () => {
   return (
@@ -16,10 +26,11 @@ const CourseTrailer = () => {
           </p>
         </div>
 
-        <VideoPlayer 
+        <VideoPlayerWithTranscript 
           src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" 
           poster="/public/lovable-uploads/af41dcbe-22e6-4e86-a8f3-d5878acd2e55.png"
           title="Wprowadzenie do kursu Flowise AI"
+          transcript={trailerTranscript}
         />
       </div>
     </section>

@@ -1,11 +1,25 @@
 
 import { Lesson } from "@/types/course";
-import MuxPlayer from "@mux/mux-player-react";
+import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
 import { useState, useEffect } from "react";
 
 interface LessonContentProps {
   lesson: Lesson;
 }
+
+// Example transcript data - in a real app, this would come from the lesson data
+const sampleTranscript = [
+  { text: "Witaj w tym kursie. Dzisiaj omówimy podstawy Flowise AI.", startTime: 0, endTime: 5 },
+  { text: "Następnie jak wejdziecie sobie do Gmaila,", startTime: 5, endTime: 10 },
+  { text: "tak jak u mnie w tej chwili to widzicie na ekranie,", startTime: 10, endTime: 15 },
+  { text: "możecie z automatu pofiltrować sobie przychodzącą pocztę.", startTime: 15, endTime: 20 },
+  { text: "Tak jak tutaj widzicie, automatycznie 4 wiadomości, które mi przyszły", startTime: 20, endTime: 25 },
+  { text: "mają przypisaną kategorię filtr moda.", startTime: 25, endTime: 30 },
+  { text: "Wejdźmy do jednej z takich wiadomości i zobaczycie", startTime: 30, endTime: 35 },
+  { text: "taka wiadomość przyszła na adres e-mail leszczynskimichal+moda@gmail.com.", startTime: 35, endTime: 40 },
+  { text: "Teraz omówimy jak skonfigurować takie filtry w Gmailu.", startTime: 40, endTime: 45 },
+  { text: "To narzędzie jest bardzo przydatne, gdy otrzymujemy dużo wiadomości.", startTime: 45, endTime: 50 },
+];
 
 const LessonContent = ({ lesson }: LessonContentProps) => {
   const [isMuxVideo, setIsMuxVideo] = useState(false);
@@ -26,72 +40,18 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.title}</h1>
       
       {lesson.videoUrl && (
-        <div className="mb-8 relative">
-          {isMuxVideo ? (
-            <div className="aspect-video w-full max-w-4xl mx-auto">
-              <MuxPlayer
-                streamType="on-demand"
-                playbackId={playbackId}
-                metadata={{
-                  video_title: lesson.title,
-                  player_name: "Mux Player",
-                }}
-                thumbnailTime={0}
-                poster={lesson.thumbnailUrl}
-                className="w-full h-full"
-                crossOrigin="anonymous"
-                disablePictureInPicture={true}
-                nohotkeys={true}
-                style={{
-                  position: "relative",
-                  aspectRatio: "16/9",
-                  backgroundColor: "#000",
-                  width: "100%",
-                  borderRadius: "0.75rem",
-                  overflow: "hidden",
-                }}
-              />
-              
-              {/* Add protection layer to prevent screen capture */}
-              <div 
-                className="absolute inset-0 pointer-events-none select-none"
-                style={{
-                  mixBlendMode: "overlay",
-                  userSelect: "none",
-                  WebkitUserSelect: "none",
-                  background: "radial-gradient(circle 100px at var(--x, 50%) var(--y, 50%), transparent 10%, rgba(0, 0, 0, 0.5) 60%)",
-                }}
-                onMouseMove={(e) => {
-                  const target = e.currentTarget;
-                  const rect = target.getBoundingClientRect();
-                  target.style.setProperty('--x', `${e.clientX - rect.left}px`);
-                  target.style.setProperty('--y', `${e.clientY - rect.top}px`);
-                }}
-              />
-            </div>
-          ) : (
-            // Fallback for non-Mux videos
-            <div className="aspect-video w-full max-w-4xl mx-auto">
-              <video
-                src={lesson.videoUrl}
-                controls
-                className="w-full h-full rounded-xl"
-                poster={lesson.thumbnailUrl}
-                controlsList="nodownload nofullscreen noremoteplayback"
-                disablePictureInPicture
-                onContextMenu={(e) => e.preventDefault()}
-                style={{
-                  aspectRatio: "16/9",
-                  backgroundColor: "#000",
-                }}
-              />
-            </div>
-          )}
+        <div className="mb-8">
+          <VideoPlayerWithTranscript
+            src={lesson.videoUrl}
+            poster={lesson.thumbnailUrl}
+            title={lesson.title}
+            transcript={lesson.transcript || sampleTranscript}
+          />
         </div>
       )}
       
       {lesson.description && (
-        <div className="prose prose-invert max-w-none">
+        <div className="prose prose-invert max-w-none mt-6">
           <p>{lesson.description}</p>
         </div>
       )}

@@ -1,7 +1,16 @@
 
 import { Check, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { VideoPlayer } from "../ui/video-player";
+import { VideoPlayerWithTranscript } from "../ui/video-player";
+
+// Sample transcript for the demo course
+const demoTranscript = [
+  { text: "W tej lekcji omówimy podstawy Flowise AI.", startTime: 0, endTime: 4 },
+  { text: "Flowise to narzędzie, które umożliwia tworzenie aplikacji AI bez konieczności pisania kodu.", startTime: 4, endTime: 9 },
+  { text: "Interfejs Flowise jest intuicyjny i łatwy w użyciu.", startTime: 9, endTime: 14 },
+  { text: "Możemy łączyć różne komponenty, tworząc zaawansowane przepływy pracy.", startTime: 14, endTime: 19 },
+  { text: "Najważniejszą zaletą jest możliwość szybkiego prototypowania i testowania pomysłów.", startTime: 19, endTime: 24 },
+];
 
 const DemoCourse = () => {
   return (
@@ -18,15 +27,16 @@ const DemoCourse = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <VideoPlayer 
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-7">
+            <VideoPlayerWithTranscript 
               src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" 
               poster="/public/lovable-uploads/2fd49611-13df-49b8-a6fe-2b83183c4e83.png"
               title="Lekcja 1: Wprowadzenie do Flowise"
+              transcript={demoTranscript}
             />
           </div>
-          <div className="space-y-6">
+          <div className="lg:col-span-5 space-y-6">
             <h3 className="text-2xl font-bold text-white">
               Co zyskasz z tej lekcji:
             </h3>
