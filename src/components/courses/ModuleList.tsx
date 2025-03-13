@@ -17,7 +17,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
         <div key={module.id} className="relative">
           <Link
             to={`/my-courses/${courseId}/${module.id}`}
-            className={`flex items-center transition-all duration-300 ${
+            className={`flex items-center transition-all duration-700 ${
               collapsed 
                 ? "p-2 justify-center" 
                 : "p-3"
@@ -31,7 +31,9 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
                   : "hover:bg-white/5 border-l-4 border-transparent"
             }`}
           >
-            <div className={`${collapsed ? "" : "mr-3"} text-lg relative z-10`}>
+            <div className={`${collapsed ? "" : "mr-3"} text-lg relative z-10 transition-transform duration-500 ${
+              collapsed ? "scale-90 hover:scale-110" : ""
+            }`}>
               {module.completed ? (
                 <CheckCircle size={collapsed ? 16 : 20} className="text-green-500" />
               ) : (
@@ -40,7 +42,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
             </div>
             
             {!collapsed && (
-              <div className="flex-1">
+              <div className="flex-1 transition-opacity duration-700">
                 <span className={`text-sm ${module.id === activeModuleId ? "text-white font-medium" : "text-white/80"}`}>
                   {module.title}
                 </span>
@@ -52,7 +54,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
           {collapsed && index < modules.length - 1 && (
             <div className={`absolute left-1/2 top-[calc(100%_-_8px)] h-10 w-0.5 ${
               module.completed ? "bg-green-500/70" : "bg-white/20"
-            } transform -translate-x-1/2 transition-all duration-300`}></div>
+            } transform -translate-x-1/2 transition-all duration-1000 animate-pulse-slow`}></div>
           )}
         </div>
       ))}

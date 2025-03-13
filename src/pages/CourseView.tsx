@@ -20,7 +20,7 @@ const CourseView = () => {
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const hoverTimeoutRef = useRef<number | null>(null);
+  const collapseTimeoutRef = useRef<number | null>(null);
 
   // Find the current course
   const course = userCourses.find(c => c.id === courseId);
@@ -56,20 +56,21 @@ const CourseView = () => {
     }
   }, [course, moduleId, lessonId]);
 
-  // Auto-collapse sidebar when mouse leaves
+  // Handle sidebar auto-collapse with immediate start but longer animation
   useEffect(() => {
     const handleMouseEnter = () => {
-      if (hoverTimeoutRef.current) {
-        window.clearTimeout(hoverTimeoutRef.current);
-        hoverTimeoutRef.current = null;
+      if (collapseTimeoutRef.current) {
+        window.clearTimeout(collapseTimeoutRef.current);
+        collapseTimeoutRef.current = null;
       }
       setSidebarCollapsed(false);
     };
 
     const handleMouseLeave = () => {
-      hoverTimeoutRef.current = window.setTimeout(() => {
+      // Start collapsing immediately when mouse leaves
+      collapseTimeoutRef.current = window.setTimeout(() => {
         setSidebarCollapsed(true);
-      }, 1000); // Delay before collapsing
+      }, 300); // Short delay before starting to collapse
     };
 
     const sidebarElement = sidebarRef.current;
@@ -84,8 +85,8 @@ const CourseView = () => {
         sidebarElement.removeEventListener('mouseleave', handleMouseLeave);
       }
       
-      if (hoverTimeoutRef.current) {
-        window.clearTimeout(hoverTimeoutRef.current);
+      if (collapseTimeoutRef.current) {
+        window.clearTimeout(collapseTimeoutRef.current);
       }
     };
   }, []);
@@ -114,15 +115,19 @@ const CourseView = () => {
                 {/* Sidebar - modules and lessons */}
                 <div 
                   ref={sidebarRef}
-                  className={`lg:col-span-${sidebarCollapsed ? '1' : '4'} xl:col-span-${sidebarCollapsed ? '1' : '3'} transition-all duration-500 ease-in-out`}
+                  className={`lg:col-span-${sidebarCollapsed ? '1' : '4'} xl:col-span-${sidebarCollapsed ? '1' : '3'} transition-all duration-1000 ease-in-out group relative`}
                 >
                   <div 
-                    className={`glass-card ${sidebarCollapsed ? 'p-2' : 'p-4'} sticky top-24 transition-all duration-500 ease-in-out`}
+                    className={`glass-card ${sidebarCollapsed ? 'p-2' : 'p-4'} sticky top-24 transition-all duration-1000 ease-in-out ${
+                      sidebarCollapsed ? 'opacity-80 hover:opacity-100' : 'opacity-100'
+                    } transform ${
+                      sidebarCollapsed ? 'scale-95' : 'scale-100'
+                    }`}
                   >
                     {sidebarCollapsed && (
                       <button 
                         onClick={toggleSidebar}
-                        className="absolute -right-3 top-1/2 -translate-y-1/2 bg-magenta rounded-full p-1 shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute -right-3 top-1/2 -translate-y-1/2 bg-magenta rounded-full p-1 shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <ChevronRight className="h-4 w-4 text-white" />
                       </button>
@@ -158,7 +163,7 @@ const CourseView = () => {
                 </div>
                 
                 {/* Main content - lesson */}
-                <div className={`lg:col-span-${sidebarCollapsed ? '11' : '8'} xl:col-span-${sidebarCollapsed ? '11' : '9'} transition-all duration-500 ease-in-out`}>
+                <div className={`lg:col-span-${sidebarCollapsed ? '11' : '8'} xl:col-span-${sidebarCollapsed ? '11' : '9'} transition-all duration-1000 ease-in-out`}>
                   <CourseContent 
                     course={course}
                     activeModule={activeModule}

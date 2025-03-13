@@ -17,18 +17,22 @@ const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = f
   }
   
   return (
-    <div className={`space-y-2 mt-4 transition-opacity duration-300 ${collapsed ? 'opacity-0' : 'opacity-100'}`}>
+    <div className={`space-y-2 mt-4 transition-all duration-1000 ${
+      collapsed 
+        ? 'opacity-0 max-h-0 overflow-hidden' 
+        : 'opacity-100 max-h-[2000px]'
+    }`}>
       {lessons.map((lesson) => (
         <Link
           key={lesson.id}
           to={`/my-courses/${courseId}/${moduleId}/${lesson.id}`}
-          className={`flex items-center p-3 rounded-md transition-colors ${
+          className={`flex items-center p-3 rounded-md transition-all duration-500 ${
             lesson.id === activeLessonId
-              ? "bg-magenta/20"
-              : "hover:bg-white/5"
+              ? "bg-magenta/20 transform translate-x-1"
+              : "hover:bg-white/5 hover:translate-x-1"
           }`}
         >
-          <div className="mr-3">
+          <div className="mr-3 transition-transform duration-300">
             {lesson.completed ? (
               <CheckCircle size={18} className="text-green-500" />
             ) : (
