@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
+import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { userCourses } from "@/data/coursesData";
@@ -21,6 +22,7 @@ const CourseView = () => {
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+  const isMobile = useIsMobile();
 
   // Find the current course
   const course = userCourses.find(c => c.id === courseId);
@@ -78,11 +80,11 @@ const CourseView = () => {
     <div className="min-h-screen bg-dark-purple text-white flex flex-col">
       <Header />
       
-      <main className="flex-1 py-10 px-0">
-        <div className="mx-auto w-full max-w-[1800px]">
+      <main className="flex-1 py-8">
+        <div className="mx-auto w-full max-w-[2000px]">
           {course && (
             <>
-              <div className="px-4">
+              <div className="px-4 lg:px-6 mb-4">
                 <CourseHeader 
                   course={course} 
                   moduleId={moduleId} 
@@ -95,14 +97,14 @@ const CourseView = () => {
                 <div
                   className={cn(
                     "transition-all duration-300 ease-in-out",
-                    sidebarExpanded ? "w-[320px]" : "w-12"
+                    sidebarExpanded ? "w-[300px] lg:w-[320px]" : "w-10 lg:w-12"
                   )}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
                   <div className={cn(
                     "glass-card sticky top-24 h-[calc(100vh-12rem)] overflow-hidden transition-all duration-300 rounded-r-lg rounded-l-none border-l-0",
-                    sidebarExpanded ? "w-full" : "w-12"
+                    sidebarExpanded ? "w-full" : "w-10 lg:w-12"
                   )}>
                     {sidebarExpanded ? (
                       <div className="p-4">
@@ -123,19 +125,17 @@ const CourseView = () => {
                       </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full">
-                        <div className="rotate-90 text-white/70 text-sm font-medium whitespace-nowrap">
+                        <div className="rotate-90 text-white/70 text-xs lg:text-sm font-medium whitespace-nowrap">
                           Nawigacja kursu
                         </div>
-                        <ArrowRightFromLine className="mt-4 text-white/70" size={20} />
+                        <ArrowRightFromLine className="mt-4 text-white/70" size={isMobile ? 16 : 20} />
                       </div>
                     )}
                   </div>
                 </div>
                 
                 {/* Main content - lesson */}
-                <div className={cn(
-                  "transition-all duration-300 flex-1 pr-0",
-                )}>
+                <div className="transition-all duration-300 flex-1">
                   <div className="glass-card rounded-l-lg rounded-r-none border-r-0 h-[calc(100vh-12rem)] overflow-auto">
                     <CourseContent 
                       course={course}
