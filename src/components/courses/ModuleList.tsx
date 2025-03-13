@@ -17,7 +17,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
         <div key={module.id} className="relative">
           <Link
             to={`/my-courses/${courseId}/${module.id}`}
-            className={`flex items-center transition-all duration-700 ${
+            className={`flex items-center transition-all duration-1000 ease-in-out ${
               collapsed 
                 ? "p-2 justify-center" 
                 : "p-3"
@@ -42,7 +42,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
             </div>
             
             {!collapsed && (
-              <div className="flex-1 transition-opacity duration-700">
+              <div className="flex-1 transition-opacity duration-1000 ease-in-out">
                 <span className={`text-sm ${module.id === activeModuleId ? "text-white font-medium" : "text-white/80"}`}>
                   {module.title}
                 </span>
@@ -54,7 +54,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
           {collapsed && index < modules.length - 1 && (
             <div className={`absolute left-1/2 top-[calc(100%_-_8px)] h-10 w-0.5 ${
               module.completed ? "bg-green-500/70" : "bg-white/20"
-            } transform -translate-x-1/2 transition-all duration-1000 animate-pulse-slow`}></div>
+            } transform -translate-x-1/2 transition-all duration-1000 ease-in-out animate-pulse-slow`}></div>
           )}
         </div>
       ))}

@@ -56,7 +56,7 @@ const CourseView = () => {
     }
   }, [course, moduleId, lessonId]);
 
-  // Handle sidebar auto-collapse with immediate start but longer animation
+  // Handle sidebar auto-collapse with smooth animation
   useEffect(() => {
     const handleMouseEnter = () => {
       if (collapseTimeoutRef.current) {
@@ -67,10 +67,9 @@ const CourseView = () => {
     };
 
     const handleMouseLeave = () => {
-      // Start collapsing immediately when mouse leaves
       collapseTimeoutRef.current = window.setTimeout(() => {
         setSidebarCollapsed(true);
-      }, 300); // Short delay before starting to collapse
+      }, 300);
     };
 
     const sidebarElement = sidebarRef.current;

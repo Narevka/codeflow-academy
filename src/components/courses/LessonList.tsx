@@ -17,7 +17,7 @@ const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = f
   }
   
   return (
-    <div className={`space-y-2 mt-4 transition-all duration-1000 ${
+    <div className={`space-y-2 mt-4 transition-all duration-1000 ease-in-out ${
       collapsed 
         ? 'opacity-0 max-h-0 overflow-hidden' 
         : 'opacity-100 max-h-[2000px]'
@@ -26,13 +26,13 @@ const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = f
         <Link
           key={lesson.id}
           to={`/my-courses/${courseId}/${moduleId}/${lesson.id}`}
-          className={`flex items-center p-3 rounded-md transition-all duration-500 ${
+          className={`flex items-center p-3 rounded-md transition-all duration-1000 ease-in-out ${
             lesson.id === activeLessonId
               ? "bg-magenta/20 transform translate-x-1"
               : "hover:bg-white/5 hover:translate-x-1"
           }`}
         >
-          <div className="mr-3 transition-transform duration-300">
+          <div className="mr-3 transition-transform duration-500 ease-in-out">
             {lesson.completed ? (
               <CheckCircle size={18} className="text-green-500" />
             ) : (
