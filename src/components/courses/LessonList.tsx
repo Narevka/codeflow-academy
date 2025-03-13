@@ -24,8 +24,8 @@ const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = f
           to={`/my-courses/${courseId}/${moduleId}/${lesson.id}`}
           className={`flex items-center p-2 rounded-md transition-all duration-1000 ease-in-out ${
             lesson.id === activeLessonId
-              ? "bg-magenta/20 transform translate-x-1"
-              : "hover:bg-white/5 hover:translate-x-1"
+              ? "bg-magenta/20"
+              : "hover:bg-white/5"
           }`}
         >
           <div className="mr-3 transition-transform duration-500 ease-in-out">
