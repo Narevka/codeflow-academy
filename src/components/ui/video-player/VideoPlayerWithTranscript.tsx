@@ -1,3 +1,4 @@
+
 import MuxPlayer from "@mux/mux-player-react";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,8 @@ interface VideoPlayerWithTranscriptProps {
   title?: string;
   transcript?: TranscriptSegment[];
   showTranscript?: boolean;
+  onError?: (error: string) => void;
+  isMuxVideo?: boolean;
 }
 
 const VideoPlayerWithTranscript = ({
@@ -19,9 +22,9 @@ const VideoPlayerWithTranscript = ({
   title,
   transcript: providedTranscript = [],
   showTranscript = true,
+  onError,
+  isMuxVideo = false,
 }: VideoPlayerWithTranscriptProps) => {
-  const [isMuxVideo, setIsMuxVideo] = useState(false);
-  const [playbackId, setPlaybackId] = useState<string>("");
   const [currentTime, setCurrentTime] = useState(0);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number>(-1);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -37,18 +40,9 @@ const VideoPlayerWithTranscript = ({
     data: transcriptData, 
     isLoading: isLoadingTranscript 
   } = useTranscript(
-    isMuxVideo && providedTranscript.length === 0 ? playbackId : undefined
+    isMuxVideo && providedTranscript.length === 0 ? src : undefined
   );
   
-  useEffect(() => {
-    if (src?.startsWith('mux:')) {
-      setIsMuxVideo(true);
-      setPlaybackId(src);
-    } else {
-      setIsMuxVideo(false);
-    }
-  }, [src]);
-
   useEffect(() => {
     if (providedTranscript && providedTranscript.length > 0) {
       setTranscript(providedTranscript);
@@ -108,6 +102,22 @@ const VideoPlayerWithTranscript = ({
     setTranscriptVisible(prev => !prev);
   };
 
+  const handleMuxError = (event: any) => {
+    const errorDetail = event.detail;
+    console.error("Mux player error:", errorDetail);
+    
+    if (errorDetail?.message?.includes("not exist") || errorDetail?.code === 404) {
+      onError?.("Nie znaleziono materiału wideo. Sprawdź, czy identyfikator wideo jest prawidłowy.");
+    } else {
+      onError?.("Wystąpił błąd podczas ładowania wideo. Spróbuj ponownie później.");
+    }
+  };
+
+  const handleVideoError = (event: any) => {
+    console.error("Video error:", event);
+    onError?.("Nie można załadować wideo. Sprawdź połączenie z internetem lub spróbuj ponownie później.");
+  };
+
   return (
     <div 
       className={cn(
@@ -125,12 +135,13 @@ const VideoPlayerWithTranscript = ({
           <MuxPlayer
             ref={muxPlayerRef}
             streamType="on-demand"
-            playbackId={playbackId.replace('mux:', '')}
+            playbackId={src}
             metadata={{
               video_title: title || "Video",
               player_name: "Mux Player",
             }}
             onTimeUpdate={handleTimeUpdate}
+            onError={handleMuxError}
             thumbnailTime={0}
             poster={poster}
             className="w-full h-full"
@@ -158,6 +169,7 @@ const VideoPlayerWithTranscript = ({
             )}
             poster={poster}
             onTimeUpdate={handleTimeUpdate}
+            onError={handleVideoError}
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
             onContextMenu={(e) => e.preventDefault()}

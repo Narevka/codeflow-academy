@@ -67,20 +67,16 @@ const TranscriptPanel: FC<TranscriptPanelProps> = ({
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-40 px-4">
-          {errorMessage ? (
-            <div className="text-center space-y-4">
-              <div className="bg-amber-400/20 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
-                <Info size={24} className="text-amber-400" />
-              </div>
-              <p className="text-amber-400 font-medium">Brak dostępnej transkrypcji dla tego wideo</p>
-              <p className="text-gray-400 text-sm">
-                Transkrypcja nie została wygenerowana dla tego materiału wideo. 
-                Transkrypcje muszą być włączone podczas tworzenia zasobu w Mux lub dodane retroaktywnie.
-              </p>
+          <div className="text-center space-y-4">
+            <div className="bg-amber-400/20 p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
+              <Info size={24} className="text-amber-400" />
             </div>
-          ) : (
-            <p className="text-gray-300">Brak dostępnej transkrypcji dla tego wideo.</p>
-          )}
+            <p className="text-amber-400 font-medium">Brak dostępnej transkrypcji dla tego wideo</p>
+            <p className="text-gray-400 text-sm">
+              {errorMessage || 
+                "Transkrypcja nie została wygenerowana dla tego materiału wideo. Transkrypcje muszą być włączone podczas tworzenia zasobu w Mux lub dodane retroaktywnie."}
+            </p>
+          </div>
         </div>
       )}
     </div>
