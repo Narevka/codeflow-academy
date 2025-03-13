@@ -20,7 +20,7 @@ interface CourseContentProps {
 
 const CourseContent = ({ course, activeModule, activeLesson, prev, next }: CourseContentProps) => {
   return (
-    <div className="glass-card p-6">
+    <div className="glass-card p-6 min-h-[500px] w-full">
       {activeLesson ? (
         <>
           <LessonContent lesson={activeLesson} />
