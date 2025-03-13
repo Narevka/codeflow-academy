@@ -11,12 +11,14 @@ import LessonList from "@/components/courses/LessonList";
 import CourseHeader from "@/components/courses/CourseHeader";
 import CourseContent from "@/components/courses/CourseContent";
 import { useCourseNavigation } from "@/hooks/useCourseNavigation";
+import { ChevronRight } from "lucide-react";
 
 const CourseView = () => {
   const { user, loading } = useAuth();
   const { courseId, moduleId, lessonId } = useParams();
   const [activeModule, setActiveModule] = useState<Module | null>(null);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // Find the current course
   const course = userCourses.find(c => c.id === courseId);
@@ -54,6 +56,10 @@ const CourseView = () => {
 
   const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
+  const toggleSidebar = () => {
+    setSidebarCollapsed(prev => !prev);
+  };
+
   return (
     <div className="min-h-screen bg-dark-purple text-white flex flex-col">
       <Header />
@@ -70,27 +76,51 @@ const CourseView = () => {
               
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Sidebar - modules and lessons */}
-                <div className="lg:col-span-4 xl:col-span-3">
-                  <div className="glass-card p-4 sticky top-24">
+                <div className={`lg:col-span-${sidebarCollapsed ? '1' : '4'} xl:col-span-${sidebarCollapsed ? '1' : '3'} transition-all duration-300 ease-in-out`}>
+                  <div 
+                    className={`glass-card ${sidebarCollapsed ? 'p-2' : 'p-4'} sticky top-24 transition-all duration-300 ease-in-out group hover:bg-opacity-15 hover:border-primary/30`}
+                    onMouseEnter={() => setSidebarCollapsed(false)}
+                  >
+                    {sidebarCollapsed && (
+                      <button 
+                        onClick={toggleSidebar}
+                        className="absolute -right-3 top-1/2 -translate-y-1/2 bg-magenta rounded-full p-1 shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      >
+                        <ChevronRight className="h-4 w-4 text-white" />
+                      </button>
+                    )}
+                    
                     <ModuleList 
                       modules={course.modules} 
                       courseId={course.id} 
                       activeModuleId={activeModule?.id}
+                      collapsed={sidebarCollapsed}
                     />
                     
-                    {activeModule && (
+                    {activeModule && !sidebarCollapsed && (
                       <LessonList 
                         lessons={activeModule.lessons}
                         courseId={course.id}
                         moduleId={activeModule.id}
                         activeLessonId={activeLesson?.id}
+                        collapsed={sidebarCollapsed}
                       />
+                    )}
+                    
+                    {!sidebarCollapsed && (
+                      <button 
+                        onClick={toggleSidebar}
+                        className="mt-4 w-full text-center text-xs text-white/60 hover:text-white transition-colors flex items-center justify-center gap-1"
+                      >
+                        <span>Minimize sidebar</span>
+                        <ChevronRight className="h-3 w-3 rotate-180" />
+                      </button>
                     )}
                   </div>
                 </div>
                 
                 {/* Main content - lesson */}
-                <div className="lg:col-span-8 xl:col-span-9">
+                <div className={`lg:col-span-${sidebarCollapsed ? '11' : '8'} xl:col-span-${sidebarCollapsed ? '11' : '9'} transition-all duration-300 ease-in-out`}>
                   <CourseContent 
                     course={course}
                     activeModule={activeModule}

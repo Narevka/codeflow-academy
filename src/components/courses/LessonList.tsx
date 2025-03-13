@@ -1,5 +1,5 @@
 
-import { Lesson, Module } from "@/types/course";
+import { Lesson } from "@/types/course";
 import { CheckCircle, Circle, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -8,9 +8,14 @@ interface LessonListProps {
   courseId: string;
   moduleId: string;
   activeLessonId?: string;
+  collapsed?: boolean;
 }
 
-const LessonList = ({ lessons, courseId, moduleId, activeLessonId }: LessonListProps) => {
+const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = false }: LessonListProps) => {
+  if (collapsed) {
+    return null; // Don't show lessons when sidebar is collapsed
+  }
+  
   return (
     <div className="space-y-2 mt-4">
       {lessons.map((lesson) => (
