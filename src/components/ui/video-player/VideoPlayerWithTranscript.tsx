@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { TranscriptSegment } from "@/types/course";
 import { useTranscript } from "@/hooks/useTranscript";
 import TranscriptPanel from "./TranscriptPanel";
+import { toast } from "sonner";
 
 interface VideoPlayerWithTranscriptProps {
   src: string;
@@ -36,22 +37,39 @@ const VideoPlayerWithTranscript = ({
   const transcriptRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
+  // Only fetch transcript from API if none is provided
+  const shouldFetchTranscript = isMuxVideo && providedTranscript.length === 0;
+  
   const { 
     data: transcriptData, 
-    isLoading: isLoadingTranscript 
-  } = useTranscript(
-    isMuxVideo && providedTranscript.length === 0 ? src : undefined
-  );
+    isLoading: isLoadingTranscript,
+    error: transcriptFetchError
+  } = useTranscript(shouldFetchTranscript ? src : undefined);
   
   useEffect(() => {
     if (providedTranscript && providedTranscript.length > 0) {
       setTranscript(providedTranscript);
       setTranscriptError(undefined);
     } else if (transcriptData) {
-      setTranscript(transcriptData.segments);
-      setTranscriptError(transcriptData.message);
+      if (transcriptData.segments.length > 0) {
+        setTranscript(transcriptData.segments);
+        setTranscriptError(undefined);
+      } else {
+        setTranscript([]);
+        setTranscriptError(transcriptData.message || "Brak dostępnej transkrypcji dla tego wideo");
+      }
     }
   }, [providedTranscript, transcriptData]);
+
+  useEffect(() => {
+    if (transcriptFetchError) {
+      console.error("Error fetching transcript:", transcriptFetchError);
+      setTranscriptError("Błąd podczas pobierania transkrypcji");
+      toast.error("Nie udało się pobrać transkrypcji", {
+        description: "Spróbuj odświeżyć stronę lub skontaktuj się z administratorem"
+      });
+    }
+  }, [transcriptFetchError]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -71,20 +89,22 @@ const VideoPlayerWithTranscript = ({
     
     setCurrentTime(time);
     
-    const index = transcript.findIndex(
-      segment => time >= segment.startTime && time <= segment.endTime
-    );
-    
-    if (index !== activeSegmentIndex) {
-      setActiveSegmentIndex(index);
+    if (transcript.length > 0) {
+      const index = transcript.findIndex(
+        segment => time >= segment.startTime && time <= segment.endTime
+      );
       
-      if (index >= 0 && transcriptRef.current) {
-        const segmentElements = transcriptRef.current.querySelectorAll('.transcript-segment');
-        if (segmentElements[index]) {
-          segmentElements[index].scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-          });
+      if (index !== activeSegmentIndex) {
+        setActiveSegmentIndex(index);
+        
+        if (index >= 0 && transcriptRef.current) {
+          const segmentElements = transcriptRef.current.querySelectorAll('.transcript-segment');
+          if (segmentElements[index]) {
+            segmentElements[index].scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+          }
         }
       }
     }
@@ -107,15 +127,27 @@ const VideoPlayerWithTranscript = ({
     console.error("Mux player error:", errorDetail);
     
     if (errorDetail?.message?.includes("not exist") || errorDetail?.code === 404) {
-      onError?.("Nie znaleziono materiału wideo. Sprawdź, czy identyfikator wideo jest prawidłowy.");
+      const errorMsg = "Nie znaleziono materiału wideo. Sprawdź, czy identyfikator wideo jest prawidłowy.";
+      onError?.(errorMsg);
+      toast.error("Problem z odtwarzaniem wideo", {
+        description: errorMsg
+      });
     } else {
-      onError?.("Wystąpił błąd podczas ładowania wideo. Spróbuj ponownie później.");
+      const errorMsg = "Wystąpił błąd podczas ładowania wideo. Spróbuj ponownie później.";
+      onError?.(errorMsg);
+      toast.error("Problem z odtwarzaniem wideo", {
+        description: errorMsg
+      });
     }
   };
 
   const handleVideoError = (event: any) => {
     console.error("Video error:", event);
-    onError?.("Nie można załadować wideo. Sprawdź połączenie z internetem lub spróbuj ponownie później.");
+    const errorMsg = "Nie można załadować wideo. Sprawdź połączenie z internetem lub spróbuj ponownie później.";
+    onError?.(errorMsg);
+    toast.error("Problem z odtwarzaniem wideo", {
+      description: errorMsg
+    });
   };
 
   return (
