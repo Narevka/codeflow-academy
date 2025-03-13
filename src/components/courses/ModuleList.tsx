@@ -12,7 +12,7 @@ interface ModuleListProps {
 
 const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: ModuleListProps) => {
   return (
-    <div className="space-y-2 relative">
+    <div className="space-y-1 relative">
       {modules.map((module, index) => (
         <div key={module.id} className="relative">
           <Link
@@ -20,24 +20,24 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
             className={`flex items-center transition-all duration-1000 ease-in-out ${
               collapsed 
                 ? "p-2 justify-center" 
-                : "p-3"
+                : "p-2"
             } rounded-md ${
               module.id === activeModuleId
                 ? collapsed 
                   ? "bg-magenta/20" 
-                  : "bg-magenta/20 border-l-4 border-magenta"
+                  : "bg-magenta/20 border-l-2 border-magenta"
                 : collapsed 
                   ? "hover:bg-white/5" 
-                  : "hover:bg-white/5 border-l-4 border-transparent"
+                  : "hover:bg-white/5 border-l-2 border-transparent"
             }`}
           >
             <div className={`${collapsed ? "" : "mr-3"} text-lg relative z-10 transition-transform duration-1000 ease-in-out ${
               collapsed ? "scale-90 hover:scale-110" : ""
             }`}>
               {module.completed ? (
-                <CheckCircle size={collapsed ? 16 : 20} className="text-green-500" />
+                <CheckCircle size={collapsed ? 16 : 18} className="text-green-500" />
               ) : (
-                <Circle size={collapsed ? 16 : 20} className="text-white/40" />
+                <Circle size={collapsed ? 16 : 18} className="text-white/40" />
               )}
             </div>
             
@@ -50,7 +50,7 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
           
           {/* Connection line between modules when collapsed */}
           {collapsed && index < modules.length - 1 && (
-            <div className={`absolute left-1/2 top-[calc(100%_-_8px)] h-10 w-0.5 ${
+            <div className={`absolute left-1/2 top-[calc(100%_-_8px)] h-8 w-0.5 ${
               module.completed ? "bg-green-500/70" : "bg-white/20"
             } transform -translate-x-1/2 transition-all duration-1000 ease-in-out animate-pulse-slow`}></div>
           )}
