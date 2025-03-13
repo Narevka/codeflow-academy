@@ -11,12 +11,16 @@ import LessonList from "@/components/courses/LessonList";
 import CourseHeader from "@/components/courses/CourseHeader";
 import CourseContent from "@/components/courses/CourseContent";
 import { useCourseNavigation } from "@/hooks/useCourseNavigation";
+import { cn } from "@/lib/utils";
+import { ArrowRightFromLine, ArrowLeftFromLine } from "lucide-react";
 
 const CourseView = () => {
   const { user, loading } = useAuth();
   const { courseId, moduleId, lessonId } = useParams();
   const [activeModule, setActiveModule] = useState<Module | null>(null);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
 
   // Find the current course
   const course = userCourses.find(c => c.id === courseId);
@@ -54,6 +58,22 @@ const CourseView = () => {
 
   const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
+  // Functions to handle the collapsible sidebar
+  const handleMouseEnter = () => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+      setHoverTimeout(null);
+    }
+    setSidebarExpanded(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setSidebarExpanded(false);
+    }, 300); // Small delay before collapsing for better UX
+    setHoverTimeout(timeout);
+  };
+
   return (
     <div className="min-h-screen bg-dark-purple text-white flex flex-col">
       <Header />
@@ -69,28 +89,54 @@ const CourseView = () => {
               />
               
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Sidebar - modules and lessons */}
-                <div className="lg:col-span-4 xl:col-span-3">
-                  <div className="glass-card p-4 sticky top-24">
-                    <ModuleList 
-                      modules={course.modules} 
-                      courseId={course.id} 
-                      activeModuleId={activeModule?.id}
-                    />
-                    
-                    {activeModule && (
-                      <LessonList 
-                        lessons={activeModule.lessons}
-                        courseId={course.id}
-                        moduleId={activeModule.id}
-                        activeLessonId={activeLesson?.id}
-                      />
+                {/* Collapsible Sidebar - modules and lessons */}
+                <div
+                  className={cn(
+                    "lg:col-span-1 xl:col-span-1 transition-all duration-300 ease-in-out",
+                    sidebarExpanded ? "lg:col-span-4 xl:col-span-3" : "lg:col-span-1 xl:col-span-1"
+                  )}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className={cn(
+                    "glass-card p-4 sticky top-24 h-[calc(100vh-12rem)] overflow-hidden transition-all duration-300",
+                    sidebarExpanded ? "w-full" : "w-12"
+                  )}>
+                    {sidebarExpanded ? (
+                      <>
+                        <ModuleList 
+                          modules={course.modules} 
+                          courseId={course.id} 
+                          activeModuleId={activeModule?.id}
+                        />
+                        
+                        {activeModule && (
+                          <LessonList 
+                            lessons={activeModule.lessons}
+                            courseId={course.id}
+                            moduleId={activeModule.id}
+                            activeLessonId={activeLesson?.id}
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full">
+                        <div className="rotate-90 text-white/70 text-sm font-medium whitespace-nowrap">
+                          Nawigacja kursu
+                        </div>
+                        <ArrowRightFromLine className="mt-4 text-white/70" size={20} />
+                      </div>
                     )}
                   </div>
                 </div>
                 
                 {/* Main content - lesson */}
-                <div className="lg:col-span-8 xl:col-span-9">
+                <div className={cn(
+                  "transition-all duration-300",
+                  sidebarExpanded 
+                    ? "lg:col-span-8 xl:col-span-9" 
+                    : "lg:col-span-11 xl:col-span-11"
+                )}>
                   <CourseContent 
                     course={course}
                     activeModule={activeModule}
