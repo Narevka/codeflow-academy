@@ -19,7 +19,13 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
 
     if (transcriptData) {
       console.log("Transkrypcja pobrana z bazy danych");
-      return transcriptData.segments as TranscriptSegment[];
+      // Explicit type casting with type safety
+      const segments = transcriptData.segments as unknown;
+      // Verify that segments is an array before returning
+      if (Array.isArray(segments)) {
+        return segments as TranscriptSegment[];
+      }
+      return [];
     }
 
     // Jeśli nie ma w bazie, pobierz z edge function
@@ -33,7 +39,12 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
       throw fnError;
     }
 
-    return data.transcript as TranscriptSegment[];
+    // Verify and safely cast the transcript data
+    if (data && data.transcript && Array.isArray(data.transcript)) {
+      return data.transcript as TranscriptSegment[];
+    }
+    
+    return [];
   } catch (error) {
     console.error("Błąd useTranscript:", error);
     return [];
