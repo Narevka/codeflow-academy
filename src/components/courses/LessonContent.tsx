@@ -23,7 +23,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
 
   return (
     <div className="space-y-6 w-full">
-      <h1 className="text-2xl md:text-3xl font-bold">{lesson.title}</h1>
+      <h1 className="text-2xl md:text-3xl font-bold">{lesson.displayTitle || lesson.title}</h1>
       
       {lesson.videoUrl && (
         <div className="w-full">

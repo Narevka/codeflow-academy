@@ -62,7 +62,7 @@ const CoursesSidebar = ({
               <SidebarLink
                 key={lesson.id}
                 link={{
-                  label: `${lessonNumber}. ${lesson.title}`,
+                  label: `${lesson.title}`,
                   href: `/my-courses/${courseId}/${lesson.moduleId}/${lesson.id}`,
                   icon: icon
                 }}

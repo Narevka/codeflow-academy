@@ -8,6 +8,7 @@ export interface TranscriptSegment {
 export interface Lesson {
   id: string;
   title: string;
+  displayTitle?: string;
   description?: string;
   videoUrl?: string;
   thumbnailUrl?: string;
