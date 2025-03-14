@@ -19,7 +19,7 @@ const Hero = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-in animate-delay-100">
-            XDDDD
+            Twórz potężne aplikacje oparte na <span className="gradient-text">Flowise AI</span> - szybko i intuicyjnie
           </h1>
           
           <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto animate-fade-in animate-delay-200">
