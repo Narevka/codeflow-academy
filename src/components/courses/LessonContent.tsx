@@ -22,7 +22,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
-  // Updated data for the token capacity chart with more accurate values
+  // Updated data for the token capacity chart with more accurate values matching the image
   const tokenChartData = [
     { name: "ChatGPT 3.5", tokens: 16000 },
     { name: "Gemini 1.0", tokens: 32000 },
@@ -105,7 +105,6 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         </div>
       )}
 
-      {/* Content sections */}
       {lesson.content && lesson.content.length > 0 && (
         <div className="space-y-8 mt-6">
           {lesson.content.map((section, index) => renderContent(section, index))}

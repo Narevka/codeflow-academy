@@ -59,7 +59,7 @@ const TokenChart: React.FC<TokenChartProps> = ({ title, subtitle, data }) => {
             />
             <ChartTooltip
               content={<ChartTooltipContent />}
-              cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+              cursor={{ fill: "rgba(100, 116, 139, 0.1)" }}
             />
           </BarChart>
         </ChartContainer>
