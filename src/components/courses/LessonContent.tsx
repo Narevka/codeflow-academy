@@ -75,7 +75,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     });
   };
 
-  // Komponent wykresu porównania tokenów - całkowicie przebudowany
+  // Komponent wykresu porównania tokenów
   const TokenComparisonChart = () => {
     return (
       <div className="mt-12 mb-10">
@@ -131,47 +131,27 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     );
   };
   
-  // Dodatkowa zawartość opisująca prompty, kontekst i modele
-  const AdditionalTokenContent = () => {
+  // Wprowadzenie do tematów tokenów i LLM
+  const BasicLLMIntroduction = () => {
     return (
-      <div className="prose prose-invert max-w-none mt-4 mb-12">
+      <div className="prose prose-invert max-w-none mt-6 mb-8">
+        <h3 className="text-xl font-bold text-magenta mb-4">Podstawowe informacje o modelach LLM</h3>
+        
         <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">3. Prompt (Zapytanie)</h4>
+          <h4 className="text-lg font-bold text-primary mb-2">1. Czym są duże modele językowe (LLM)</h4>
           <p className="mb-4 text-base leading-relaxed">
-            Prompt to zapytanie lub wejściowy tekst, który wysyłamy do modelu językowego w celu uzyskania odpowiedzi. 
-            Może to być proste pytanie ("Jaka jest stolica Francji?") lub bardziej skomplikowana instrukcja, 
-            która zawiera historię rozmowy. W Flowise prompty są podstawowym sposobem komunikacji z modelem i sterowania jego działaniem.
+            Duże modele językowe (LLM) to zaawansowane systemy AI, które zostały wytrenowane na ogromnych zbiorach 
+            danych tekstowych. Potrafią zrozumieć kontekst, generować odpowiedzi i wykonywać złożone zadania językowe. 
+            W kontekście Flowise, są one fundamentem aplikacji, które będziesz budować.
           </p>
         </div>
         
         <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">4. Konwersacja i Kontekst</h4>
+          <h4 className="text-lg font-bold text-primary mb-2">2. Tokeny - podstawowa jednostka przetwarzania</h4>
           <p className="mb-4 text-base leading-relaxed">
-            Modele językowe, takie jak GPT, generują odpowiedzi na podstawie przesłanych do nich promptów. 
-            Jednakże nie mają one rzeczywistej "pamięci" – każdy nowy prompt traktowany jest jako oddzielne zapytanie. 
-            Aby kontynuować konwersację w sposób spójny, historia rozmowy jest zwykle zawierana w treści promptu. 
-            Dlatego im dłuższa konwersacja, tym więcej tokenów potrzeba na zachowanie kontekstu.
-          </p>
-        </div>
-        
-        <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">5. Wydajność a Skomplikowanie Modelu</h4>
-          <p className="mb-4 text-base leading-relaxed">
-            W kontekście wyboru modelu do aplikacji warto znać różnice między różnymi wersjami:
-          </p>
-          <ul className="list-disc pl-6 mb-4 space-y-2">
-            <li className="text-base">
-              <span className="font-semibold">GPT-3.5:</span> Szybszy, ale obsługuje mniejszą liczbę tokenów. 
-              Idealny do prostszych zadań.
-            </li>
-            <li className="text-base">
-              <span className="font-semibold">GPT-4:</span> Wolniejszy, ale bardziej precyzyjny i obsługujący większą ilość tokenów. 
-              Lepszy do zaawansowanych analiz i długich konwersacji.
-            </li>
-          </ul>
-          <p className="mb-4 text-base leading-relaxed">
-            Oprócz modeli GPT, istnieją także inne modele, takie jak Falcon 40B, które oferują różne zalety 
-            w zależności od specyfiki aplikacji.
+            Tokeny to podstawowe jednostki tekstu, na które modele językowe dzielą otrzymane dane. Mogą to być słowa, części słów, 
+            znaki interpunkcyjne lub inne symbole. Ilość tokenów, jaką model może przetworzyć jednocześnie, określa jego 
+            "okno kontekstowe" (context window) i jest kluczowym parametrem przy wyborze modelu do konkretnego zastosowania.
           </p>
         </div>
       </div>
@@ -316,7 +296,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
             </AccordionContent>
           </AccordionItem>
           
-          <AccordionItem value="praktyczne-zastosowania" className="border-white/10">
+          <AccordionItem value="praktyczne-zastosowania" className="border-white/10 mb-4">
             <AccordionTrigger className="text-white hover:text-blue-400 py-4 px-6 bg-white/5 rounded-lg hover:no-underline hover:bg-white/10">
               <span className="text-lg font-medium">Praktyczne zastosowania w Flowise</span>
             </AccordionTrigger>
@@ -362,6 +342,53 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                     zarządzanie pamięcią konwersacji i selektywne wyzwalanie droższych modeli tylko wtedy, gdy są naprawdę potrzebne.
                   </p>
                 </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          
+          <AccordionItem value="prompts-conversations" className="border-white/10">
+            <AccordionTrigger className="text-white hover:text-blue-400 py-4 px-6 bg-white/5 rounded-lg hover:no-underline hover:bg-white/10">
+              <span className="text-lg font-medium">Struktura promptów i zarządzanie konwersacją</span>
+            </AccordionTrigger>
+            <AccordionContent className="bg-white/5 px-6 pt-0 pb-6 rounded-b-lg text-white/80">
+              <div className="mt-4 space-y-3">
+                <p>
+                  Prompt to zapytanie lub wejściowy tekst, który wysyłamy do modelu językowego w celu uzyskania odpowiedzi. 
+                  W Flowise prompty są podstawowym sposobem komunikacji z modelem i sterowania jego działaniem:
+                </p>
+                
+                <div className="bg-black/20 p-4 rounded-lg my-4">
+                  <h5 className="font-semibold text-blue-300 mb-2">Anatomia dobrego promptu:</h5>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li><strong>Kontekst</strong> – informacje o celu zadania i ograniczeniach</li>
+                    <li><strong>Instrukcje</strong> – precyzyjne wytyczne co model ma zrobić</li>
+                    <li><strong>Dane wejściowe</strong> – konkretne informacje do przetworzenia</li>
+                    <li><strong>Format wyjścia</strong> – oczekiwany format odpowiedzi</li>
+                  </ul>
+                </div>
+                
+                <p>
+                  Modele językowe, takie jak GPT, generują odpowiedzi na podstawie przesłanych do nich promptów. 
+                  Jednakże nie mają one rzeczywistej "pamięci" – każdy nowy prompt traktowany jest jako oddzielne zapytanie.
+                  Aby kontynuować konwersację w sposób spójny, historia rozmowy jest zwykle zawierana w treści promptu. 
+                  Dlatego im dłuższa konwersacja, tym więcej tokenów potrzeba na zachowanie kontekstu.
+                </p>
+                
+                <div className="bg-gradient-to-br from-magenta/20 to-blue-900/20 p-5 rounded-lg border border-white/10 my-4">
+                  <h5 className="font-semibold text-blue-300 mb-3">Strategie zarządzania konwersacjami w Flowise:</h5>
+                  <ol className="list-decimal pl-6 space-y-2">
+                    <li><strong>Summarization Chain</strong> – okresowe streszczanie historii konwersacji</li>
+                    <li><strong>Okno przesuwne</strong> – zachowywanie tylko N ostatnich wiadomości</li>
+                    <li><strong>Kontekst selektywny</strong> – przechowywanie tylko kluczowych informacji</li>
+                    <li><strong>Hybrydowe podejście</strong> – łączenie pamięci krótkotrwałej z długotrwałą (np. vector store)</li>
+                  </ol>
+                </div>
+                
+                <p>
+                  W praktyce, przy budowie aplikacji w Flowise, musisz znaleźć równowagę między zachowaniem wystarczającego 
+                  kontekstu dla sensownych odpowiedzi a optymalizacją zużycia tokenów. Dobre zrozumienie struktury promptów 
+                  i strategii zarządzania konwersacjami jest kluczowe dla tworzenia wydajnych i naturalnych interakcji z użytkownikiem.
+                </p>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -418,14 +445,14 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         </div>
       )}
 
+      {/* Wprowadzenie do podstawowych pojęć */}
+      <BasicLLMIntroduction />
+
       {/* Wykres porównania tokenów */}
       <TokenComparisonChart />
       
-      {/* Nowa sekcja z pogłębionymi wyjaśnieniami */}
+      {/* Sekcja z pogłębionymi wyjaśnieniami */}
       <DetailedExplanations />
-      
-      {/* Oryginalna sekcja z treścią o promptach i modelach */}
-      <AdditionalTokenContent />
     </div>
   );
 };
