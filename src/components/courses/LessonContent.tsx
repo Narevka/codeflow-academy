@@ -12,7 +12,6 @@ import {
   ResponsiveContainer,
   Label
 } from "recharts";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -75,7 +74,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     });
   };
 
-  // Komponent wykresu porównania tokenów
+  // Komponent wykresu porównania tokenów - całkowicie przebudowany
   const TokenComparisonChart = () => {
     return (
       <div className="mt-12 mb-10">
@@ -131,268 +130,49 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     );
   };
   
-  // Wprowadzenie do tematów tokenów i LLM
-  const BasicLLMIntroduction = () => {
+  // Dodatkowa zawartość opisująca prompty, kontekst i modele
+  const AdditionalTokenContent = () => {
     return (
-      <div className="prose prose-invert max-w-none mt-6 mb-8">
-        <h3 className="text-xl font-bold text-magenta mb-4">Podstawowe informacje o modelach LLM</h3>
-        
+      <div className="prose prose-invert max-w-none mt-4 mb-12">
         <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">1. Czym są duże modele językowe (LLM)</h4>
+          <h4 className="text-lg font-bold text-primary mb-2">3. Prompt (Zapytanie)</h4>
           <p className="mb-4 text-base leading-relaxed">
-            Duże modele językowe (LLM) to zaawansowane systemy AI, które zostały wytrenowane na ogromnych zbiorach 
-            danych tekstowych. Potrafią zrozumieć kontekst, generować odpowiedzi i wykonywać złożone zadania językowe. 
-            W kontekście Flowise, są one fundamentem aplikacji, które będziesz budować.
+            Prompt to zapytanie lub wejściowy tekst, który wysyłamy do modelu językowego w celu uzyskania odpowiedzi. 
+            Może to być proste pytanie ("Jaka jest stolica Francji?") lub bardziej skomplikowana instrukcja, 
+            która zawiera historię rozmowy. W Flowise prompty są podstawowym sposobem komunikacji z modelem i sterowania jego działaniem.
           </p>
         </div>
         
         <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">2. Tokeny - podstawowa jednostka przetwarzania</h4>
+          <h4 className="text-lg font-bold text-primary mb-2">4. Konwersacja i Kontekst</h4>
           <p className="mb-4 text-base leading-relaxed">
-            Tokeny to podstawowe jednostki tekstu, na które modele językowe dzielą otrzymane dane. Mogą to być słowa, części słów, 
-            znaki interpunkcyjne lub inne symbole. Ilość tokenów, jaką model może przetworzyć jednocześnie, określa jego 
-            "okno kontekstowe" (context window) i jest kluczowym parametrem przy wyborze modelu do konkretnego zastosowania.
+            Modele językowe, takie jak GPT, generują odpowiedzi na podstawie przesłanych do nich promptów. 
+            Jednakże nie mają one rzeczywistej "pamięci" – każdy nowy prompt traktowany jest jako oddzielne zapytanie. 
+            Aby kontynuować konwersację w sposób spójny, historia rozmowy jest zwykle zawierana w treści promptu. 
+            Dlatego im dłuższa konwersacja, tym więcej tokenów potrzeba na zachowanie kontekstu.
           </p>
         </div>
-      </div>
-    );
-  };
-
-  // Pogłębione wyjaśnienia w formie akordeonu
-  const DetailedExplanations = () => {
-    return (
-      <div className="mt-10 mb-16">
-        <h3 className="text-xl font-bold text-magenta mb-6">Dogłębna analiza działania modeli LLM</h3>
         
-        <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
-          <AccordionItem value="tokenization-process" className="border-white/10 mb-4">
-            <AccordionTrigger className="text-white hover:text-blue-400 py-4 px-6 bg-white/5 rounded-lg hover:no-underline hover:bg-white/10">
-              <span className="text-lg font-medium">Proces tokenizacji tekstu</span>
-            </AccordionTrigger>
-            <AccordionContent className="bg-white/5 px-6 pt-0 pb-6 rounded-b-lg text-white/80">
-              <div className="mt-4 space-y-3">
-                <p>
-                  Tokenizacja to fundamentalny proces w działaniu modeli językowych, który polega na podziale tekstu na mniejsze jednostki zwane tokenami. 
-                  Warto zrozumieć, że tokeny <strong>nie są</strong> po prostu pojedynczymi słowami:
-                </p>
-                
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Częste słowa jak "the", "a", "an" często stanowią pojedyncze tokeny</li>
-                  <li>Rzadsze słowa mogą być dzielone na kilka tokenów (np. "tokenization" → "token" + "ization")</li>
-                  <li>Znaki przestankowe, duże litery, spacje - wszystko to ma znaczenie w procesie tokenizacji</li>
-                  <li>W językach innych niż angielski, tokenizacja jest jeszcze bardziej złożona i mniej efektywna</li>
-                </ul>
-                
-                <p className="pt-2">
-                  Modele używają różnych algorytmów tokenizacji. GPT-4 używa tokenizera o nazwie "cl100k_base", który został specjalnie zaprojektowany, 
-                  aby być wydajnym dla wielu języków i typów danych, w tym kodu i tekstu technicznego.
-                </p>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          
-          <AccordionItem value="context-window" className="border-white/10 mb-4">
-            <AccordionTrigger className="text-white hover:text-blue-400 py-4 px-6 bg-white/5 rounded-lg hover:no-underline hover:bg-white/10">
-              <span className="text-lg font-medium">Okno kontekstowe i jego znaczenie</span>
-            </AccordionTrigger>
-            <AccordionContent className="bg-white/5 px-6 pt-0 pb-6 rounded-b-lg text-white/80">
-              <div className="mt-4 space-y-3">
-                <p>
-                  Okno kontekstowe (context window) określa, ile tokenów model może przetworzyć w jednym zapytaniu. 
-                  To kluczowe ograniczenie, które ma ogromny wpływ na możliwości aplikacji:
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-                  <div className="bg-black/20 p-4 rounded-lg">
-                    <h5 className="font-semibold text-blue-300 mb-2">GPT-3.5 (16K tokenów)</h5>
-                    <p>Odpowiada to około:</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>12 stronom maszynopisu</li>
-                      <li>~6000 słów tekstu</li>
-                      <li>1-2 rozdziałom książki</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-black/20 p-4 rounded-lg">
-                    <h5 className="font-semibold text-blue-300 mb-2">GPT-4 (128K tokenów)</h5>
-                    <p>Odpowiada to około:</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>95 stronom maszynopisu</li>
-                      <li>~50,000 słów tekstu</li>
-                      <li>całej krótkiej książce</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <p>
-                  Jednak ważne jest zrozumienie, że wielkość okna kontekstowego to <strong>nie tylko</strong> ilość tekstu, 
-                  który możesz "wrzucić" do modelu, ale również zdolność modelu do utrzymania spójności w długich konwersacjach 
-                  i analizowania złożonych dokumentów w całości, bez potrzeby ich fragmentacji.
-                </p>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          
-          <AccordionItem value="model-capabilities" className="border-white/10 mb-4">
-            <AccordionTrigger className="text-white hover:text-blue-400 py-4 px-6 bg-white/5 rounded-lg hover:no-underline hover:bg-white/10">
-              <span className="text-lg font-medium">Różnice w zdolnościach poszczególnych modeli</span>
-            </AccordionTrigger>
-            <AccordionContent className="bg-white/5 px-6 pt-0 pb-6 rounded-b-lg text-white/80">
-              <div className="mt-4 space-y-3">
-                <p>
-                  Modele językowe różnią się nie tylko ilością tokenów, które mogą przetworzyć, ale również jakością generowanych odpowiedzi:
-                </p>
-                
-                <div className="overflow-x-auto my-4">
-                  <table className="w-full text-sm text-left">
-                    <thead className="bg-blue-900/30 text-white">
-                      <tr>
-                        <th className="px-4 py-3 rounded-tl-lg">Model</th>
-                        <th className="px-4 py-3">Rozumienie kontekstu</th>
-                        <th className="px-4 py-3">Odpowiedzi twórcze</th>
-                        <th className="px-4 py-3">Wiedza specjalistyczna</th>
-                        <th className="px-4 py-3 rounded-tr-lg">Analiza kodu</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="bg-blue-900/10 border-b border-white/10">
-                        <td className="px-4 py-3 font-medium">GPT-3.5</td>
-                        <td className="px-4 py-3">Dobry</td>
-                        <td className="px-4 py-3">Dobry</td>
-                        <td className="px-4 py-3">Podstawowy</td>
-                        <td className="px-4 py-3">Podstawowy</td>
-                      </tr>
-                      <tr className="bg-blue-900/20 border-b border-white/10">
-                        <td className="px-4 py-3 font-medium">Gemini 1.0</td>
-                        <td className="px-4 py-3">Bardzo dobry</td>
-                        <td className="px-4 py-3">Bardzo dobry</td>
-                        <td className="px-4 py-3">Dobry</td>
-                        <td className="px-4 py-3">Dobry</td>
-                      </tr>
-                      <tr className="bg-blue-900/10 border-b border-white/10">
-                        <td className="px-4 py-3 font-medium">GPT-4</td>
-                        <td className="px-4 py-3">Doskonały</td>
-                        <td className="px-4 py-3">Doskonały</td>
-                        <td className="px-4 py-3">Bardzo dobry</td>
-                        <td className="px-4 py-3">Bardzo dobry</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                
-                <p>
-                  <strong>GPT-4</strong> nie tylko obsługuje więcej tokenów, ale również znacznie lepiej rozumie złożone instrukcje, 
-                  kontekst kulturowy i specjalistyczne pojęcia. W praktyce oznacza to, że może generować bardziej precyzyjne i 
-                  użyteczne odpowiedzi w zaawansowanych zastosowaniach, takich jak:
-                </p>
-                
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Analiza skomplikowanych dokumentów prawnych</li>
-                  <li>Tłumaczenie i streszczanie badań naukowych</li>
-                  <li>Tworzenie zaawansowanego kodu wraz z wyjaśnieniami</li>
-                  <li>Generowanie spójnych i logicznych długich tekstów</li>
-                </ul>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          
-          <AccordionItem value="praktyczne-zastosowania" className="border-white/10 mb-4">
-            <AccordionTrigger className="text-white hover:text-blue-400 py-4 px-6 bg-white/5 rounded-lg hover:no-underline hover:bg-white/10">
-              <span className="text-lg font-medium">Praktyczne zastosowania w Flowise</span>
-            </AccordionTrigger>
-            <AccordionContent className="bg-white/5 px-6 pt-0 pb-6 rounded-b-lg text-white/80">
-              <div className="mt-4 space-y-3">
-                <p>
-                  W kontekście aplikacji budowanych w Flowise, zrozumienie tokenów i ich ograniczeń pozwala na projektowanie 
-                  efektywnych przepływów, które optymalizują interakcje z modelami:
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4">
-                  <div className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 p-5 rounded-lg border border-white/10">
-                    <h5 className="font-semibold text-blue-300 mb-3">Techniki optymalizacji tokenów</h5>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li>Wstępne przetwarzanie danych (chunking)</li>
-                      <li>Streszczanie długich tekstów przed ich analizą</li>
-                      <li>Selektywne przechowywanie kluczowych elementów konwersacji</li>
-                      <li>Efektywne instrukcje systemowe (mniej tokenów, więcej precyzji)</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 p-5 rounded-lg border border-white/10">
-                    <h5 className="font-semibold text-blue-300 mb-3">Wybór modelu w zależności od zastosowania</h5>
-                    <ul className="list-disc pl-5 space-y-2">
-                      <li><strong>GPT-3.5</strong>: Chatboty o krótkim kontekście, proste analizy tekstu, podstawowe asystenty</li>
-                      <li><strong>Gemini 1.0</strong>: Aplikacje multimodalne, przetwarzanie średnio złożonych danych</li>
-                      <li><strong>GPT-4</strong>: Zaawansowane asystenty badawcze, analiza dokumentów prawnych, synteza wiedzy z wielu źródeł</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <p>
-                  Praktyczny przykład: Budując w Flowise chatbota obsługującego bazę wiedzy, możesz zastosować 
-                  podejście hybrydowe - używać GPT-3.5 do prostych zapytań o fakty, a GPT-4 uruchamiać tylko wtedy, 
-                  gdy wymagana jest głębsza analiza dokumentów lub kontekstu historycznego rozmowy.
-                </p>
-                
-                <div className="p-4 bg-green-900/20 rounded-lg mt-4 border border-green-500/30">
-                  <h5 className="font-semibold text-green-300 mb-2">Wskazówka dla projektantów Flowise:</h5>
-                  <p>
-                    Optymalne wykorzystanie LLM wymaga zbalansowania kosztów, wydajności i jakości. Projektując przepływy, 
-                    zawsze bierz pod uwagę ograniczenia tokenów oraz stosuj techniki takie jak filtrowanie zbędnych danych, 
-                    zarządzanie pamięcią konwersacji i selektywne wyzwalanie droższych modeli tylko wtedy, gdy są naprawdę potrzebne.
-                  </p>
-                </div>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-          
-          <AccordionItem value="prompts-conversations" className="border-white/10">
-            <AccordionTrigger className="text-white hover:text-blue-400 py-4 px-6 bg-white/5 rounded-lg hover:no-underline hover:bg-white/10">
-              <span className="text-lg font-medium">Struktura promptów i zarządzanie konwersacją</span>
-            </AccordionTrigger>
-            <AccordionContent className="bg-white/5 px-6 pt-0 pb-6 rounded-b-lg text-white/80">
-              <div className="mt-4 space-y-3">
-                <p>
-                  Prompt to zapytanie lub wejściowy tekst, który wysyłamy do modelu językowego w celu uzyskania odpowiedzi. 
-                  W Flowise prompty są podstawowym sposobem komunikacji z modelem i sterowania jego działaniem:
-                </p>
-                
-                <div className="bg-black/20 p-4 rounded-lg my-4">
-                  <h5 className="font-semibold text-blue-300 mb-2">Anatomia dobrego promptu:</h5>
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li><strong>Kontekst</strong> – informacje o celu zadania i ograniczeniach</li>
-                    <li><strong>Instrukcje</strong> – precyzyjne wytyczne co model ma zrobić</li>
-                    <li><strong>Dane wejściowe</strong> – konkretne informacje do przetworzenia</li>
-                    <li><strong>Format wyjścia</strong> – oczekiwany format odpowiedzi</li>
-                  </ul>
-                </div>
-                
-                <p>
-                  Modele językowe, takie jak GPT, generują odpowiedzi na podstawie przesłanych do nich promptów. 
-                  Jednakże nie mają one rzeczywistej "pamięci" – każdy nowy prompt traktowany jest jako oddzielne zapytanie.
-                  Aby kontynuować konwersację w sposób spójny, historia rozmowy jest zwykle zawierana w treści promptu. 
-                  Dlatego im dłuższa konwersacja, tym więcej tokenów potrzeba na zachowanie kontekstu.
-                </p>
-                
-                <div className="bg-gradient-to-br from-magenta/20 to-blue-900/20 p-5 rounded-lg border border-white/10 my-4">
-                  <h5 className="font-semibold text-blue-300 mb-3">Strategie zarządzania konwersacjami w Flowise:</h5>
-                  <ol className="list-decimal pl-6 space-y-2">
-                    <li><strong>Summarization Chain</strong> – okresowe streszczanie historii konwersacji</li>
-                    <li><strong>Okno przesuwne</strong> – zachowywanie tylko N ostatnich wiadomości</li>
-                    <li><strong>Kontekst selektywny</strong> – przechowywanie tylko kluczowych informacji</li>
-                    <li><strong>Hybrydowe podejście</strong> – łączenie pamięci krótkotrwałej z długotrwałą (np. vector store)</li>
-                  </ol>
-                </div>
-                
-                <p>
-                  W praktyce, przy budowie aplikacji w Flowise, musisz znaleźć równowagę między zachowaniem wystarczającego 
-                  kontekstu dla sensownych odpowiedzi a optymalizacją zużycia tokenów. Dobre zrozumienie struktury promptów 
-                  i strategii zarządzania konwersacjami jest kluczowe dla tworzenia wydajnych i naturalnych interakcji z użytkownikiem.
-                </p>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <div className="mb-6">
+          <h4 className="text-lg font-bold text-primary mb-2">5. Wydajność a Skomplikowanie Modelu</h4>
+          <p className="mb-4 text-base leading-relaxed">
+            W kontekście wyboru modelu do aplikacji warto znać różnice między różnymi wersjami:
+          </p>
+          <ul className="list-disc pl-6 mb-4 space-y-2">
+            <li className="text-base">
+              <span className="font-semibold">GPT-3.5:</span> Szybszy, ale obsługuje mniejszą liczbę tokenów. 
+              Idealny do prostszych zadań.
+            </li>
+            <li className="text-base">
+              <span className="font-semibold">GPT-4:</span> Wolniejszy, ale bardziej precyzyjny i obsługujący większą ilość tokenów. 
+              Lepszy do zaawansowanych analiz i długich konwersacji.
+            </li>
+          </ul>
+          <p className="mb-4 text-base leading-relaxed">
+            Oprócz modeli GPT, istnieją także inne modele, takie jak Falcon 40B, które oferują różne zalety 
+            w zależności od specyfiki aplikacji.
+          </p>
+        </div>
       </div>
     );
   };
@@ -445,14 +225,11 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         </div>
       )}
 
-      {/* Wprowadzenie do podstawowych pojęć */}
-      <BasicLLMIntroduction />
-
       {/* Wykres porównania tokenów */}
       <TokenComparisonChart />
       
-      {/* Sekcja z pogłębionymi wyjaśnieniami */}
-      <DetailedExplanations />
+      {/* Nowa sekcja z treścią o promptach i modelach */}
+      <AdditionalTokenContent />
     </div>
   );
 };
