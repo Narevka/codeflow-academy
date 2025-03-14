@@ -47,14 +47,14 @@ const VideoPlayerWithTranscript = ({
   return (
     <div 
       className={cn(
-        "relative",
-        isFullscreen ? "fixed inset-0 z-50 bg-black flex" : "grid grid-cols-1 lg:grid-cols-12 gap-4 w-full max-w-6xl mx-auto"
+        "relative w-full",
+        isFullscreen ? "fixed inset-0 z-50 bg-black flex" : "flex flex-col lg:flex-row gap-4"
       )}
     >
       <div className={cn(
         "aspect-video relative",
         isFullscreen ? "w-full h-full flex items-center" : 
-        transcriptVisible ? "lg:col-span-7" : "lg:col-span-12"
+        transcriptVisible ? "w-full lg:w-3/5" : "w-full"
       )}>
         {isMuxVideo ? (
           <MuxVideoPlayer
@@ -85,8 +85,10 @@ const VideoPlayerWithTranscript = ({
       {transcriptVisible && (
         <div 
           className={cn(
-            "lg:col-span-5 glass-card p-4 aspect-video h-full",
-            isFullscreen ? "" : ""
+            "glass-card p-4 w-full lg:w-2/5",
+            isFullscreen 
+              ? "fixed right-0 top-0 w-1/4 h-full overflow-y-auto z-50" 
+              : "max-h-[400px] lg:max-h-[unset] lg:aspect-video"
           )}
           ref={transcriptRef}
         >

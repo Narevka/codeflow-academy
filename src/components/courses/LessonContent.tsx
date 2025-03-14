@@ -22,11 +22,11 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
   }, [lesson.videoUrl]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.title}</h1>
       
       {lesson.videoUrl && (
-        <div className="mb-8">
+        <div className="w-full">
           <VideoPlayerWithTranscript
             src={lesson.videoUrl}
             poster={lesson.thumbnailUrl}
