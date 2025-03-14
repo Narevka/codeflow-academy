@@ -2,6 +2,7 @@
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
 import { useState, useEffect } from "react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -39,6 +40,37 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       {lesson.description && (
         <div className="prose prose-invert max-w-none mt-6">
           <p>{lesson.description}</p>
+        </div>
+      )}
+
+      {/* Content sections */}
+      {lesson.content && lesson.content.length > 0 && (
+        <div className="space-y-8 mt-6">
+          {lesson.content.map((section, index) => (
+            <div key={index} className="space-y-4">
+              {section.title && (
+                <h2 className="text-xl md:text-2xl font-bold">{section.title}</h2>
+              )}
+              {section.text && (
+                <div className="prose prose-invert max-w-none">
+                  {section.text.split('\n\n').map((paragraph, pIndex) => (
+                    <p key={pIndex}>{paragraph}</p>
+                  ))}
+                </div>
+              )}
+              {section.imageUrl && (
+                <div className="mt-4 rounded-lg overflow-hidden border border-gray-700">
+                  <AspectRatio ratio={16/9} className="bg-gray-900">
+                    <img 
+                      src={section.imageUrl} 
+                      alt={section.imageAlt || `Ilustracja do "${section.title || 'lekcji'}"`} 
+                      className="object-contain w-full h-full"
+                    />
+                  </AspectRatio>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       )}
 
