@@ -30,9 +30,14 @@ export const Sidebar = ({
       <motion.div 
         className={cn(className, "overflow-hidden")}
         animate={{
-          width: animate ? (actualOpen ? "100%" : "60px") : "100%",
+          width: animate ? (actualOpen ? "280px" : "60px") : "280px",
         }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ 
+          duration: 0.25, 
+          ease: [0.25, 0.1, 0.25, 1], 
+          staggerChildren: 0.05 
+        }}
+        style={{ willChange: "width" }}
         onMouseEnter={() => actualSetOpen(true)}
         onMouseLeave={() => actualSetOpen(false)}
       >
@@ -116,11 +121,19 @@ export const SidebarLink = ({
       {link.icon}
       <motion.span
         animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
-          width: animate ? (open ? "auto" : 0) : "auto",
+          visibility: animate ? (open ? "visible" : "hidden") : "visible",
         }}
-        className="text-neutral-100 dark:text-white text-base font-medium group-hover/sidebar:translate-x-1 transition-all duration-150 whitespace-pre inline-block !p-0 !m-0"
+        transition={{ 
+          duration: 0.2,
+          ease: "easeOut" 
+        }}
+        style={{ 
+          transformOrigin: "left center",
+          willChange: "transform, opacity",
+          pointerEvents: !open && animate ? "none" : "auto"
+        }}
+        className="text-neutral-100 dark:text-white text-base font-medium group-hover/sidebar:translate-x-1 transition-all duration-150 whitespace-nowrap overflow-hidden !p-0 !m-0"
       >
         {link.label}
       </motion.span>

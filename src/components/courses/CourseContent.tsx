@@ -27,13 +27,13 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next, sidebar
   // Define animation constants for better visual effect
   const contentStyle = {
     expanded: {
-      width: "calc(100% + 240px)",
-      marginLeft: "-100px",
-      paddingLeft: "100px",
+      width: "calc(100% + 220px)",
+      marginLeft: "0",
+      paddingLeft: "24px",
     },
     normal: {
       width: "100%",
-      marginLeft: "0px",
+      marginLeft: "0",
       paddingLeft: "24px",
     }
   };
@@ -44,7 +44,11 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next, sidebar
       <motion.div 
         className="glass-card min-h-[600px] h-full flex flex-col overflow-hidden"
         animate={animate ? (sidebarOpen ? contentStyle.normal : contentStyle.expanded) : contentStyle.normal}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ 
+          duration: 0.25, 
+          ease: [0.25, 0.1, 0.25, 1] 
+        }}
+        style={{ willChange: "width" }}
       >
         <div className="text-center py-20 flex-1">
           <p className="text-xl">Wybierz lekcję z menu, aby rozpocząć naukę.</p>
@@ -57,7 +61,11 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next, sidebar
     <motion.div 
       className="glass-card min-h-[600px] h-full flex flex-col overflow-hidden"
       animate={animate ? (sidebarOpen ? contentStyle.normal : contentStyle.expanded) : contentStyle.normal}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ 
+        duration: 0.25, 
+        ease: [0.25, 0.1, 0.25, 1] 
+      }}
+      style={{ willChange: "width" }}
     >
       <div className="flex-1 p-6">
         <LessonContent lesson={activeLesson} />
