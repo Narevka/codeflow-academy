@@ -21,6 +21,22 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
+  // Helper function to format description text with proper line breaks and styling
+  const formatDescription = (text: string) => {
+    if (!text) return null;
+    
+    // Split by double line breaks to separate paragraphs
+    const paragraphs = text.split('\n\n');
+    
+    return paragraphs.map((paragraph, index) => {
+      // Check if this paragraph is a heading (no specific marker, just first paragraph)
+      if (index === 0) {
+        return <h3 key={index} className="text-xl font-semibold mt-4 mb-2">{paragraph}</h3>;
+      }
+      return <p key={index} className="mb-4">{paragraph}</p>;
+    });
+  };
+
   return (
     <div className="space-y-6 w-full">
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.displayTitle || lesson.title}</h1>
@@ -39,7 +55,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       
       {lesson.description && (
         <div className="prose prose-invert max-w-none mt-6">
-          <p>{lesson.description}</p>
+          {formatDescription(lesson.description)}
         </div>
       )}
 
@@ -61,7 +77,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
               )}
               {video.description && (
                 <div className="prose prose-invert max-w-none">
-                  <p>{video.description}</p>
+                  {formatDescription(video.description)}
                 </div>
               )}
             </div>
