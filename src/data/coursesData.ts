@@ -226,4 +226,3 @@ export const flowiseCourse: Course = {
 };
 
 export const userCourses: Course[] = [flowiseCourse];
-
