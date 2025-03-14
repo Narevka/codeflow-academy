@@ -29,11 +29,15 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     const paragraphs = text.split('\n\n');
     
     return paragraphs.map((paragraph, index) => {
-      // Check if this paragraph is a heading (no specific marker, just first paragraph)
-      if (index === 0) {
-        return <h3 key={index} className="text-xl font-semibold mt-4 mb-2">{paragraph}</h3>;
+      // Check if this paragraph is a section heading (usually shorter and without punctuation)
+      if (paragraph.length < 100 && !paragraph.includes('.')) {
+        return (
+          <h3 key={index} className="text-xl font-bold text-primary mt-8 mb-4">
+            {paragraph}
+          </h3>
+        );
       }
-      return <p key={index} className="mb-4">{paragraph}</p>;
+      return <p key={index} className="mb-4 text-base leading-relaxed">{paragraph}</p>;
     });
   };
 
