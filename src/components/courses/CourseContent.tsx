@@ -19,18 +19,21 @@ interface CourseContentProps {
 }
 
 const CourseContent = ({ course, activeModule, activeLesson, prev, next }: CourseContentProps) => {
+  // If no lesson is active, use the first lesson of the active module
+  const displayLesson = activeLesson || (activeModule?.lessons[0] || null);
+
   return (
     <div className="glass-card p-6 min-h-[600px] h-full flex flex-col">
-      {activeLesson ? (
+      {displayLesson ? (
         <>
           <div className="flex-1">
-            <LessonContent lesson={activeLesson} />
+            <LessonContent lesson={displayLesson} />
           </div>
           <CourseNavigation prev={prev} next={next} courseId={course.id} />
         </>
       ) : (
         <div className="text-center py-20 flex-1">
-          <p>Wybierz lekcję z menu, aby rozpocząć naukę.</p>
+          <p className="text-xl">Wybierz lekcję z menu, aby rozpocząć naukę.</p>
         </div>
       )}
     </div>
