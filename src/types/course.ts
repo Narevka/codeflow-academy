@@ -18,7 +18,6 @@ export interface ContentSection {
   text?: string;
   imageUrl?: string;
   imageAlt?: string;
-  videoUrl?: string; // Added this property
 }
 
 export interface Lesson {

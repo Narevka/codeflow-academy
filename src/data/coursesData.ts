@@ -16,7 +16,7 @@ export const flowiseCourse: Course = {
           id: "lesson-1-1",
           title: "Wprowadzenie",
           displayTitle: "Lekcja 1 - Wprowadzenie do Flowise: Tworzenie Aplikacji z Dużymi Modelami Językowymi",
-          description: "Flowise to narzędzie, które rewolucjonizuje tworzenie aplikacji opartych na sztucznej inteligencji, szczególnie tych korzystających z dużych modeli językowych (LLM).",
+          description: "Flowise to narzędzie, które rewolucjonizuje tworzenie aplikacji opartych na sztucznej inteligencji, szczególnie tych korzystających z dużych modeli językowych (LLM). Dzięki niemu, osoby bez zaawansowanej wiedzy programistycznej mogą budować interaktywne chatboty, systemy analizy tekstu oraz aplikacje oparte na konwersacjach AI. Flowise pozwala na projektowanie interfejsów graficznych, integrację z różnymi modelami oraz efektywne zarządzanie danymi wejściowymi i wyjściowymi.",
           videoUrl: "mux:V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw",
           content: [
             {
@@ -25,15 +25,12 @@ export const flowiseCourse: Course = {
             },
             {
               title: "Co to LLM",
-              videoUrl: "mux:sVnpYWjzZqmn6FOYBdymJ9htg2AcomJqIOBKF3nHlH00"
-            },
-            {
-              title: "Wprowadzenie do Dużych Modeli Językowych (LLM)",
-              text: "Duże modele językowe, takie jak GPT-3, GPT-4 czy Gemini od Google, są rdzeniem współczesnych technologii przetwarzania języka naturalnego (NLP). Te modele są trenowane na ogromnych zbiorach danych językowych, co pozwala im generować odpowiedzi na pytania, analizować teksty, a nawet prowadzić rozbudowane konwersacje, zbliżone do interakcji z człowiekiem.\n\nJednym z kluczowych aspektów działania LLM są tokeny. Tokeny to jednostki tekstu – mogą to być słowa, znaki lub fragmenty zdań – które są analizowane przez model. Kiedy wpisujemy zdanie, jest ono rozbijane na tokeny, które model przetwarza, aby odpowiedzieć w sposób spójny i zrozumiały.\n\nAby lepiej zrozumieć, czym są tokeny i jak działają, warto odwiedzić narzędzia takie jak strona OpenAI, gdzie można zobaczyć, jak GPT przetwarza tekst na tokeny i w jaki sposób analizuje je, aby wygenerować odpowiedzi."
+              text: "Duże modele językowe, takie jak GPT-3, GPT-4 czy Gemini od Google, są rdzeniem współczesnych technologii przetwarzania języka naturalnego (NLP). Te modele są trenowane na ogromnych zbiorach danych językowych, co pozwala im generować odpowiedzi na pytania, analizować teksty, a nawet prowadzić rozbudowane konwersacje, zbliżone do interakcji z człowiekiem.\n\nJednym z kluczowych aspektów działania LLM są tokeny. Tokeny to jednostki tekstu – mogą to być słowa, znaki lub fragmenty zdań – które są analizowane przez model. Kiedy wpisujemy zdanie, jest ono rozbijane na tokeny, które model przetwarza, aby odpowiedzieć w sposób spójny i zrozumiały.\n\nAby lepiej zrozumieć, czym są tokeny i jak działają, warto odwiedzić narzędzia takie jak strona OpenAI, gdzie można zobaczyć, jak GPT przetwarza tekst na tokeny i w jaki sposób analizuje je, aby wygenerować odpowiedzi.",
+              imageAlt: "Porównanie możliwości przetwarzania tokenów przez różne modele językowe"
             },
             {
               title: "Przetwarzanie Kontekstu przez Modele Językowe",
-              text: "Ważne jest zrozumienie, że modele językowe, mimo zaawansowania, nie \"pamiętają\" poprzednich rozmów w taki sposób, jak moglibyśmy to sobie wyobrażać. Każda nowa odpowiedź jest generowana na podstawie nowego zapytania (promptu), który może zawierać skrótową historię wcześniejszej konwersacji.\n\nNa przykład, w modelach takich jak GPT-4, istnieje ograniczenie liczby tokenów, które można przetworzyć jednocześnie. GPT-4 może obsłużyć do 128 tysięcy tokenów (około 300 stron tekstu), podczas gdy GPT-3.5 – jedynie 16 tysięcy tokenów (około 14 stron). Choć nowszy model GPT-4 oferuje większe możliwości, nie zawsze jest konieczne jego użycie. GPT-3.5, mimo mniejszej liczby tokenów, działa szybciej i jest wystarczający do prostszych zadań."
+              text: "Ważne jest zrozumienie, że modele językowe, mimo zaawansowania, nie \"pamiętają\" poprzednich rozmów w taki sposób, jak moglibyśmy to sobie wyobrażać. Każda nowa odpowiedź jest generowana na podstawie nowego zapytania (promptu), który może zawierać skróconą historię wcześniejszej konwersacji.\n\nNa przykład, w modelach takich jak GPT-4, istnieje ograniczenie liczby tokenów, które można przetworzyć jednocześnie. GPT-4 może obsłużyć do 128 tysięcy tokenów (około 300 stron tekstu), podczas gdy GPT-3.5 – jedynie 16 tysięcy tokenów (około 14 stron). Choć nowszy model GPT-4 oferuje większe możliwości, nie zawsze jest konieczne jego użycie. GPT-3.5, mimo mniejszej liczby tokenów, działa szybciej i jest wystarczający do prostszych zadań."
             },
             {
               title: "Wybór Modelu do Twojej Aplikacji",
@@ -41,11 +38,7 @@ export const flowiseCourse: Course = {
             },
             {
               title: "Dogłębniejsze objaśnienie terminów:",
-              text: "1. Duże Modele Językowe (LLM)\n\nLLM to rodzaj sztucznej inteligencji, który został wytrenowany na ogromnych zbiorach danych tekstowych. Modele te analizują miliardy zdań i fragmentów tekstu, aby nauczyć się wzorców językowych, które pozwalają im generować spójne i kontekstowo adekwatne odpowiedzi. Przykłady LLM to GPT-3, GPT-4 oraz Gemini od Google. W kontekście Flowise, te modele są wykorzystywane jako podstawowe jednostki do przetwarzania tekstu i generowania odpowiedzi.\n\n2. Tokeny\n\nTokeny to podstawowe jednostki tekstu wykorzystywane przez modele językowe. Można je zrozumieć jako słowa, znaki lub fragmenty zdań, na które model dzieli wejściowy tekst. Przykładowo, zdanie \"ChatGPT to świetne narzędzie\" może zostać podzielone na kilka tokenów: \"Chat\", \"GPT\", \"to\", \"świetne\", \"narzędzie\". Modele takie jak GPT-3 czy GPT-4 operują właśnie na tych tokenach, analizując je i na tej podstawie generując odpowiedzi.\n\n• GPT-4: Obsługuje do 128 tysięcy tokenów (ok. 300 stron tekstu).\n\n• GPT-3.5: Obsługuje do 16 tysięcy tokenów (ok. 14 stron tekstu).\n\nRozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpływa to na długość konwersacji, któr�� model może \"zapamiętać\" oraz przetworzyć."
-            },
-            {
-              title: "Porównanie modeli językowych",
-              imageAlt: "Porównanie możliwości przetwarzania tokenów przez różne modele językowe"
+              text: "1. Duże Modele Językowe (LLM)\n\nLLM to rodzaj sztucznej inteligencji, który został wytrenowany na ogromnych zbiorach danych tekstowych. Modele te analizują miliardy zdań i fragmentów tekstu, aby nauczyć się wzorców językowych, które pozwalają im generować spójne i kontekstowo adekwatne odpowiedzi. Przykłady LLM to GPT-3, GPT-4 oraz Gemini od Google. W kontekście Flowise, te modele są wykorzystywane jako podstawowe jednostki do przetwarzania tekstu i generowania odpowiedzi.\n\n2. Tokeny\n\nTokeny to podstawowe jednostki tekstu wykorzystywane przez modele językowe. Można je zrozumieć jako słowa, znaki lub fragmenty zdań, na które model dzieli wejściowy tekst. Przykładowo, zdanie \"ChatGPT to świetne narzędzie\" może zostać podzielone na kilka tokenów: \"Chat\", \"GPT\", \"to\", \"świetne\", \"narzędzie\". Modele takie jak GPT-3 czy GPT-4 operują właśnie na tych tokenach, analizując je i na tej podstawie generując odpowiedzi.\n\n• GPT-4: Obsługuje do 128 tysięcy tokenów (ok. 300 stron tekstu).\n\n• GPT-3.5: Obsługuje do 16 tysięcy tokenów (ok. 14 stron tekstu).\n\nRozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpływa to na długość konwersacji, którą model może \"zapamiętać\" oraz przetworzyć."
             },
             {
               title: "3. Prompt (Zapytanie)",
@@ -66,6 +59,13 @@ export const flowiseCourse: Course = {
             {
               title: "Podsumowanie",
               text: "Flowise daje użytkownikom możliwość tworzenia zaawansowanych aplikacji konwersacyjnych w oparciu o LLM, bez potrzeby znajomości programowania. Zrozumienie działania tokenów oraz wyboru odpowiedniego modelu pozwala na lepsze dostosowanie aplikacji do konkretnych potrzeb. Ostatecznie, wybór narzędzi i modelu zależy od celu aplikacji – czy to szybkie odpowiedzi, czy bardziej skomplikowane analizy. Dzięki takim rozwiązaniom, jak Flowise, tworzenie aplikacji AI staje się bardziej dostępne niż kiedykolwiek."
+            }
+          ],
+          additionalVideos: [
+            {
+              title: "Dodatkowe materiały do lekcji 1",
+              videoUrl: "mux:sVnpYWjzZqmn6FOYBdymJ9htg2AcomJqIOBKF3nHlH00",
+              description: "Dodatkowe informacje i przykłady praktyczne związane z wprowadzeniem do Flowise AI."
             }
           ],
           completed: true
@@ -226,3 +226,4 @@ export const flowiseCourse: Course = {
 };
 
 export const userCourses: Course[] = [flowiseCourse];
+

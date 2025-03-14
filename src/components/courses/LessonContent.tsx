@@ -30,41 +30,21 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     { name: "ChatGPT 4.0", tokens: 128000 }
   ];
 
-  // Process video URLs in content sections
-  const getVideoPlaybackId = (url: string | undefined) => {
-    if (!url) return null;
-    if (url.startsWith('mux:')) return url;
-    return null;
-  };
-
-  // Helper function to render a video player if a section has a videoUrl
-  const renderSectionVideo = (videoUrl: string | undefined, title: string | undefined) => {
-    if (!videoUrl) return null;
-    
-    const playbackId = getVideoPlaybackId(videoUrl);
-    if (!playbackId) return null;
-    
-    return (
-      <div className="w-full mb-6">
-        <VideoPlayerWithTranscript
-          src={playbackId}
-          title={title || "Video content"}
-        />
-      </div>
-    );
-  };
-
   // Check if this is the specific section that should show a chart instead of an image
   const renderContent = (section: any, index: number) => {
-    // If this section has a video, render the video
-    const hasVideo = !!section.videoUrl;
-    
     // If this is the specific LLM comparison section, render chart instead of image
-    if (section.title === "Porównanie modeli językowych" && section.imageAlt?.includes("Porównanie możliwości przetwarzania tokenów")) {
+    if (section.title === "Co to LLM" && section.imageAlt?.includes("Porównanie możliwości przetwarzania tokenów")) {
       return (
         <div key={index} className="space-y-6 mb-8">
           {section.title && (
             <h2 className="text-xl md:text-2xl font-bold">{section.title}</h2>
+          )}
+          {section.text && (
+            <div className="prose prose-invert max-w-none">
+              {section.text.split('\n\n').map((paragraph: string, pIndex: number) => (
+                <p key={pIndex}>{paragraph}</p>
+              ))}
+            </div>
           )}
           <div className="pt-4">
             <TokenChart 
@@ -77,13 +57,12 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       );
     }
     
-    // Render section with video if it has one
+    // Otherwise, render the normal section with possible image
     return (
-      <div key={index} className="space-y-4 mb-8">
+      <div key={index} className="space-y-4">
         {section.title && (
           <h2 className="text-xl md:text-2xl font-bold">{section.title}</h2>
         )}
-        {hasVideo && renderSectionVideo(section.videoUrl, section.title)}
         {section.text && (
           <div className="prose prose-invert max-w-none">
             {section.text.split('\n\n').map((paragraph: string, pIndex: number) => (
