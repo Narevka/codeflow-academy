@@ -4,6 +4,8 @@ import { Link, LinkProps } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useSidebar } from "./sidebar-context";
+import { SidebarProvider } from "./sidebar-provider";
+import { MobileSidebar } from "./mobile-sidebar";
 
 // Sidebar component
 export const Sidebar = ({
