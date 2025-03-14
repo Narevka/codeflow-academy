@@ -28,11 +28,11 @@ const CoursesSidebar = ({
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Flatten all lessons from all modules into a single array
-  const allLessons = modules.flatMap((module, moduleIndex) => 
+  const allLessons = modules.flatMap((module) => 
     module.lessons.map(lesson => ({
       ...lesson,
       moduleId: module.id,
-      lessonNumber: moduleIndex + 1 // Add lesson number for display
+      moduleTitle: module.title
     }))
   );
   
@@ -62,7 +62,7 @@ const CoursesSidebar = ({
               <SidebarLink
                 key={lesson.id}
                 link={{
-                  label: `${lessonNumber}. ${lesson.title}`,
+                  label: `${lesson.title}`,
                   href: `/my-courses/${courseId}/${lesson.moduleId}/${lesson.id}`,
                   icon: icon
                 }}
