@@ -80,12 +80,12 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     return (
       <div className="mt-12 mb-10">
         <h3 className="text-xl font-bold text-primary mb-6 text-center">Możliwości przetwarzania tokenów</h3>
-        <div className="w-full max-w-3xl mx-auto h-[350px] p-4 border border-white/20 rounded-xl bg-gradient-to-br from-purple/5 to-magenta/5 shadow-lg">
+        <div className="w-full max-w-3xl mx-auto h-[350px] border border-white/20 rounded-xl bg-gradient-to-br from-purple/5 to-magenta/5 shadow-lg">
           <ChartContainer 
             config={{ 
               tokens: { color: "#0066cc" } 
             }}
-            className="rounded-lg p-4 h-full"
+            className="rounded-lg h-full w-full"
           >
             <BarChart 
               data={tokenComparisonData} 
