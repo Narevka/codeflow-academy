@@ -2,10 +2,28 @@
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
 import { useState, useEffect } from "react";
+import { 
+  Bar, 
+  BarChart, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  Label
+} from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 interface LessonContentProps {
   lesson: Lesson;
 }
+
+// Dane dla wykresu tokenów
+const tokenComparisonData = [
+  { name: "ChatGPT 3.5", tokens: 16000, fill: "#0066cc" },
+  { name: "Gemini 1.0", tokens: 32000, fill: "#0066cc" },
+  { name: "ChatGPT 4.0", tokens: 128000, fill: "#0066cc" },
+];
 
 const LessonContent = ({ lesson }: LessonContentProps) => {
   const [isMuxVideo, setIsMuxVideo] = useState(false);
@@ -57,6 +75,47 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     });
   };
 
+  // Komponent wykresu porównania tokenów
+  const TokenComparisonChart = () => {
+    return (
+      <div className="mt-12 mb-10">
+        <h3 className="text-xl font-bold text-primary mb-6">Możliwości przetwarzania tokenów</h3>
+        <div className="w-full h-[400px]">
+          <ChartContainer 
+            config={{ 
+              tokens: { color: "#0066cc" } 
+            }}
+            className="rounded-lg p-4 h-full"
+          >
+            <BarChart 
+              data={tokenComparisonData} 
+              margin={{ top: 20, right: 30, left: 30, bottom: 60 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis dataKey="name" tick={{ fill: 'white' }} />
+              <YAxis tick={{ fill: 'white' }}>
+                <Label 
+                  value="Ilość tokenów" 
+                  position="insideLeft" 
+                  angle={-90} 
+                  style={{ textAnchor: 'middle', fill: 'white' }} 
+                />
+              </YAxis>
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent 
+                    formatter={(value) => [`${value.toLocaleString()} tokenów`, 'Ilość']}
+                  />
+                }
+              />
+              <Bar dataKey="tokens" fill="#0066cc" />
+            </BarChart>
+          </ChartContainer>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6 w-full">
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.displayTitle || lesson.title}</h1>
@@ -104,6 +163,9 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
           ))}
         </div>
       )}
+
+      {/* Dodajemy wykres porównujący możliwości tokenów poniżej zawartości */}
+      <TokenComparisonChart />
     </div>
   );
 };
