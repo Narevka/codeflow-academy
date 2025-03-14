@@ -4,12 +4,13 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 // Sample token color assignments
 const TOKEN_COLORS = [
-  "bg-purple-500", "bg-blue-400", "bg-green-400", 
-  "bg-yellow-400", "bg-orange-400", "bg-pink-400",
-  "bg-red-400", "bg-indigo-400", "bg-cyan-400"
+  "bg-cyan-400", "bg-pink-400", "bg-orange-400", 
+  "bg-blue-400", "bg-green-400", "bg-yellow-400", 
+  "bg-red-400", "bg-indigo-400", "bg-purple-500"
 ];
 
 // Mock tokenization function (since we can't use tiktoken directly in browser)
@@ -65,6 +66,7 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
   const [text, setText] = useState(initialText);
   const [modelType, setModelType] = useState("gpt-4o");
   const [tokens, setTokens] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState("text"); // For the Text/Token IDs tabs
 
   // Sample examples that demonstrate tokenization differences
   const examples = [
@@ -72,6 +74,7 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
     "Hello world! How are you doing today?",
     "antidisestablishmentarianism",
     "2 + 2 = 4",
+    "czy to napraw działa?"
   ];
 
   useEffect(() => {
@@ -103,18 +106,18 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
           className="mb-4"
         >
           <TabsList className="bg-background/10 border border-white/10">
-            <TabsTrigger value="gpt-4o">GPT-4o & GPT-4o mini</TabsTrigger>
-            <TabsTrigger value="gpt-4">GPT-3.5 & GPT-4</TabsTrigger>
-            <TabsTrigger value="gpt-3">GPT-3 (Legacy)</TabsTrigger>
+            <TabsTrigger value="gpt-4o" className="data-[state=active]:bg-black data-[state=active]:text-white">GPT-4o & GPT-4o mini</TabsTrigger>
+            <TabsTrigger value="gpt-4" className="data-[state=active]:bg-black data-[state=active]:text-white">GPT-3.5 & GPT-4</TabsTrigger>
+            <TabsTrigger value="gpt-3" className="data-[state=active]:bg-black data-[state=active]:text-white">GPT-3 (Legacy)</TabsTrigger>
           </TabsList>
         </Tabs>
         
-        <div className="border border-white/20 rounded-md p-4 mb-4 bg-black/20">
-          <Input
+        <div className="border border-white/20 rounded-md p-4 mb-6 bg-black/30">
+          <Textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Wpisz tekst do tokenizacji..."
-            className="bg-transparent border border-white/30 text-white mb-4"
+            className="bg-transparent border border-white/30 text-white mb-4 min-h-[100px] resize-none"
           />
           
           <div className="flex flex-wrap gap-2">
@@ -137,19 +140,19 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
           </div>
         </div>
         
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="flex flex-col">
-            <span className="text-sm font-semibold mb-1">Tokens</span>
+            <span className="text-sm font-semibold text-white/70 mb-1">Tokens</span>
             <span className="text-3xl font-bold">{tokens.length}</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold mb-1">Characters</span>
+            <span className="text-sm font-semibold text-white/70 mb-1">Characters</span>
             <span className="text-3xl font-bold">{text.length}</span>
           </div>
         </div>
         
-        <Card className="bg-gray-100/10 p-4 rounded-md border border-white/20">
-          <div className="flex flex-wrap">
+        <Card className="bg-gray-800/40 p-4 rounded-md border border-white/20 mb-4">
+          <div className="flex flex-wrap gap-1">
             {tokens.map((token, index) => (
               <span 
                 key={index} 
@@ -161,21 +164,34 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
           </div>
         </Card>
         
-        <div className="mt-4 flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="bg-white/10 hover:bg-white/20 border-white/20"
+        <div className="mb-2">
+          <Tabs 
+            defaultValue="text" 
+            value={activeTab}
+            onValueChange={setActiveTab}
           >
-            Text
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="bg-white/5 hover:bg-white/10 border-white/10 opacity-60"
-          >
-            Token IDs
-          </Button>
+            <TabsList className="bg-background/10 border border-white/10">
+              <TabsTrigger 
+                value="text" 
+                className="data-[state=active]:bg-black data-[state=active]:text-white"
+              >
+                Text
+              </TabsTrigger>
+              <TabsTrigger 
+                value="ids" 
+                className="bg-white/5 hover:bg-white/10 border-white/10 opacity-60"
+              >
+                Token IDs
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+        
+        <div className="text-sm text-white/60 mt-4">
+          <p>
+            You can use the tool above to understand how a piece of text might be tokenized by a language
+            model, and the total count of tokens in that piece of text.
+          </p>
         </div>
       </div>
     </div>
