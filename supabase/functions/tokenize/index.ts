@@ -1,5 +1,6 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
 // CORS headers for browser requests
 const corsHeaders = {
@@ -7,109 +8,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// More sophisticated tokenization algorithm to better emulate tiktoken behavior
-function tokenizeText(text: string, model: string): { tokens: number, characters: number, tokenizedText: string[] } {
-  if (!text) {
-    return { tokens: 0, characters: 0, tokenizedText: [] };
-  }
-
-  const characters = text.length;
-  let tokens: string[] = [];
-  
-  // Different tokenization strategies based on model
-  if (model === "gpt-4o" || model === "gpt-4o-mini") {
-    // For o200k_base encoding (used by GPT-4o models)
-    // This approach more closely follows the tiktoken pattern
-    
-    // Split into words, spaces, and punctuation
-    // This regex pattern better matches GPT-4o tokenization patterns
-    const pattern = /(\s+|[.,!?;:()]|[a-zA-Z]+|[0-9]+)/g;
-    const matches = text.match(pattern) || [];
-    
-    for (const match of matches) {
-      if (!match) continue;
-      
-      if (match.trim() === '') {
-        // Spaces as tokens
-        tokens.push(match);
-      } else if (match.length <= 3) {
-        // Short words/tokens kept intact
-        tokens.push(match);
-      } else if (/^[0-9]+$/.test(match)) {
-        // Numbers handled separately
-        tokens.push(match);
-      } else {
-        // Longer words broken into subword tokens like tiktoken does
-        let i = 0;
-        while (i < match.length) {
-          // Handle different languages differently
-          let tokenSize = 3;
-          // Detect non-Latin characters for different tokenization
-          if (/[^\x00-\x7F]/.test(match.slice(i))) {
-            tokenSize = 1; // Non-Latin chars often token per character
-          } else if (/[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/.test(match)) {
-            tokenSize = 2; // Handling Polish and Slavic characters
-          }
-          
-          const chunk = match.slice(i, i + tokenSize);
-          tokens.push(chunk);
-          i += tokenSize;
-        }
-      }
-    }
-  } else {
-    // For cl100k_base encoding (used by GPT-3.5 and GPT-4)
-    
-    // Split by words, spaces, and punctuation
-    const pattern = /(\s+|[.,!?;:()]|[a-zA-Z]+|[0-9]+)/g;
-    const matches = text.match(pattern) || [];
-    
-    for (const match of matches) {
-      if (!match) continue;
-      
-      if (match.trim() === '') {
-        // Spaces as tokens
-        tokens.push(match);
-      } else if (match.length <= 4) {
-        // Short tokens kept intact
-        tokens.push(match);
-      } else {
-        // Split longer tokens more similar to how cl100k_base works
-        let i = 0;
-        while (i < match.length) {
-          const chunk = match.slice(i, i + 4);
-          tokens.push(chunk);
-          i += 4;
-        }
-      }
-    }
-  }
-
-  // Handle special cases for common examples to match OpenAI's tokenizer
-  // This helps match the expected outputs for popular examples
-  if (text === "czy to napraw działa? elooooooo") {
-    if (model === "gpt-4o") {
-      // Match the exact tokenization from OpenAI for this example
-      tokens = ["czy", " to", " nap", "raw", " dzia", "ła", "?", " elo", "oooo", "oo"];
-      return { tokens: tokens.length, characters, tokenizedText: tokens };
-    } else {
-      tokens = ["czy", " to", " napraw", " dział", "a", "?", " el", "ooo", "oooo"];
-      return { tokens: tokens.length, characters, tokenizedText: tokens };
-    }
-  } else if (text === "Dzień dobry! Co u Ciebie?") {
-    if (model === "gpt-3.5") {
-      tokens = ["Dzie", "ń", " dobry", "!", " Co", " u", " Cie", "bie", "?"];
-      return { tokens: tokens.length, characters, tokenizedText: tokens };
-    }
-  } else if (text === "Hello world! This is a test.") {
-    if (model === "gpt-3") {
-      tokens = ["Hello", " world", "!", " This", " is", " a", " test", "."];
-      return { tokens: tokens.length, characters, tokenizedText: tokens };
-    }
-  }
-  
-  return { tokens: tokens.length, characters, tokenizedText: tokens };
-}
+// Get the OpenAI API key from environment variables
+const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -131,11 +31,93 @@ serve(async (req) => {
     }
 
     console.log(`Tokenizing text: "${text}" with model: ${model}`);
-    const result = tokenizeText(text, model);
-    console.log(`Result: ${result.tokens} tokens, ${result.characters} characters`);
     
+    // Check if we have the OpenAI API key
+    if (!openaiApiKey) {
+      // Fallback to approximation if no API key
+      return new Response(
+        JSON.stringify({ 
+          error: "OpenAI API key not set. Using approximate tokenization.",
+          tokens: Math.ceil(text.length / 4), // rough approximation
+          characters: text.length,
+          tokenizedText: text.split(/\b|\s+/).filter(Boolean)
+        }),
+        { 
+          status: 200, 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        }
+      );
+    }
+    
+    // Map model parameter to OpenAI model string
+    let openaiModel;
+    if (model === "gpt-4o" || model === "gpt-4o-mini") {
+      openaiModel = "gpt-4o";
+    } else if (model === "gpt-3.5") {
+      openaiModel = "gpt-3.5-turbo";
+    } else if (model === "gpt-3") {
+      openaiModel = "gpt-3.5-turbo"; // Fallback for legacy model
+    } else {
+      openaiModel = "gpt-4o"; // Default
+    }
+    
+    // Call OpenAI API to tokenize the text
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${openaiApiKey}`
+      },
+      body: JSON.stringify({
+        model: openaiModel,
+        messages: [
+          {
+            role: "system",
+            content: "You are a helpful tokenization tool. You'll receive text and must return a JSON object with tokenization details."
+          },
+          {
+            role: "user",
+            content: `Tokenize the following text: "${text}". Return a JSON object with tokens array (showing individual tokens), token count, and character count. Example format: {"tokens": ["Hello", " world"], "count": 2, "characters": 11}`
+          }
+        ],
+        response_format: { type: "json_object" }
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("OpenAI API error:", errorData);
+      throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error("Invalid response from OpenAI API");
+    }
+    
+    // Extract the JSON from the response
+    let tokenData;
+    try {
+      const content = data.choices[0].message.content;
+      tokenData = JSON.parse(content);
+    } catch (error) {
+      console.error("Error parsing JSON from OpenAI:", error);
+      throw new Error("Failed to parse tokenization data from OpenAI");
+    }
+
+    // Calculate tokens used for this request (from OpenAI response)
+    const tokensUsed = data.usage?.total_tokens || 0;
+    console.log(`OpenAI tokens used: ${tokensUsed}`);
+    
+    // Return the tokenization results
     return new Response(
-      JSON.stringify(result),
+      JSON.stringify({
+        tokens: tokenData.count,
+        characters: tokenData.characters,
+        tokenizedText: tokenData.tokens,
+        tokensUsed: tokensUsed
+      }),
       { 
         status: 200, 
         headers: { ...corsHeaders, "Content-Type": "application/json" } 
@@ -145,7 +127,12 @@ serve(async (req) => {
     console.error("Error in tokenize function:", error.message);
     
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        tokenizedText: [],
+        tokens: 0,
+        characters: 0
+      }),
       { 
         status: 500, 
         headers: { ...corsHeaders, "Content-Type": "application/json" } 

@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 const models = [
   { label: "GPT-4o & GPT-4o mini", value: "gpt-4o" },
@@ -12,7 +12,7 @@ const models = [
 ];
 
 const examples = {
-  "gpt-4o": "czy to napraw działa? elooooooo",
+  "gpt-4o": "tu fagata sexi pipka spod konina",
   "gpt-3.5": "Dzień dobry! Co u Ciebie?",
   "gpt-3": "Hello world! This is a test."
 };
@@ -26,9 +26,16 @@ const Tokenizer = () => {
   const [error, setError] = useState("");
   const [activeModel, setActiveModel] = useState("gpt-4o");
   const [viewMode, setViewMode] = useState<"text" | "tokenIds">("text");
+  const [isApiKeyMissing, setIsApiKeyMissing] = useState(false);
 
-  // Function to tokenize text using our Edge Function
   const tokenizeText = async (inputText: string, model: string) => {
+    if (!inputText.trim()) {
+      setTokens(0);
+      setCharacters(0);
+      setTokenizedText([]);
+      return;
+    }
+    
     setIsLoading(true);
     setError("");
     
@@ -39,38 +46,38 @@ const Tokenizer = () => {
       
       if (error) throw error;
       
+      if (data.error && data.error.includes("OpenAI API key not set")) {
+        setIsApiKeyMissing(true);
+        toast.error("OpenAI API key is not configured. Using approximate tokenization.");
+      } else {
+        setIsApiKeyMissing(false);
+      }
+      
       setTokens(data.tokens);
       setCharacters(data.characters);
       setTokenizedText(data.tokenizedText || []);
     } catch (err: any) {
       console.error("Error tokenizing text:", err);
-      setError("Failed to tokenize text. Using simple estimation instead.");
+      setError("Failed to tokenize text. Please try again.");
       
-      // Fallback to simple estimation if the Edge Function fails
-      const simpleEstimate = Math.ceil(inputText.length / 4);
-      setTokens(simpleEstimate);
-      setCharacters(inputText.length);
-      
-      // Create a simple tokenization for display
-      const simpleTokens = inputText.split(/\s+/).flatMap(word => 
-        word.length > 5 ? [word.substring(0, Math.ceil(word.length/2)), word.substring(Math.ceil(word.length/2))] : [word]
-      ).filter(Boolean);
-      
-      setTokenizedText(simpleTokens);
+      // Don't reset values if there's an error - keep the last successful results
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Update tokenization when text or model changes
   useEffect(() => {
-    if (text) {
-      tokenizeText(text, activeModel);
-    } else {
-      setTokens(0);
-      setCharacters(0);
-      setTokenizedText([]);
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (text) {
+        tokenizeText(text, activeModel);
+      } else {
+        setTokens(0);
+        setCharacters(0);
+        setTokenizedText([]);
+      }
+    }, 300); // 300ms debounce delay
+    
+    return () => clearTimeout(delayDebounceFn);
   }, [text, activeModel]);
 
   const handleClear = () => {
@@ -81,16 +88,19 @@ const Tokenizer = () => {
     setText(examples[activeModel as keyof typeof examples] || examples["gpt-4o"]);
   };
 
-  const getTokenColor = (token: string) => {
-    // Color mapping for specific tokens or token patterns
+  const getTokenColor = (token: string, index: number) => {
     if (/^\s+$/.test(token)) return "bg-gray-200 text-gray-800"; // Whitespace
-    if (/^[.,!?;:]$/.test(token)) return "bg-yellow-200 text-yellow-800"; // Punctuation
-    if (/^\d+$/.test(token)) return "bg-green-200 text-green-800"; // Numbers
     
-    // Rotate through colors for other tokens
-    const colors = ["bg-purple-200 text-purple-800", "bg-red-200 text-red-800", "bg-blue-200 text-blue-800"];
-    const hash = token.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return colors[hash % colors.length];
+    const colors = [
+      "bg-blue-200 text-blue-800",   // Light blue
+      "bg-green-200 text-green-800", // Light green
+      "bg-red-200 text-red-800",     // Light red
+      "bg-yellow-200 text-yellow-800", // Light yellow
+      "bg-purple-200 text-purple-800", // Light purple
+      "bg-pink-200 text-pink-800",   // Light pink
+    ];
+    
+    return colors[index % colors.length];
   };
 
   return (
@@ -144,6 +154,11 @@ const Tokenizer = () => {
               Show example
             </Button>
           </div>
+          {isApiKeyMissing && (
+            <div className="text-yellow-400 text-sm flex items-center">
+              Using approximation (OpenAI API key not configured)
+            </div>
+          )}
         </div>
         
         <div className="flex mt-6 gap-12">
@@ -182,7 +197,7 @@ const Tokenizer = () => {
               {tokenizedText.map((token, index) => (
                 <span 
                   key={index} 
-                  className={`${getTokenColor(token)} px-2 py-1 rounded text-sm font-mono`}
+                  className={`${getTokenColor(token, index)} px-2 py-1 rounded text-sm font-mono`}
                 >
                   {viewMode === "text" ? token : index + 1}
                 </span>
