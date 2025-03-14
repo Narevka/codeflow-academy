@@ -53,10 +53,14 @@ const CoursesSidebar = ({
             const isActive = lesson.id === activeLessonId;
             const lessonNumber = index + 1;
             
+            // Extract module number from module title (e.g., "1. Wprowadzenie" -> "1")
+            const moduleNumMatch = lesson.moduleTitle?.match(/^(\d+)\./);
+            const moduleNum = moduleNumMatch ? moduleNumMatch[1] : "";
+            
             // Icon based on lesson completion status
             const icon = lesson.completed ? 
-              <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-dark-purple flex items-center justify-center text-xs font-bold text-dark-purple">{lessonNumber}</div> : 
-              <div className="w-6 h-6 border-2 border-neutral-300 dark:border-white/60 rounded-full z-10 flex-shrink-0 bg-dark-purple flex items-center justify-center text-xs font-bold text-white/80">{lessonNumber}</div>;
+              <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-dark-purple flex items-center justify-center text-xs font-bold text-dark-purple">{moduleNum || lessonNumber}</div> : 
+              <div className="w-6 h-6 border-2 border-neutral-300 dark:border-white/60 rounded-full z-10 flex-shrink-0 bg-dark-purple flex items-center justify-center text-xs font-bold text-white/80">{moduleNum || lessonNumber}</div>;
 
             return (
               <SidebarLink
