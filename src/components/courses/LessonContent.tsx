@@ -48,7 +48,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
           {lesson.additionalVideos.map((video, index) => (
             <div key={index} className="space-y-4">
               <h2 className="text-xl font-semibold">
-                {index === 0 ? "Co to LLM" : (video.title || `Dodatkowe wideo ${index + 1}`)}
+                {video.title || `Dodatkowe wideo ${index + 1}`}
               </h2>
               {video.videoUrl && (
                 <VideoPlayerWithTranscript
