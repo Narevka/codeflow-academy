@@ -80,7 +80,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     return (
       <div className="mt-12 mb-10">
         <h3 className="text-xl font-bold text-primary mb-6">Możliwości przetwarzania tokenów</h3>
-        <div className="w-full h-[400px]">
+        <div className="w-full h-[400px] p-1 border border-white/20 rounded-xl bg-gradient-to-br from-purple/5 to-magenta/5 shadow-lg">
           <ChartContainer 
             config={{ 
               tokens: { color: "#0066cc" } 
