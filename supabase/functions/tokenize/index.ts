@@ -35,10 +35,13 @@ serve(async (req) => {
     // Check if we have the OpenAI API key
     if (!openaiApiKey) {
       // Fallback to approximation if no API key
+      const approxTokens = Math.ceil(text.length / 4); // rough approximation
+      console.log(`OpenAI API key not set. Using approximate tokenization: ${approxTokens} tokens`);
+      
       return new Response(
         JSON.stringify({ 
           error: "OpenAI API key not set. Using approximate tokenization.",
-          tokens: Math.ceil(text.length / 4), // rough approximation
+          tokens: approxTokens,
           characters: text.length,
           tokenizedText: text.split(/\b|\s+/).filter(Boolean)
         }),
