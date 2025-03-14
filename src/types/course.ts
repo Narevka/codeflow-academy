@@ -5,6 +5,14 @@ export interface TranscriptSegment {
   endTime: number;
 }
 
+export interface AdditionalVideo {
+  title?: string;
+  videoUrl: string;
+  thumbnailUrl?: string;
+  description?: string;
+  transcript?: TranscriptSegment[];
+}
+
 export interface Lesson {
   id: string;
   title: string;
@@ -14,6 +22,7 @@ export interface Lesson {
   thumbnailUrl?: string;
   completed: boolean;
   transcript?: TranscriptSegment[];
+  additionalVideos?: AdditionalVideo[];
 }
 
 export interface Module {

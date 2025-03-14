@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { TranscriptSegment } from "@/types/course";
 import { useTranscript } from "@/hooks/useTranscript";
 
-export function useVideoPlayer(src: string, providedTranscript: TranscriptSegment[] = []) {
+export function useVideoPlayer(src: string, providedTranscript: TranscriptSegment[] = [], transcriptSourceFile?: string) {
   const [isMuxVideo, setIsMuxVideo] = useState(false);
   const [playbackId, setPlaybackId] = useState<string>("");
   const [currentTime, setCurrentTime] = useState(0);
@@ -18,7 +18,8 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
     data: autoTranscript, 
     isLoading: isLoadingTranscript 
   } = useTranscript(
-    isMuxVideo ? playbackId : undefined
+    isMuxVideo ? playbackId : undefined,
+    transcriptSourceFile
   );
   
   useEffect(() => {

@@ -2,7 +2,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
-import transcriptData from "../trans/1.json";
+import transcriptData1 from "../trans/1.json";
+import transcriptData2 from "../trans/2.json";
 
 // Helper function to convert Mux transcript format to our app format
 const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[] => {
@@ -84,23 +85,26 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   return refinedSegments;
 };
 
-// Function to get local transcript from src/trans/1.json
-const getLocalTranscript = (playbackId: string | undefined): TranscriptSegment[] => {
+// Function to get local transcript from src/trans/1.json or src/trans/2.json
+const getLocalTranscript = (playbackId: string | undefined, sourceFile?: string): TranscriptSegment[] => {
+  // Choose transcript data source based on sourceFile parameter
+  const transcriptSource = sourceFile === "2.json" ? transcriptData2 : transcriptData1;
+  
   // Convert the transcript data to segments
-  return convertMuxTranscriptToSegments(transcriptData);
+  return convertMuxTranscriptToSegments(transcriptSource);
 };
 
 // Function to fetch transcript
-const fetchTranscript = async (playbackId: string | undefined): Promise<TranscriptSegment[]> => {
+const fetchTranscript = async (playbackId: string | undefined, sourceFile?: string): Promise<TranscriptSegment[]> => {
   if (!playbackId) {
     return [];
   }
 
   try {
     // First try to get from local JSON file
-    const localTranscript = getLocalTranscript(playbackId);
+    const localTranscript = getLocalTranscript(playbackId, sourceFile);
     if (localTranscript && localTranscript.length > 0) {
-      console.log("Using local transcript file");
+      console.log("Using local transcript file", sourceFile || "1.json");
       console.log(`Generated ${localTranscript.length} transcript segments`);
       return localTranscript;
     }
@@ -144,10 +148,10 @@ const fetchTranscript = async (playbackId: string | undefined): Promise<Transcri
 };
 
 // Hook to fetch transcript
-export function useTranscript(playbackId: string | undefined) {
+export function useTranscript(playbackId: string | undefined, sourceFile?: string) {
   return useQuery({
-    queryKey: ["transcript", playbackId],
-    queryFn: () => fetchTranscript(playbackId),
+    queryKey: ["transcript", playbackId, sourceFile],
+    queryFn: () => fetchTranscript(playbackId, sourceFile),
     enabled: !!playbackId,
     staleTime: 1000 * 60 * 5, // 5 minutes
   });

@@ -15,6 +15,7 @@ interface VideoPlayerWithTranscriptProps {
   title?: string;
   transcript?: TranscriptSegment[];
   showTranscript?: boolean;
+  transcriptSourceFile?: string;
 }
 
 const VideoPlayerWithTranscript = ({
@@ -23,6 +24,7 @@ const VideoPlayerWithTranscript = ({
   title,
   transcript: providedTranscript = [],
   showTranscript = true,
+  transcriptSourceFile,
 }: VideoPlayerWithTranscriptProps) => {
   const [transcriptVisible, setTranscriptVisible] = useState(showTranscript);
   
@@ -38,7 +40,7 @@ const VideoPlayerWithTranscript = ({
     isLoadingTranscript,
     handleTimeUpdate,
     handleTranscriptClick
-  } = useVideoPlayer(src, providedTranscript);
+  } = useVideoPlayer(src, providedTranscript, transcriptSourceFile);
 
   const toggleTranscript = () => {
     setTranscriptVisible(prev => !prev);
@@ -59,8 +61,8 @@ const VideoPlayerWithTranscript = ({
         {isMuxVideo ? (
           <MuxVideoPlayer
             ref={muxPlayerRef}
-            playbackId={playbackId}
-            title={title}
+            playbackId={playbackId.replace('mux:', '')}
+            title={title || "Video"}
             poster={poster}
             onTimeUpdate={handleTimeUpdate}
             isFullscreen={isFullscreen}

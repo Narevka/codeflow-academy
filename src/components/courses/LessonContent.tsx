@@ -41,6 +41,32 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
           <p>{lesson.description}</p>
         </div>
       )}
+
+      {lesson.additionalVideos && lesson.additionalVideos.length > 0 && (
+        <div className="space-y-8 mt-10">
+          {lesson.additionalVideos.map((video, index) => (
+            <div key={index} className="space-y-4">
+              {video.title && (
+                <h2 className="text-xl md:text-2xl font-bold">{video.title}</h2>
+              )}
+              {video.videoUrl && (
+                <VideoPlayerWithTranscript
+                  src={video.videoUrl}
+                  poster={video.thumbnailUrl}
+                  title={video.title || `Dodatkowe wideo ${index + 1}`}
+                  transcript={video.transcript}
+                  transcriptSourceFile="2.json"
+                />
+              )}
+              {video.description && (
+                <div className="prose prose-invert max-w-none">
+                  <p>{video.description}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

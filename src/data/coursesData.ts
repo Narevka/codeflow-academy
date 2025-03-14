@@ -18,6 +18,13 @@ export const flowiseCourse: Course = {
           displayTitle: "Lekcja 1 - Wprowadzenie do Flowise: Tworzenie Aplikacji z Dużymi Modelami Językowymi",
           description: "Flowise to narzędzie, które rewolucjonizuje tworzenie aplikacji opartych na sztucznej inteligencji, szczególnie tych korzystających z dużych modeli językowych (LLM). Dzięki niemu, osoby bez zaawansowanej wiedzy programistycznej mogą budować interaktywne chatboty, systemy analizy tekstu oraz aplikacje oparte na konwersacjach AI. Flowise pozwala na projektowanie interfejsów graficznych, integrację z różnymi modelami oraz efektywne zarządzanie danymi wejściowymi i wyjściowymi.",
           videoUrl: "mux:V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw",
+          additionalVideos: [
+            {
+              title: "Dodatkowe materiały do lekcji 1",
+              videoUrl: "mux:sVnpYWjzZqmn6FOYBdymJ9htg2AcomJqIOBKF3nHlH00",
+              description: "Dodatkowe informacje i przykłady praktyczne związane z wprowadzeniem do Flowise AI."
+            }
+          ],
           completed: true
         }
       ]
