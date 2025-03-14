@@ -1,4 +1,3 @@
-
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
 import { useState, useEffect } from "react";
@@ -12,7 +11,6 @@ import {
   ResponsiveContainer,
   Label
 } from "recharts";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -75,42 +73,57 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     });
   };
 
-  // Komponent wykresu porównania tokenów
+  // Komponent wykresu porównania tokenów - całkowicie przebudowany
   const TokenComparisonChart = () => {
     return (
       <div className="mt-12 mb-10">
-        <h3 className="text-xl font-bold text-primary mb-6 text-center">Możliwości przetwarzania tokenów</h3>
-        <div className="w-full max-w-3xl mx-auto h-[350px] border border-white/20 rounded-xl bg-gradient-to-br from-purple/5 to-magenta/5 shadow-lg">
-          <ChartContainer 
-            config={{ 
-              tokens: { color: "#0066cc" } 
-            }}
-            className="rounded-lg h-full w-full"
-          >
-            <BarChart 
-              data={tokenComparisonData} 
-              margin={{ top: 20, right: 30, left: 30, bottom: 60 }}
+        <h3 className="text-xl font-bold text-magenta mb-6 text-center">Możliwości przetwarzania tokenów</h3>
+        <div className="w-full max-w-3xl mx-auto h-[300px] rounded-xl border border-white/20 overflow-hidden bg-gradient-to-br from-[#1E2130] to-[#2A2E3F]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={tokenComparisonData}
+              margin={{ top: 20, right: 30, left: 60, bottom: 40 }}
             >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="name" tick={{ fill: 'white' }} />
-              <YAxis tick={{ fill: 'white' }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" vertical={false} />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fill: 'white', fontSize: 12 }}
+                tickLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
+                axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
+              />
+              <YAxis 
+                tick={{ fill: 'white', fontSize: 12 }}
+                tickLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
+                axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
+              >
                 <Label 
                   value="Ilość tokenów" 
                   position="insideLeft" 
                   angle={-90} 
-                  style={{ textAnchor: 'middle', fill: 'white' }} 
+                  style={{ textAnchor: 'middle', fill: 'white', fontSize: 12 }} 
+                  offset={-45}
                 />
               </YAxis>
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent 
-                    formatter={(value) => [`${value.toLocaleString()} tokenów`, 'Ilość']}
-                  />
-                }
+              <Tooltip
+                contentStyle={{ 
+                  backgroundColor: 'rgba(20, 22, 34, 0.9)', 
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '8px',
+                  color: 'white',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                }}
+                formatter={(value: number) => [`${value.toLocaleString()} tokenów`, 'Ilość']}
+                labelStyle={{ color: '#cf0e81', fontWeight: 'bold' }}
               />
-              <Bar dataKey="tokens" fill="#0066cc" />
+              <Bar 
+                dataKey="tokens" 
+                radius={[4, 4, 0, 0]}
+                fill="#0075ff"
+                animationDuration={1500}
+                barSize={60}
+              />
             </BarChart>
-          </ChartContainer>
+          </ResponsiveContainer>
         </div>
       </div>
     );
