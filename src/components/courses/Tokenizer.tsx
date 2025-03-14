@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const models = [
   { label: "GPT-4o & GPT-4o mini", value: "gpt-4o" },
@@ -12,7 +12,7 @@ const models = [
 ];
 
 const examples = {
-  "gpt-4o": "test123 mowie costam",
+  "gpt-4o": "czy to napraw działa? elooooooo",
   "gpt-3.5": "Dzień dobry! Co u Ciebie?",
   "gpt-3": "Hello world! This is a test."
 };
@@ -81,10 +81,16 @@ const Tokenizer = () => {
     setText(examples[activeModel as keyof typeof examples] || examples["gpt-4o"]);
   };
 
-  const getTokenColor = (index: number) => {
-    // Rotate through colors for tokens
+  const getTokenColor = (token: string) => {
+    // Color mapping for specific tokens or token patterns
+    if (/^\s+$/.test(token)) return "bg-gray-200 text-gray-800"; // Whitespace
+    if (/^[.,!?;:]$/.test(token)) return "bg-yellow-200 text-yellow-800"; // Punctuation
+    if (/^\d+$/.test(token)) return "bg-green-200 text-green-800"; // Numbers
+    
+    // Rotate through colors for other tokens
     const colors = ["bg-purple-200 text-purple-800", "bg-red-200 text-red-800", "bg-blue-200 text-blue-800"];
-    return colors[index % colors.length];
+    const hash = token.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return colors[hash % colors.length];
   };
 
   return (
@@ -108,12 +114,11 @@ const Tokenizer = () => {
           {models.map(model => (
             <TabsContent key={model.value} value={model.value} className="mt-0">
               <div className="w-full">
-                <Input
+                <Textarea
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Type or paste text here to count tokens..."
                   className="w-full p-4 h-32 bg-black/20 border-white/10 text-white resize-none"
-                  multiline
                 />
               </div>
             </TabsContent>
@@ -177,7 +182,7 @@ const Tokenizer = () => {
               {tokenizedText.map((token, index) => (
                 <span 
                   key={index} 
-                  className={`${getTokenColor(index)} px-2 py-1 rounded text-sm font-mono`}
+                  className={`${getTokenColor(token)} px-2 py-1 rounded text-sm font-mono`}
                 >
                   {viewMode === "text" ? token : index + 1}
                 </span>
