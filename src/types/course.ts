@@ -13,13 +13,6 @@ export interface AdditionalVideo {
   transcript?: TranscriptSegment[];
 }
 
-export interface ContentSection {
-  title?: string;
-  text?: string;
-  imageUrl?: string;
-  imageAlt?: string;
-}
-
 export interface Lesson {
   id: string;
   title: string;
@@ -30,7 +23,6 @@ export interface Lesson {
   completed: boolean;
   transcript?: TranscriptSegment[];
   additionalVideos?: AdditionalVideo[];
-  content?: ContentSection[];
 }
 
 export interface Module {
