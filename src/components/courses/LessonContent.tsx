@@ -60,8 +60,19 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 />
               )}
               {video.description && (
-                <div className="prose prose-invert max-w-none">
-                  <p>{video.description}</p>
+                <div className="prose prose-invert max-w-none mt-4">
+                  {video.description.split('\n\n').map((paragraph, idx) => {
+                    if (paragraph.includes(':')) {
+                      const [heading, ...content] = paragraph.split('\n\n');
+                      return (
+                        <div key={idx} className="mb-4">
+                          <h3 className="text-lg font-semibold mb-2">{heading}</h3>
+                          <p>{content.join('\n\n')}</p>
+                        </div>
+                      );
+                    }
+                    return <p key={idx} className="mb-4">{paragraph}</p>;
+                  })}
                 </div>
               )}
             </div>
