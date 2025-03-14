@@ -21,7 +21,7 @@ const TokenChart: React.FC<TokenChartProps> = ({ title, subtitle, data }) => {
         <h3 className="text-xl font-bold text-teal-600">{title}</h3>
         {subtitle && <p className="text-sm text-gray-400">{subtitle}</p>}
       </div>
-      <div className="h-[300px] w-full">
+      <div className="h-[400px] w-full"> {/* Increased height from 300px to 400px */}
         <ChartContainer 
           config={{
             tokens: {
@@ -33,7 +33,7 @@ const TokenChart: React.FC<TokenChartProps> = ({ title, subtitle, data }) => {
             }
           }}
         >
-          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 50 }}>
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 40, bottom: 60 }}> {/* Increased left and bottom margins */}
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis 
               dataKey="name" 
@@ -47,6 +47,7 @@ const TokenChart: React.FC<TokenChartProps> = ({ title, subtitle, data }) => {
               tickLine={false}
               tick={{ fill: "#94a3b8" }}
               tickFormatter={(value) => value.toLocaleString()}
+              domain={[0, 'dataMax + 20000']} {/* Add some padding to the top of the chart */}
             />
             <Bar 
               dataKey="tokens" 

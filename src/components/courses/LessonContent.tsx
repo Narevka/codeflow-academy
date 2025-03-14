@@ -22,7 +22,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
-  // Data for the token capacity chart - to be used when needed
+  // Updated data for the token capacity chart with more accurate values
   const tokenChartData = [
     { name: "ChatGPT 3.5", tokens: 16000 },
     { name: "Gemini 1.0", tokens: 32000 },
@@ -34,7 +34,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     // If this is the specific LLM comparison section, render chart instead of image
     if (section.title === "Co to LLM" && section.imageAlt?.includes("Porównanie możliwości przetwarzania tokenów")) {
       return (
-        <div key={index} className="space-y-4">
+        <div key={index} className="space-y-6 mb-8">
           {section.title && (
             <h2 className="text-xl md:text-2xl font-bold">{section.title}</h2>
           )}
@@ -45,10 +45,13 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
               ))}
             </div>
           )}
-          <TokenChart 
-            title="Możliwości przetwarzania tokenów" 
-            data={tokenChartData}
-          />
+          <div className="pt-4">
+            <TokenChart 
+              title="Możliwości przetwarzania tokenów" 
+              subtitle="Porównanie ilości tokenów obsługiwanych przez popularne modele językowe"
+              data={tokenChartData}
+            />
+          </div>
         </div>
       );
     }
