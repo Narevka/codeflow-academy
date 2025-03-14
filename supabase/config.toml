@@ -24,6 +24,3 @@ verify_jwt = false
 
 [functions.update-transcript]
 verify_jwt = false
-
-[functions.tokenize]
-verify_jwt = false
