@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
@@ -9,7 +10,6 @@ import CoursesSidebar from "@/components/courses/CoursesSidebar";
 import CourseHeader from "@/components/courses/CourseHeader";
 import CourseContent from "@/components/courses/CourseContent";
 import { useCourseNavigation } from "@/hooks/useCourseNavigation";
-import { SidebarProvider } from "@/components/ui/sidebar";
 
 const CourseView = () => {
   const { user, loading: authLoading } = useAuth();
@@ -21,9 +21,11 @@ const CourseView = () => {
   const [error, setError] = useState<string | null>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
+  // Load course data 
   useEffect(() => {
     console.log("CourseView mounted, courseId:", courseId);
     
+    // Reset state on navigation
     setLoading(true);
     setError(null);
     
@@ -34,9 +36,11 @@ const CourseView = () => {
       if (foundCourse) {
         setCourse(foundCourse);
         
+        // Find active module and lesson based on URL params
         let activeModuleFound = null;
         let activeLessonFound = null;
 
+        // First look for the exact module and lesson in URL
         if (moduleId && lessonId) {
           activeModuleFound = foundCourse.modules.find(m => m.id === moduleId) || null;
           
@@ -45,6 +49,7 @@ const CourseView = () => {
           }
         }
         
+        // If no specific module/lesson in URL, use the first available
         if (!activeModuleFound && foundCourse.modules.length > 0) {
           activeModuleFound = foundCourse.modules[0];
         }
@@ -66,8 +71,10 @@ const CourseView = () => {
     setLoading(false);
   }, [courseId, moduleId, lessonId]);
 
+  // Auth state logging for debugging
   console.log("Auth state:", { user, authLoading });
 
+  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-dark-purple text-white flex flex-col">
@@ -84,6 +91,7 @@ const CourseView = () => {
     );
   }
 
+  // Show error state  
   if (error || !course) {
     return (
       <div className="min-h-screen bg-dark-purple text-white flex flex-col">
@@ -119,31 +127,31 @@ const CourseView = () => {
                 activeModule={activeModule || undefined} 
               />
               
-              <SidebarProvider>
-                <div className="grid grid-cols-12 gap-6 relative">
-                  <div 
-                    ref={sidebarRef}
-                    className="col-span-12 lg:col-span-4 xl:col-span-3 transition-all duration-300"
-                  >
-                    <CoursesSidebar
-                      modules={course.modules}
-                      courseId={course.id}
-                      activeModuleId={activeModule?.id}
-                      activeLessonId={activeLesson?.id}
-                    />
-                  </div>
-                  
-                  <div className="col-span-12 lg:col-span-8 xl:col-span-9 transition-all duration-300">
-                    <CourseContent 
-                      course={course}
-                      activeModule={activeModule}
-                      activeLesson={activeLesson}
-                      prev={prev}
-                      next={next}
-                    />
-                  </div>
+              <div className="grid grid-cols-12 gap-6">
+                {/* Sidebar - direct lesson list */}
+                <div 
+                  ref={sidebarRef}
+                  className="col-span-12 lg:col-span-4 xl:col-span-3"
+                >
+                  <CoursesSidebar
+                    modules={course.modules}
+                    courseId={course.id}
+                    activeModuleId={activeModule?.id}
+                    activeLessonId={activeLesson?.id}
+                  />
                 </div>
-              </SidebarProvider>
+                
+                {/* Main content - lesson */}
+                <div className="col-span-12 lg:col-span-8 xl:col-span-9">
+                  <CourseContent 
+                    course={course}
+                    activeModule={activeModule}
+                    activeLesson={activeLesson}
+                    prev={prev}
+                    next={next}
+                  />
+                </div>
+              </div>
             </>
           )}
         </div>

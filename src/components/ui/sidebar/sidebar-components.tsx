@@ -33,7 +33,6 @@ export const Sidebar = ({
           width: animate ? (actualOpen ? "100%" : "60px") : "100%",
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        initial={false}
         onMouseEnter={() => actualSetOpen(true)}
         onMouseLeave={() => actualSetOpen(false)}
       >
