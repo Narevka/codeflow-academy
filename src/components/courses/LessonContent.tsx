@@ -21,35 +21,13 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
-  const formatDescription = (text: string) => {
-    if (!text) return null;
-    
-    return text.split('\n\n').map((paragraph, idx) => {
-      // Check if paragraph is a heading (starts with a number followed by dot and space)
-      if (/^\d+\.\s/.test(paragraph)) {
-        return (
-          <div key={idx} className="mb-4">
-            <h3 className="text-lg font-semibold mb-2">{paragraph}</h3>
-          </div>
-        );
-      }
-      
-      // Check if it's a heading without numbers (typically section titles)
-      else if (paragraph && !paragraph.includes(' ') && paragraph.length < 50) {
-        return <h2 key={idx} className="text-xl font-bold mt-6 mb-3">{paragraph}</h2>;
-      }
-      
-      // Regular paragraph
-      return <p key={idx} className="mb-4">{paragraph}</p>;
-    });
-  };
-
   return (
     <div className="space-y-6 w-full">
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.displayTitle || lesson.title}</h1>
       
       {lesson.videoUrl && (
         <div className="w-full">
+          <h2 className="text-xl font-semibold mb-3">Wprowadzenie do Flowise</h2>
           <VideoPlayerWithTranscript
             src={lesson.videoUrl}
             poster={lesson.thumbnailUrl}
@@ -61,7 +39,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       
       {lesson.description && (
         <div className="prose prose-invert max-w-none mt-6">
-          {formatDescription(lesson.description)}
+          <p>{lesson.description}</p>
         </div>
       )}
 
@@ -78,11 +56,23 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                   poster={video.thumbnailUrl}
                   title={video.title || `Dodatkowe wideo ${index + 1}`}
                   transcript={video.transcript}
+                  transcriptSourceFile="2.json"
                 />
               )}
               {video.description && (
                 <div className="prose prose-invert max-w-none mt-4">
-                  {formatDescription(video.description)}
+                  {video.description.split('\n\n').map((paragraph, idx) => {
+                    if (paragraph.includes(':')) {
+                      const [heading, ...content] = paragraph.split('\n\n');
+                      return (
+                        <div key={idx} className="mb-4">
+                          <h3 className="text-lg font-semibold mb-2">{heading}</h3>
+                          <p>{content.join('\n\n')}</p>
+                        </div>
+                      );
+                    }
+                    return <p key={idx} className="mb-4">{paragraph}</p>;
+                  })}
                 </div>
               )}
             </div>
