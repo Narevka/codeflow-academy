@@ -10,6 +10,8 @@ import CoursesSidebar from "@/components/courses/CoursesSidebar";
 import CourseHeader from "@/components/courses/CourseHeader";
 import CourseContent from "@/components/courses/CourseContent";
 import { useCourseNavigation } from "@/hooks/useCourseNavigation";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { motion } from "framer-motion";
 
 const CourseView = () => {
   const { user, loading: authLoading } = useAuth();
@@ -19,6 +21,7 @@ const CourseView = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Move sidebar state to component top level
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   // Load course data 
@@ -127,30 +130,47 @@ const CourseView = () => {
                 activeModule={activeModule || undefined} 
               />
               
-              <div className="grid grid-cols-12 gap-6">
-                {/* Sidebar - direct lesson list */}
-                <div 
-                  ref={sidebarRef}
-                  className="col-span-12 lg:col-span-4 xl:col-span-3"
-                >
-                  <CoursesSidebar
-                    modules={course.modules}
-                    courseId={course.id}
-                    activeModuleId={activeModule?.id}
-                    activeLessonId={activeLesson?.id}
-                  />
-                </div>
-                
-                {/* Main content - lesson */}
-                <div className="col-span-12 lg:col-span-8 xl:col-span-9">
-                  <CourseContent 
-                    course={course}
-                    activeModule={activeModule}
-                    activeLesson={activeLesson}
-                    prev={prev}
-                    next={next}
-                  />
-                </div>
+              {/* Use a flex layout instead of grid for more fluid responsive behavior */}
+              <div className="w-full">
+                {/* Use the top-level sidebar state */}
+                <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen}>
+                  <div className="flex flex-col lg:flex-row relative">
+                    {/* Sidebar - direct lesson list */}
+                    <motion.div 
+                      ref={sidebarRef}
+                      className="flex-shrink-0 w-full lg:w-1/4 xl:w-1/5"
+                      animate={{
+                        width: sidebarOpen ? "auto" : "60px"
+                      }}
+                      style={{
+                        maxWidth: sidebarOpen ? "100%" : "60px",
+                      }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      <CoursesSidebar
+                        modules={course.modules}
+                        courseId={course.id}
+                        activeModuleId={activeModule?.id}
+                        activeLessonId={activeLesson?.id}
+                        noProvider={true} // Flag to avoid nested SidebarProvider
+                      />
+                    </motion.div>
+                    
+                    {/* Main content - lesson */}
+                    <div 
+                      className="flex-grow transition-all duration-300"
+                    >
+                      <CourseContent 
+                        course={course}
+                        activeModule={activeModule}
+                        activeLesson={activeLesson}
+                        prev={prev}
+                        next={next}
+                        sidebarOpen={sidebarOpen}
+                      />
+                    </div>
+                  </div>
+                </SidebarProvider>
               </div>
             </>
           )}
