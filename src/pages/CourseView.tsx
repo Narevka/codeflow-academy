@@ -10,7 +10,6 @@ import CoursesSidebar from "@/components/courses/CoursesSidebar";
 import CourseHeader from "@/components/courses/CourseHeader";
 import CourseContent from "@/components/courses/CourseContent";
 import { useCourseNavigation } from "@/hooks/useCourseNavigation";
-import { ChevronRight } from "lucide-react";
 
 const CourseView = () => {
   const { user, loading: authLoading } = useAuth();
@@ -37,26 +36,33 @@ const CourseView = () => {
       if (foundCourse) {
         setCourse(foundCourse);
         
-        // Find active module and lesson
-        const module = moduleId 
-          ? foundCourse.modules.find(m => m.id === moduleId) 
-          : foundCourse.modules[0];
-        
-        console.log("Active module:", module ? module.title : "No module found");
-        
-        if (module) {
-          setActiveModule(module);
+        // Find active module and lesson based on URL params
+        let activeModuleFound = null;
+        let activeLessonFound = null;
+
+        // First look for the exact module and lesson in URL
+        if (moduleId && lessonId) {
+          activeModuleFound = foundCourse.modules.find(m => m.id === moduleId) || null;
           
-          const lesson = lessonId
-            ? module.lessons.find(l => l.id === lessonId)
-            : module.lessons[0];
-          
-          console.log("Active lesson:", lesson ? lesson.title : "No lesson found");
-          
-          if (lesson) {
-            setActiveLesson(lesson);
+          if (activeModuleFound) {
+            activeLessonFound = activeModuleFound.lessons.find(l => l.id === lessonId) || null;
           }
         }
+        
+        // If no specific module/lesson in URL, use the first available
+        if (!activeModuleFound && foundCourse.modules.length > 0) {
+          activeModuleFound = foundCourse.modules[0];
+        }
+        
+        if (!activeLessonFound && activeModuleFound && activeModuleFound.lessons.length > 0) {
+          activeLessonFound = activeModuleFound.lessons[0];
+        }
+        
+        setActiveModule(activeModuleFound);
+        setActiveLesson(activeLessonFound);
+        
+        console.log("Active module:", activeModuleFound ? activeModuleFound.title : "No module found");
+        console.log("Active lesson:", activeLessonFound ? activeLessonFound.title : "No lesson found");
       } else {
         setError(`Course with ID "${courseId}" not found`);
       }
@@ -65,13 +71,7 @@ const CourseView = () => {
     setLoading(false);
   }, [courseId, moduleId, lessonId]);
 
-  // Temporarily disable auth check for debugging
-  // if (!authLoading && !user) {
-  //   console.log("User not logged in, redirecting to /auth");
-  //   return <Navigate to="/auth" replace />;
-  // }
-  
-  // Instead, log auth state
+  // Auth state logging for debugging
   console.log("Auth state:", { user, authLoading });
 
   // Show loading state
@@ -128,10 +128,10 @@ const CourseView = () => {
               />
               
               <div className="grid grid-cols-12 gap-6">
-                {/* Sidebar - modules and lessons */}
+                {/* Sidebar - direct lesson list */}
                 <div 
                   ref={sidebarRef}
-                  className={`col-span-12 lg:col-span-4 xl:col-span-3`}
+                  className="col-span-12 lg:col-span-4 xl:col-span-3"
                 >
                   <CoursesSidebar
                     modules={course.modules}
