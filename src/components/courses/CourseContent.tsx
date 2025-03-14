@@ -25,7 +25,7 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next }: Cours
   // If no lesson is active, show a message to select a lesson
   if (!activeLesson) {
     return (
-      <div className={`glass-card p-6 min-h-[600px] h-full flex flex-col transition-all duration-300 ${open ? '' : 'ml-[-200px]'}`}>
+      <div className={`glass-card p-6 min-h-[600px] h-full flex flex-col transition-all duration-300 ${open ? 'w-full' : 'w-full ml-0'}`}>
         <div className="text-center py-20 flex-1">
           <p className="text-xl">Wybierz lekcję z menu, aby rozpocząć naukę.</p>
         </div>
@@ -34,7 +34,7 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next }: Cours
   }
 
   return (
-    <div className={`glass-card p-6 min-h-[600px] h-full flex flex-col transition-all duration-300 ${open ? '' : 'ml-[-200px]'}`}>
+    <div className={`glass-card p-6 min-h-[600px] h-full flex flex-col transition-all duration-300 ${open ? 'w-full' : 'w-full ml-0'}`}>
       <div className="flex-1">
         <LessonContent lesson={activeLesson} />
       </div>
