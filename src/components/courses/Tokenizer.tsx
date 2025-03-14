@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { supabase } from "@/integrations/supabase/client";
+import { Loader2 } from "lucide-react";
 
 // Sample token color assignments
 const TOKEN_COLORS = [
@@ -13,8 +15,8 @@ const TOKEN_COLORS = [
   "bg-red-400", "bg-indigo-400", "bg-purple-500"
 ];
 
-// Mock tokenization function (since we can't use tiktoken directly in browser)
-function mockTokenize(text: string, model: string): string[] {
+// Fallback tokenization function in case the edge function fails
+function fallbackTokenize(text: string, model: string): string[] {
   if (!text) return [];
   
   // Very simplified tokenization - this is just a visual approximation
@@ -67,6 +69,8 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
   const [modelType, setModelType] = useState("gpt-4o");
   const [tokens, setTokens] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState("text"); // For the Text/Token IDs tabs
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Sample examples that demonstrate tokenization differences
   const examples = [
@@ -74,11 +78,36 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
     "Hello world! How are you doing today?",
     "antidisestablishmentarianism",
     "2 + 2 = 4",
-    "czy to napraw działa?"
+    "czy to naprawę działa?"
   ];
 
+  const fetchTokens = async (inputText: string, model: string) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('tokenize', {
+        body: { text: inputText, model },
+      });
+      
+      if (error) {
+        console.error("Edge function error:", error);
+        setError("Nie udało się tokenizować tekstu. Używam metody fallbackowej.");
+        setTokens(fallbackTokenize(inputText, model));
+      } else {
+        setTokens(data.tokens);
+      }
+    } catch (err) {
+      console.error("Fetch tokens error:", err);
+      setError("Błąd podczas tokenizacji. Używam metody fallbackowej.");
+      setTokens(fallbackTokenize(inputText, model));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    setTokens(mockTokenize(text, modelType));
+    fetchTokens(text, modelType);
   }, [text, modelType]);
 
   const handleClear = () => {
@@ -126,6 +155,7 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
               size="sm" 
               onClick={handleClear}
               className="bg-white/10 hover:bg-white/20 border-white/20"
+              disabled={loading}
             >
               Clear
             </Button>
@@ -134,6 +164,7 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
               size="sm" 
               onClick={handleShowExample}
               className="bg-white/10 hover:bg-white/20 border-white/20"
+              disabled={loading}
             >
               Show example
             </Button>
@@ -152,16 +183,23 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
         </div>
         
         <Card className="bg-gray-800/40 p-4 rounded-md border border-white/20 mb-4">
-          <div className="flex flex-wrap gap-1">
-            {tokens.map((token, index) => (
-              <span 
-                key={index} 
-                className={`${getTokenColor(token)} m-0.5 px-2 py-1 text-white rounded`}
-              >
-                {token}
-              </span>
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex justify-center items-center h-20">
+              <Loader2 className="h-8 w-8 animate-spin text-white" />
+              <span className="ml-2 text-white">Tokenizowanie...</span>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-1">
+              {tokens.map((token, index) => (
+                <span 
+                  key={index} 
+                  className={`${getTokenColor(token)} m-0.5 px-2 py-1 text-white rounded`}
+                >
+                  {token}
+                </span>
+              ))}
+            </div>
+          )}
         </Card>
         
         <div className="mb-2">
@@ -187,10 +225,17 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
           </Tabs>
         </div>
         
+        {error && (
+          <div className="text-yellow-300 text-sm mb-4">
+            {error}
+          </div>
+        )}
+        
         <div className="text-sm text-white/60 mt-4">
           <p>
-            You can use the tool above to understand how a piece of text might be tokenized by a language
-            model, and the total count of tokens in that piece of text.
+            Powyższe narzędzie pomaga zrozumieć, jak tekst jest tokenizowany przez modele języka
+            oraz całkowitą liczbę tokenów w danym fragmencie tekstu. Tokenizacja realizowana jest
+            przy użyciu algorytmów zgodnych z OpenAI tiktoken.
           </p>
         </div>
       </div>
