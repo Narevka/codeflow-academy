@@ -94,8 +94,12 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
         console.error("Edge function error:", error);
         setError("Nie udało się tokenizować tekstu. Używam metody fallbackowej.");
         setTokens(fallbackTokenize(inputText, model));
-      } else {
+      } else if (data && data.tokens) {
         setTokens(data.tokens);
+        console.log("Tokenization success:", data);
+      } else {
+        setError("Otrzymano nieprawidłowe dane z API. Używam metody fallbackowej.");
+        setTokens(fallbackTokenize(inputText, model));
       }
     } catch (err) {
       console.error("Fetch tokens error:", err);
@@ -107,7 +111,11 @@ const Tokenizer: React.FC<TokenizerProps> = ({ initialText = "test123 mowie cost
   };
 
   useEffect(() => {
-    fetchTokens(text, modelType);
+    if (text.trim() !== '') {
+      fetchTokens(text, modelType);
+    } else {
+      setTokens([]);
+    }
   }, [text, modelType]);
 
   const handleClear = () => {

@@ -8,10 +8,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Funkcja do tokenizacji tekstu za pomocą określonego modelu
+// Function to tokenize text using the specified model
 function tokenizeText(text: string, model: string): { tokens: string[], count: number } {
   try {
-    // Wybierz odpowiednie kodowanie w zależności od modelu
+    // Select the appropriate encoding based on the model
     let encodingType: string;
     
     if (model === "gpt-4o" || model === "gpt-4o-mini") {
@@ -19,16 +19,16 @@ function tokenizeText(text: string, model: string): { tokens: string[], count: n
     } else if (model === "gpt-4" || model === "gpt-3.5-turbo") {
       encodingType = "cl100k_base";
     } else {
-      encodingType = "p50k_base"; // Dla starszych modeli
+      encodingType = "p50k_base"; // For older models
     }
     
-    // Uzyskaj enkoder
+    // Get the encoder
     const encoding = tiktoken.getEncoding(encodingType);
     
-    // Tokenizuj tekst
+    // Tokenize the text
     const tokenIds = encoding.encode(text);
     
-    // Konwertuj tokeny z powrotem na tekst, aby zobaczyć, jak zostały podzielone
+    // Convert tokens back to text to see how they were divided
     const tokens: string[] = [];
     for (const tokenId of tokenIds) {
       const tokenBytes = encoding.decode([tokenId]);
@@ -41,7 +41,7 @@ function tokenizeText(text: string, model: string): { tokens: string[], count: n
       count: tokenIds.length
     };
   } catch (error) {
-    console.error("Błąd podczas tokenizacji:", error);
+    console.error("Tokenization error:", error);
     return {
       tokens: [],
       count: 0
@@ -50,7 +50,7 @@ function tokenizeText(text: string, model: string): { tokens: string[], count: n
 }
 
 serve(async (req) => {
-  // Obsługa CORS preflight
+  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -60,7 +60,7 @@ serve(async (req) => {
     
     if (!text) {
       return new Response(
-        JSON.stringify({ error: "Brak tekstu do tokenizacji" }),
+        JSON.stringify({ error: "No text to tokenize" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -72,10 +72,10 @@ serve(async (req) => {
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
-    console.error("Błąd w funkcji tokenize:", error);
+    console.error("Error in tokenize function:", error);
     
     return new Response(
-      JSON.stringify({ error: "Wystąpił błąd podczas przetwarzania żądania" }),
+      JSON.stringify({ error: "An error occurred while processing the request" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
