@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
   Label
 } from "recharts";
+import { Info, Book } from "lucide-react";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -130,47 +131,137 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     );
   };
   
-  // Dodatkowa zawartość opisująca prompty, kontekst i modele
-  const AdditionalTokenContent = () => {
+  // Nowa sekcja - kluczowe pojęcia AI wyświetlane w formie karty z informacjami
+  const KeyAITermsGlossary = () => {
     return (
-      <div className="prose prose-invert max-w-none mt-4 mb-12">
-        <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">3. Prompt (Zapytanie)</h4>
-          <p className="mb-4 text-base leading-relaxed">
-            Prompt to zapytanie lub wejściowy tekst, który wysyłamy do modelu językowego w celu uzyskania odpowiedzi. 
-            Może to być proste pytanie ("Jaka jest stolica Francji?") lub bardziej skomplikowana instrukcja, 
-            która zawiera historię rozmowy. W Flowise prompty są podstawowym sposobem komunikacji z modelem i sterowania jego działaniem.
-          </p>
+      <div className="mt-12 mb-16">
+        <div className="flex items-center justify-center mb-8">
+          <Book className="text-magenta mr-3" size={24} />
+          <h3 className="text-2xl font-bold text-white">Kluczowe pojęcia AI w Flowise</h3>
         </div>
         
-        <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">4. Konwersacja i Kontekst</h4>
-          <p className="mb-4 text-base leading-relaxed">
-            Modele językowe, takie jak GPT, generują odpowiedzi na podstawie przesłanych do nich promptów. 
-            Jednakże nie mają one rzeczywistej "pamięci" – każdy nowy prompt traktowany jest jako oddzielne zapytanie. 
-            Aby kontynuować konwersację w sposób spójny, historia rozmowy jest zwykle zawierana w treści promptu. 
-            Dlatego im dłuższa konwersacja, tym więcej tokenów potrzeba na zachowanie kontekstu.
-          </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Karta 1: LLM */}
+          <div className="bg-gradient-to-br from-[#1E2130]/80 to-[#2A2E3F] p-6 rounded-xl border border-white/10 hover:border-magenta/30 transition-all shadow-lg">
+            <div className="flex items-center mb-3">
+              <div className="bg-magenta/20 h-8 w-8 rounded-full flex items-center justify-center mr-3">
+                <span className="text-magenta font-bold">1</span>
+              </div>
+              <h4 className="text-xl font-bold text-white">Duże Modele Językowe (LLM)</h4>
+            </div>
+            <p className="text-white/80 leading-relaxed mb-3">
+              Zaawansowane systemy AI trenowane na ogromnych zbiorach danych tekstowych, 
+              które umożliwiają generowanie tekstu ludzkiej jakości, rozumienie kontekstu i rozwiązywanie złożonych problemów.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              W Flowise, LLM stanowią rdzeń aplikacji konwersacyjnych, umożliwiając interakcje zbliżone do ludzkich 
+              oraz przetwarzanie wiedzy z różnych źródeł danych.
+            </p>
+          </div>
+
+          {/* Karta 2: Tokeny */}
+          <div className="bg-gradient-to-br from-[#1E2130]/80 to-[#2A2E3F] p-6 rounded-xl border border-white/10 hover:border-magenta/30 transition-all shadow-lg">
+            <div className="flex items-center mb-3">
+              <div className="bg-magenta/20 h-8 w-8 rounded-full flex items-center justify-center mr-3">
+                <span className="text-magenta font-bold">2</span>
+              </div>
+              <h4 className="text-xl font-bold text-white">Tokeny</h4>
+            </div>
+            <p className="text-white/80 leading-relaxed mb-3">
+              Podstawowe jednostki przetwarzania tekstu w modelach AI - fragmenty słów, znaki lub całe słowa, 
+              na które dzielony jest tekst podczas analizy przez LLM.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              Limit tokenów określa maksymalną długość kontekstu, jaką model może przetworzyć jednocześnie:
+              <span className="block mt-2 text-sm bg-black/30 p-2 rounded border border-white/10">
+                GPT-3.5: 16k tokenów (~14 stron) | GPT-4: 128k tokenów (~300 stron)
+              </span>
+            </p>
+          </div>
+
+          {/* Karta 3: Prompty */}
+          <div className="bg-gradient-to-br from-[#1E2130]/80 to-[#2A2E3F] p-6 rounded-xl border border-white/10 hover:border-magenta/30 transition-all shadow-lg">
+            <div className="flex items-center mb-3">
+              <div className="bg-magenta/20 h-8 w-8 rounded-full flex items-center justify-center mr-3">
+                <span className="text-magenta font-bold">3</span>
+              </div>
+              <h4 className="text-xl font-bold text-white">Prompt (Zapytanie)</h4>
+            </div>
+            <p className="text-white/80 leading-relaxed mb-3">
+              Instrukcja lub pytanie wysyłane do modelu AI, które określa zadanie do wykonania.
+              Od jakości i precyzji promptu zależy trafność odpowiedzi modelu.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              W Flowise, projektowanie promptów jest kluczowym elementem tworzenia efektywnych aplikacji AI - 
+              umożliwia sterowanie zachowaniem modelu i uzyskanie pożądanych wyników bez programowania.
+            </p>
+          </div>
+
+          {/* Karta 4: Kontekst */}
+          <div className="bg-gradient-to-br from-[#1E2130]/80 to-[#2A2E3F] p-6 rounded-xl border border-white/10 hover:border-magenta/30 transition-all shadow-lg">
+            <div className="flex items-center mb-3">
+              <div className="bg-magenta/20 h-8 w-8 rounded-full flex items-center justify-center mr-3">
+                <span className="text-magenta font-bold">4</span>
+              </div>
+              <h4 className="text-xl font-bold text-white">Konwersacja i Kontekst</h4>
+            </div>
+            <p className="text-white/80 leading-relaxed mb-3">
+              Mechanizm "pamięci" modeli językowych, pozwalający na prowadzenie spójnych rozmów poprzez 
+              uwzględnianie wcześniejszych wypowiedzi w bieżącej analizie.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              W aplikacjach Flowise, zarządzanie kontekstem pozwala tworzyć naturalnie płynące dialogi, 
+              gdzie model "pamięta" wcześniejsze pytania i odpowiedzi użytkownika.
+            </p>
+          </div>
+
+          {/* Karta 5: Wybór modelu */}
+          <div className="bg-gradient-to-br from-[#1E2130]/80 to-[#2A2E3F] p-6 rounded-xl border border-white/10 hover:border-magenta/30 transition-all shadow-lg md:col-span-2">
+            <div className="flex items-center mb-3">
+              <div className="bg-magenta/20 h-8 w-8 rounded-full flex items-center justify-center mr-3">
+                <span className="text-magenta font-bold">5</span>
+              </div>
+              <h4 className="text-xl font-bold text-white">Wydajność a Skomplikowanie Modelu</h4>
+            </div>
+            <div className="md:flex md:gap-8">
+              <div className="md:w-1/2">
+                <p className="text-white/80 leading-relaxed mb-3">
+                  Kluczowe aspekty wyboru odpowiedniego modelu AI dla konkretnych zastosowań, uwzględniając 
+                  kompromis między szybkością działania a jakością wyników.
+                </p>
+                <p className="text-white/80 leading-relaxed">
+                  W Flowise możesz wybierać między różnymi modelami w zależności od potrzeb aplikacji:
+                </p>
+              </div>
+              <div className="md:w-1/2 mt-3 md:mt-0">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-black/30 p-3 rounded border border-white/10">
+                    <h5 className="font-semibold text-white mb-1">Szybsze modele (GPT-3.5)</h5>
+                    <ul className="list-disc pl-4 text-sm text-white/70">
+                      <li>Niższy koszt użytkowania</li>
+                      <li>Krótszy czas odpowiedzi</li>
+                      <li>Idealne do prostszych zastosowań</li>
+                    </ul>
+                  </div>
+                  <div className="bg-black/30 p-3 rounded border border-white/10">
+                    <h5 className="font-semibold text-white mb-1">Zaawansowane modele (GPT-4)</h5>
+                    <ul className="list-disc pl-4 text-sm text-white/70">
+                      <li>Lepsza analiza złożonych danych</li>
+                      <li>Większy kontekst (do 128k tokenów)</li>
+                      <li>Dokładniejsze odpowiedzi</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
-        <div className="mb-6">
-          <h4 className="text-lg font-bold text-primary mb-2">5. Wydajność a Skomplikowanie Modelu</h4>
-          <p className="mb-4 text-base leading-relaxed">
-            W kontekście wyboru modelu do aplikacji warto znać różnice między różnymi wersjami:
-          </p>
-          <ul className="list-disc pl-6 mb-4 space-y-2">
-            <li className="text-base">
-              <span className="font-semibold">GPT-3.5:</span> Szybszy, ale obsługuje mniejszą liczbę tokenów. 
-              Idealny do prostszych zadań.
-            </li>
-            <li className="text-base">
-              <span className="font-semibold">GPT-4:</span> Wolniejszy, ale bardziej precyzyjny i obsługujący większą ilość tokenów. 
-              Lepszy do zaawansowanych analiz i długich konwersacji.
-            </li>
-          </ul>
-          <p className="mb-4 text-base leading-relaxed">
-            Oprócz modeli GPT, istnieją także inne modele, takie jak Falcon 40B, które oferują różne zalety 
-            w zależności od specyfiki aplikacji.
+        <div className="flex items-center mt-8 p-4 bg-blue-900/30 rounded-lg border border-blue-500/30">
+          <Info className="text-blue-400 mr-3 flex-shrink-0" size={24} />
+          <p className="text-white/90 text-sm">
+            Głębsze zrozumienie tych pojęć pozwoli Ci efektywniej projektować aplikacje w Flowise, 
+            wybierając odpowiednie modele i optymalizując przepływy pracy w zależności od konkretnych potrzeb.
           </p>
         </div>
       </div>
@@ -228,8 +319,8 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       {/* Wykres porównania tokenów */}
       <TokenComparisonChart />
       
-      {/* Nowa sekcja z treścią o promptach i modelach */}
-      <AdditionalTokenContent />
+      {/* Nowa sekcja z kartami kluczowych pojęć */}
+      <KeyAITermsGlossary />
     </div>
   );
 };
