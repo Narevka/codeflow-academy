@@ -29,8 +29,11 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     const paragraphs = text.split('\n\n');
     
     return paragraphs.map((paragraph, index) => {
-      // Check if this paragraph is a section heading (usually shorter and without punctuation)
-      if (paragraph.length < 100 && !paragraph.includes('.')) {
+      // Check if paragraph is a section heading (all caps or short without punctuation)
+      if (
+        (paragraph.length < 100 && !paragraph.includes('.')) ||
+        paragraph.toUpperCase() === paragraph
+      ) {
         return (
           <h3 key={index} className="text-xl font-bold text-primary mt-8 mb-4">
             {paragraph}
