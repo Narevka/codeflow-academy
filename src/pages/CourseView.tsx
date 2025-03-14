@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
@@ -20,7 +19,6 @@ const CourseView = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
