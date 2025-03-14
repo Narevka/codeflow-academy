@@ -1,4 +1,3 @@
-
 import { Course } from "@/types/course";
 
 export const flowiseCourse: Course = {
@@ -10,7 +9,7 @@ export const flowiseCourse: Course = {
   modules: [
     {
       id: "module-1",
-      title: "1. Wprowadzenie",
+      title: "Wprowadzenie do Flowise",
       completed: true,
       lessons: [
         {
@@ -24,7 +23,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-2",
-      title: "2. Instalacja",
+      title: "Instalacja i konfiguracja",
       completed: true,
       lessons: [
         {
@@ -38,7 +37,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-3",
-      title: "3. Aktualizowanie",
+      title: "Aktualizacja i zarządzanie",
       completed: false,
       lessons: [
         {
@@ -52,7 +51,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-4",
-      title: "4. Podstawy",
+      title: "Podstawy pracy z Flowise",
       completed: false,
       lessons: [
         {
@@ -66,7 +65,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-5",
-      title: "5. Pierwszy flow",
+      title: "Tworzenie pierwszych aplikacji",
       completed: false,
       lessons: [
         {
@@ -80,7 +79,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-6",
-      title: "6. Monitorowanie",
+      title: "Monitorowanie i analityka",
       completed: false,
       lessons: [
         {
@@ -94,7 +93,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-7",
-      title: "7. Prompt Chain",
+      title: "Weryfikacja i testowanie",
       completed: false,
       lessons: [
         {
@@ -108,7 +107,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-8",
-      title: "8. Zewnętrzne API",
+      title: "Integracje z zewnętrznymi systemami",
       completed: false,
       lessons: [
         {
@@ -122,7 +121,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-9",
-      title: "9. Baza wektorowa",
+      title: "Praktyczne zastosowania",
       completed: false,
       lessons: [
         {
@@ -136,7 +135,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-10",
-      title: "10. Agenci",
+      title: "Zaawansowane techniki",
       completed: false,
       lessons: [
         {
@@ -150,7 +149,7 @@ export const flowiseCourse: Course = {
     },
     {
       id: "module-11",
-      title: "11. Webhooki",
+      title: "Integracje z platformami społecznościowymi",
       completed: false,
       lessons: [
         {
