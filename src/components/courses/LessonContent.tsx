@@ -1,3 +1,4 @@
+
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
 import { useState, useEffect } from "react";
@@ -11,7 +12,6 @@ import {
   ResponsiveContainer,
   Label
 } from "recharts";
-import Tokenizer from "./Tokenizer";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -227,9 +227,6 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
 
       {/* Wykres porównania tokenów */}
       <TokenComparisonChart />
-      
-      {/* Tokenizer component */}
-      <Tokenizer />
       
       {/* Nowa sekcja z treścią o promptach i modelach */}
       <AdditionalTokenContent />
