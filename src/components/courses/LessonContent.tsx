@@ -96,11 +96,11 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         <Tabs defaultValue="cards" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="cards" className="flex items-center gap-2">
-              <BarChart2 size={18} />
+              <BarChart2 className="h-4 w-4" />
               <span>Karty Pojęć</span>
             </TabsTrigger>
             <TabsTrigger value="details" className="flex items-center gap-2">
-              <Lightbulb size={18} />
+              <Lightbulb className="h-4 w-4" />
               <span>Szczegółowe Opisy</span>
             </TabsTrigger>
           </TabsList>
@@ -212,7 +212,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 <AccordionItem value="llm" className="border-slate-700">
                   <AccordionTrigger className="text-lg text-white hover:text-blue-400 transition-colors">
                     <div className="flex items-center gap-2">
-                      <Cpu size={20} className="text-blue-400" />
+                      <Cpu className="text-blue-400" />
                       <span>1. Duże Modele Językowe (LLM)</span>
                     </div>
                   </AccordionTrigger>
@@ -232,7 +232,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 <AccordionItem value="tokens" className="border-slate-700">
                   <AccordionTrigger className="text-lg text-white hover:text-blue-400 transition-colors">
                     <div className="flex items-center gap-2">
-                      <Layers size={20} className="text-blue-400" />
+                      <Layers className="text-blue-400" />
                       <span>2. Tokeny</span>
                     </div>
                   </AccordionTrigger>
@@ -260,7 +260,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 <AccordionItem value="prompt" className="border-slate-700">
                   <AccordionTrigger className="text-lg text-white hover:text-blue-400 transition-colors">
                     <div className="flex items-center gap-2">
-                      <Search size={20} className="text-blue-400" />
+                      <Search className="text-blue-400" />
                       <span>3. Prompt (Zapytanie)</span>
                     </div>
                   </AccordionTrigger>
@@ -279,7 +279,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 <AccordionItem value="context" className="border-slate-700">
                   <AccordionTrigger className="text-lg text-white hover:text-blue-400 transition-colors">
                     <div className="flex items-center gap-2">
-                      <MessageCircle size={20} className="text-blue-400" />
+                      <MessageCircle className="text-blue-400" />
                       <span>4. Konwersacja i Kontekst</span>
                     </div>
                   </AccordionTrigger>
@@ -298,7 +298,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 <AccordionItem value="performance" className="border-slate-700">
                   <AccordionTrigger className="text-lg text-white hover:text-blue-400 transition-colors">
                     <div className="flex items-center gap-2">
-                      <BarChart size={20} className="text-blue-400" />
+                      <BarChart className="text-blue-400" />
                       <span>5. Wydajność a Skomplikowanie Modelu</span>
                     </div>
                   </AccordionTrigger>
@@ -444,3 +444,4 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
 };
 
 export default LessonContent;
+
