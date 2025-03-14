@@ -30,9 +30,9 @@ interface LessonContentProps {
 
 // Dane dla wykresu tokenów
 const tokenComparisonData = [
-  { name: "ChatGPT 3.5", tokens: 16000, fill: "#0066cc" },
-  { name: "Gemini 1.0", tokens: 32000, fill: "#0066cc" },
-  { name: "ChatGPT 4.0", tokens: 128000, fill: "#0066cc" },
+  { name: "ChatGPT 3.5", tokens: 16000, fill: "#0066cc", description: "~14 stron tekstu" },
+  { name: "Gemini 1.0", tokens: 32000, fill: "#0066cc", description: "~28 stron tekstu" },
+  { name: "ChatGPT 4.0", tokens: 128000, fill: "#0066cc", description: "~300 stron tekstu" },
 ];
 
 const LessonContent = ({ lesson }: LessonContentProps) => {
@@ -118,7 +118,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-300">
-                    Modele AI wytrenowane na ogromnych zbiorach danych tekstowych, umożliwiające rozumienie i generowanie ludzkiego języka.
+                    AI trenowane na ogromnych zbiorach tekstowych.
                   </p>
                   <div className="mt-3 text-slate-400 text-sm">
                     <p>Przykłady: GPT-4, GPT-3.5, Gemini</p>
@@ -137,7 +137,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-300">
-                    Podstawowe jednostki tekstu wykorzystywane przez modele językowe - fragmenty słów, znaki lub całe słowa.
+                    Jednostki tekstu w modelu - słowa, znaki, fragmenty.
                   </p>
                   <div className="mt-3 text-slate-400 text-sm">
                     <p>GPT-4: do 128K tokenów</p>
@@ -157,7 +157,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-300">
-                    Tekst wejściowy wysyłany do modelu językowego w celu uzyskania odpowiedzi.
+                    Tekst wejściowy dla modelu AI.
                   </p>
                   <div className="mt-3 text-slate-400 text-sm">
                     <p>Od prostych pytań po złożone instrukcje</p>
@@ -176,10 +176,10 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-300">
-                    Modele pamiętają wcześniejszą część rozmowy dzięki przechowywaniu kontekstu w promptach.
+                    Modele pamiętają kontekst dzięki tokenizacji historii.
                   </p>
                   <div className="mt-3 text-slate-400 text-sm">
-                    <p>Im dłuższa konwersacja, tym więcej tokenów potrzeba</p>
+                    <p>Dłuższa rozmowa = więcej tokenów</p>
                   </div>
                 </CardContent>
               </Card>
@@ -195,11 +195,11 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-300">
-                    Różne modele oferują różny balans między wydajnością a możliwościami.
+                    Balans między szybkością a możliwościami modelu.
                   </p>
                   <div className="mt-3 text-slate-400 text-sm">
                     <p>GPT-3.5: Szybszy, mniejsza pojemność</p>
-                    <p>GPT-4: Wolniejszy, większa pojemność i precyzja</p>
+                    <p>GPT-4: Wolniejszy, większa precyzja</p>
                   </div>
                 </CardContent>
               </Card>
@@ -369,7 +369,10 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                   color: 'white',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
                 }}
-                formatter={(value: number) => [`${value.toLocaleString()} tokenów`, 'Ilość']}
+                formatter={(value: number, name: string, props: any) => {
+                  const item = tokenComparisonData.find(d => d.tokens === value);
+                  return [`${value.toLocaleString()} tokenów (${item?.description})`, 'Pojemność']
+                }}
                 labelStyle={{ color: '#cf0e81', fontWeight: 'bold' }}
               />
               <Bar 
