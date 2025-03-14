@@ -27,6 +27,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       
       {lesson.videoUrl && (
         <div className="w-full">
+          <h2 className="text-xl font-semibold mb-3">Wprowadzenie do Flowise</h2>
           <VideoPlayerWithTranscript
             src={lesson.videoUrl}
             poster={lesson.thumbnailUrl}
@@ -46,9 +47,9 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         <div className="space-y-8 mt-10">
           {lesson.additionalVideos.map((video, index) => (
             <div key={index} className="space-y-4">
-              {video.title && (
-                <h2 className="text-xl md:text-2xl font-bold">{video.title}</h2>
-              )}
+              <h2 className="text-xl font-semibold">
+                {index === 0 ? "Co to LLM" : (video.title || `Dodatkowe wideo ${index + 1}`)}
+              </h2>
               {video.videoUrl && (
                 <VideoPlayerWithTranscript
                   src={video.videoUrl}
