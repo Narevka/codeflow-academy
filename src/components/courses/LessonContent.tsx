@@ -47,6 +47,14 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     const paragraphs = text.split('\n\n');
     
     return paragraphs.map((paragraph, index) => {
+      // Remove paragraphs that contain duplicate content about LLM and tokens
+      // which is already covered in the KeyAITermsGlossary component
+      if (paragraph.includes("Duże Modele Językowe (LLM)") || 
+          paragraph.includes("LLM to rodzaj sztucznej inteligencji") ||
+          paragraph.includes("Tokeny to podstawowe jednostki tekstu")) {
+        return null;
+      }
+
       // Check if paragraph is a numbered list item (starts with a number followed by a dot)
       if (/^\d+\.\s/.test(paragraph)) {
         return (
@@ -72,7 +80,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         );
       }
       return <p key={index} className="mb-4 text-base leading-relaxed">{paragraph}</p>;
-    });
+    }).filter(Boolean); // Filter out null values
   };
 
   // Komponent wykresu porównania tokenów - całkowicie przebudowany
