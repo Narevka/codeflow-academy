@@ -1,3 +1,4 @@
+
 import { Course } from "@/types/course";
 
 export const flowiseCourse: Course = {
@@ -26,7 +27,7 @@ export const flowiseCourse: Course = {
             {
               title: "Co to LLM",
               text: "Duże modele językowe, takie jak GPT-3, GPT-4 czy Gemini od Google, są rdzeniem współczesnych technologii przetwarzania języka naturalnego (NLP). Te modele są trenowane na ogromnych zbiorach danych językowych, co pozwala im generować odpowiedzi na pytania, analizować teksty, a nawet prowadzić rozbudowane konwersacje, zbliżone do interakcji z człowiekiem.\n\nJednym z kluczowych aspektów działania LLM są tokeny. Tokeny to jednostki tekstu – mogą to być słowa, znaki lub fragmenty zdań – które są analizowane przez model. Kiedy wpisujemy zdanie, jest ono rozbijane na tokeny, które model przetwarza, aby odpowiedzieć w sposób spójny i zrozumiały.\n\nAby lepiej zrozumieć, czym są tokeny i jak działają, warto odwiedzić narzędzia takie jak strona OpenAI, gdzie można zobaczyć, jak GPT przetwarza tekst na tokeny i w jaki sposób analizuje je, aby wygenerować odpowiedzi.",
-              imageUrl: "public/lovable-uploads/c446517e-2a9a-4167-826e-e3f660538637.png",
+              imageUrl: "public/lovable-uploads/201137b0-af5f-412c-baec-1bd4c2a2f144.png",
               imageAlt: "Porównanie możliwości przetwarzania tokenów przez różne modele językowe"
             },
             {
