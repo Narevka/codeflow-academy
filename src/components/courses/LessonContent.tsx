@@ -29,8 +29,21 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     const paragraphs = text.split('\n\n');
     
     return paragraphs.map((paragraph, index) => {
+      // Check if paragraph is a numbered list item (starts with a number followed by a dot)
+      if (/^\d+\.\s/.test(paragraph)) {
+        return (
+          <div key={index} className="mb-6">
+            <h4 className="text-lg font-bold text-primary mb-2">{paragraph.split('\n')[0]}</h4>
+            <div className="pl-4">
+              {paragraph.split('\n').slice(1).map((p, i) => (
+                <p key={i} className="mb-2 text-base leading-relaxed">{p}</p>
+              ))}
+            </div>
+          </div>
+        );
+      }
       // Check if paragraph is a section heading (all caps or short without punctuation)
-      if (
+      else if (
         (paragraph.length < 100 && !paragraph.includes('.')) ||
         paragraph.toUpperCase() === paragraph
       ) {
