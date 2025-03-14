@@ -1,3 +1,4 @@
+
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
 import { useState, useEffect } from "react";
@@ -22,7 +23,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
-  // Updated data for the token capacity chart with more accurate values matching the image
+  // Updated token data based on the screenshot values
   const tokenChartData = [
     { name: "ChatGPT 3.5", tokens: 16000 },
     { name: "Gemini 1.0", tokens: 32000 },
