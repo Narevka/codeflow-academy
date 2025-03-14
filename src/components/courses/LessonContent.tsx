@@ -1,3 +1,4 @@
+
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
 import { useState, useEffect } from "react";
@@ -128,6 +129,53 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       </div>
     );
   };
+  
+  // Dodatkowa zawartość opisująca prompty, kontekst i modele
+  const AdditionalTokenContent = () => {
+    return (
+      <div className="prose prose-invert max-w-none mt-4 mb-12">
+        <div className="mb-6">
+          <h4 className="text-lg font-bold text-primary mb-2">3. Prompt (Zapytanie)</h4>
+          <p className="mb-4 text-base leading-relaxed">
+            Prompt to zapytanie lub wejściowy tekst, który wysyłamy do modelu językowego w celu uzyskania odpowiedzi. 
+            Może to być proste pytanie ("Jaka jest stolica Francji?") lub bardziej skomplikowana instrukcja, 
+            która zawiera historię rozmowy. W Flowise prompty są podstawowym sposobem komunikacji z modelem i sterowania jego działaniem.
+          </p>
+        </div>
+        
+        <div className="mb-6">
+          <h4 className="text-lg font-bold text-primary mb-2">4. Konwersacja i Kontekst</h4>
+          <p className="mb-4 text-base leading-relaxed">
+            Modele językowe, takie jak GPT, generują odpowiedzi na podstawie przesłanych do nich promptów. 
+            Jednakże nie mają one rzeczywistej "pamięci" – każdy nowy prompt traktowany jest jako oddzielne zapytanie. 
+            Aby kontynuować konwersację w sposób spójny, historia rozmowy jest zwykle zawierana w treści promptu. 
+            Dlatego im dłuższa konwersacja, tym więcej tokenów potrzeba na zachowanie kontekstu.
+          </p>
+        </div>
+        
+        <div className="mb-6">
+          <h4 className="text-lg font-bold text-primary mb-2">5. Wydajność a Skomplikowanie Modelu</h4>
+          <p className="mb-4 text-base leading-relaxed">
+            W kontekście wyboru modelu do aplikacji warto znać różnice między różnymi wersjami:
+          </p>
+          <ul className="list-disc pl-6 mb-4 space-y-2">
+            <li className="text-base">
+              <span className="font-semibold">GPT-3.5:</span> Szybszy, ale obsługuje mniejszą liczbę tokenów. 
+              Idealny do prostszych zadań.
+            </li>
+            <li className="text-base">
+              <span className="font-semibold">GPT-4:</span> Wolniejszy, ale bardziej precyzyjny i obsługujący większą ilość tokenów. 
+              Lepszy do zaawansowanych analiz i długich konwersacji.
+            </li>
+          </ul>
+          <p className="mb-4 text-base leading-relaxed">
+            Oprócz modeli GPT, istnieją także inne modele, takie jak Falcon 40B, które oferują różne zalety 
+            w zależności od specyfiki aplikacji.
+          </p>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-6 w-full">
@@ -177,8 +225,11 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         </div>
       )}
 
-      {/* Dodajemy wykres porównujący możliwości tokenów poniżej zawartości */}
+      {/* Wykres porównania tokenów */}
       <TokenComparisonChart />
+      
+      {/* Nowa sekcja z treścią o promptach i modelach */}
+      <AdditionalTokenContent />
     </div>
   );
 };
