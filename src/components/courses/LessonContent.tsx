@@ -18,7 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ChevronDown, ChevronUp, BrainCircuit, MessagesSquare, Layers, MessageCircle, Activity } from "lucide-react";
+import { BrainCircuit, MessagesSquare, Layers, MessageCircle, Activity } from "lucide-react";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -82,10 +82,10 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     });
   };
 
-  // Komponent wykresu porównania tokenów - całkowicie przebudowany
+  // Komponent wykresu porównania tokenów
   const TokenComparisonChart = () => {
     return (
-      <div className="mt-12 mb-10">
+      <div className="mt-6 mb-6">
         <h3 className="text-xl font-bold text-magenta mb-6 text-center">Możliwości przetwarzania tokenów</h3>
         <div className="w-full max-w-3xl mx-auto h-[300px] rounded-xl border border-white/20 overflow-hidden bg-gradient-to-br from-[#1E2130] to-[#2A2E3F]">
           <ResponsiveContainer width="100%" height="100%">
@@ -142,13 +142,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
   const AITermsAccordion = () => {
     return (
       <div className="mt-8 mb-12">
-        <div className="flex justify-center gap-8 mb-6">
-          <button
-            onClick={() => setActiveAccordion("item-1")}
-            className="text-white bg-dark-purple/50 px-3 py-2 rounded hover:bg-dark-purple/80"
-          >
-            Karty Pojęć
-          </button>
+        <div className="flex justify-center mb-6">
           <button
             onClick={() => setActiveAccordion("item-5")}
             className="text-white bg-magenta/30 px-3 py-2 rounded hover:bg-magenta/50"
@@ -199,6 +193,9 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
                 <p className="mt-2">
                   Rozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpływa to na długość konwersacji, którą model może „zapamiętać" oraz przetworzyć.
                 </p>
+                
+                {/* Token comparison chart moved inside the Tokens accordion item */}
+                <TokenComparisonChart />
               </AccordionContent>
             </AccordionItem>
             
@@ -315,9 +312,6 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
           ))}
         </div>
       )}
-
-      {/* Wykres porównania tokenów */}
-      <TokenComparisonChart />
       
       {/* Sekcja z terminami AI w formacie akordeonu */}
       <AITermsAccordion />
