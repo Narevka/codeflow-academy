@@ -1,6 +1,5 @@
 
 import { useEffect } from "react";
-import { motion } from "framer-motion";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -26,13 +25,7 @@ const Index = () => {
   }, [theme]);
   
   return (
-    <div 
-      className={`min-h-screen ${
-        theme === 'dark' 
-          ? 'bg-gray-950 text-white' 
-          : 'bg-white text-gray-900'
-      }`}
-    >
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-to-b from-gray-950 to-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       <Header />
       
       <main>

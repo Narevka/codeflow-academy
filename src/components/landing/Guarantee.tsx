@@ -9,7 +9,7 @@ const Guarantee = () => {
   
   return (
     <section className={`py-24 ${
-      theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'
+      theme === 'dark' ? 'bg-gray-900/80' : 'bg-gray-50'
     }`}>
       <div className="container mx-auto px-4">
         <motion.div 
@@ -17,29 +17,29 @@ const Guarantee = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className={`max-w-4xl mx-auto p-10 rounded-2xl border ${
+          className={`max-w-4xl mx-auto p-12 rounded-2xl ${
             theme === 'dark'
-              ? 'bg-gray-900/50 border-gray-800/50'
-              : 'bg-white border-gray-100 shadow-lg'
+              ? 'bg-gradient-to-br from-gray-800/50 to-gray-900/70 border border-gray-700/50'
+              : 'bg-white shadow-xl border border-gray-100/60'
           }`}
         >
-          <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center gap-10">
             <div className="flex-shrink-0">
-              <div className={`w-24 h-24 rounded-full flex items-center justify-center ${
-                theme === 'dark' ? 'bg-blue-900/20' : 'bg-blue-50'
+              <div className={`w-28 h-28 rounded-2xl flex items-center justify-center ${
+                theme === 'dark' ? 'bg-indigo-900/20' : 'bg-indigo-50'
               }`}>
-                <ShieldCheck size={48} className="text-blue-600 dark:text-blue-400" />
+                <ShieldCheck size={56} className="text-indigo-600 dark:text-indigo-400" />
               </div>
             </div>
             
             <div className="text-center md:text-left">
-              <h2 className={`text-2xl md:text-3xl font-bold mb-4`}>
+              <h2 className="text-2xl md:text-3xl font-bold mb-5">
                 30-dniowa gwarancja satysfakcji
               </h2>
               
-              <p className={`text-lg mb-6 ${
+              <p className={`text-lg mb-7 ${
                 theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-              }`}>
+              } leading-relaxed`}>
                 Wierzymy, że nasz kurs dostarczy Ci ogrom wartościowej, praktycznej wiedzy. 
                 Jednak jeśli z jakiegoś powodu uznasz, że nie spełnia Twoich oczekiwań, 
                 masz 30 dni na rezygnację. Wystarczy, że napiszesz na info@toknowai.pl, 
@@ -48,11 +48,11 @@ const Guarantee = () => {
               
               <Link 
                 to="/offer" 
-                className={`inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-transform hover:translate-y-[-2px] ${
-                  'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-500/20'
+                className={`inline-flex items-center justify-center px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:translate-y-[-2px] ${
+                  'bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg hover:shadow-indigo-500/20'
                 }`}
               >
-                Rozpocznij swoją przygodę z AI bez ryzyka!
+                Rozpocznij swoją przygodę z AI bez ryzyka
               </Link>
             </div>
           </div>
