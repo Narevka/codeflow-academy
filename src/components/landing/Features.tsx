@@ -45,7 +45,7 @@ const Features = () => {
     {
       icon: <Workflow className="w-6 h-6 text-orange" />,
       title: "Intuicyjny interfejs",
-      description: "Flowise wykorzystuje prosty interfejs typu „przeciągnij i upuść", który ułatwia tworzenie złożonych aplikacji AI."
+      description: "Flowise wykorzystuje prosty interfejs typu \"przeciągnij i upuść\", który ulatwia tworzenie złożonych aplikacji AI."
     },
     {
       icon: <Brain className="w-6 h-6 text-orange" />,
