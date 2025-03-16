@@ -55,7 +55,7 @@ export default {
 				},
 				magenta: '#cf0e81',
 				purple: '#5c26e0',
-				dark: '#000000',
+				dark: '#121212',
 				'dark-purple': '#1A1F2C',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

@@ -8,22 +8,29 @@ import {
 } from "@/components/ui/accordion";
 import { BrainCircuit, MessagesSquare, Layers, MessageCircle, Activity } from "lucide-react";
 import TokenComparisonChart from "./TokenComparisonChart";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const AITermsAccordion = () => {
   const [activeAccordion, setActiveAccordion] = useState<string | null>("item-5");
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   
   return (
     <div className="mt-8 mb-12">
       <div className="flex justify-center mb-6">
         <button
           onClick={() => setActiveAccordion("item-5")}
-          className="text-white bg-magenta/30 px-3 py-2 rounded hover:bg-magenta/50"
+          className="text-white bg-magenta/30 px-3 py-2 rounded hover:bg-magenta/50 transition-colors"
         >
           Szczegółowe Opisy
         </button>
       </div>
       
-      <div className="bg-slate-800/50 rounded-lg border border-slate-700/50 overflow-hidden">
+      <div className={`rounded-lg border overflow-hidden ${
+        isDark 
+          ? "bg-slate-900/50 border-slate-800/50" 
+          : "bg-slate-800/50 border-slate-700/50"
+      }`}>
         <Accordion
           type="single"
           collapsible
@@ -32,10 +39,14 @@ const AITermsAccordion = () => {
           className="w-full"
         >
           <AccordionItem value="item-1" className="border-b border-white/10">
-            <AccordionTrigger className="py-5 px-4 hover:bg-slate-700/30 transition-colors">
+            <AccordionTrigger className={`py-5 px-4 transition-colors ${
+              isDark 
+                ? "hover:bg-slate-800/30" 
+                : "hover:bg-slate-700/30"
+            }`}>
               <div className="flex items-center">
                 <BrainCircuit className="text-blue-400 mr-3" />
-                <span className="text-xl font-medium">1. Duże Modele Językowe (LLM)</span>
+                <span className="text-xl font-medium text-white">1. Duże Modele Językowe (LLM)</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 py-3 text-white/70">
@@ -46,10 +57,14 @@ const AITermsAccordion = () => {
           </AccordionItem>
           
           <AccordionItem value="item-2" className="border-b border-white/10">
-            <AccordionTrigger className="py-5 px-4 hover:bg-slate-700/30 transition-colors">
+            <AccordionTrigger className={`py-5 px-4 transition-colors ${
+              isDark 
+                ? "hover:bg-slate-800/30" 
+                : "hover:bg-slate-700/30"
+            }`}>
               <div className="flex items-center">
                 <Layers className="text-blue-400 mr-3" />
-                <span className="text-xl font-medium">2. Tokeny</span>
+                <span className="text-xl font-medium text-white">2. Tokeny</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 py-3 text-white/70">
@@ -66,7 +81,6 @@ const AITermsAccordion = () => {
                 Rozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpływa to na długość konwersacji, którą model może „zapamiętać" oraz przetworzyć.
               </p>
               
-              {/* Token comparison chart moved inside the Tokens accordion item */}
               <TokenComparisonChart />
             </AccordionContent>
           </AccordionItem>

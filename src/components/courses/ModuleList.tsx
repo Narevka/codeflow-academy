@@ -13,7 +13,7 @@ interface ModuleListProps {
 const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: ModuleListProps) => {
   return (
     <div className="space-y-1">
-      <h3 className="font-semibold text-white mb-3">Moduły</h3>
+      <h3 className="font-semibold text-white dark:text-white mb-3">Moduły</h3>
       {modules.map((module) => (
         <div key={module.id} className="relative">
           <Link
@@ -21,19 +21,19 @@ const ModuleList = ({ modules, courseId, activeModuleId, collapsed = false }: Mo
             className={`flex items-center p-3 rounded-md ${
               module.id === activeModuleId
                 ? "bg-magenta/20 border-l-4 border-magenta"
-                : "hover:bg-white/5 border-l-4 border-transparent"
+                : "hover:bg-black/5 dark:hover:bg-white/5 border-l-4 border-transparent"
             }`}
           >
             <div className="mr-3 text-lg">
               {module.completed ? (
                 <CheckCircle size={20} className="text-green-500" />
               ) : (
-                <Circle size={20} className="text-white/40" />
+                <Circle size={20} className="text-black/40 dark:text-white/40" />
               )}
             </div>
             
             <div className="flex-1">
-              <span className={`text-sm ${module.id === activeModuleId ? "text-white font-medium" : "text-white/80"}`}>
+              <span className={`text-sm ${module.id === activeModuleId ? "text-black dark:text-white font-medium" : "text-black/80 dark:text-white/80"}`}>
                 {module.title}
               </span>
             </div>

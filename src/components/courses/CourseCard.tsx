@@ -10,11 +10,11 @@ interface CourseCardProps {
 
 const CourseCard = ({ course }: CourseCardProps) => {
   return (
-    <div className="glass-card overflow-hidden transition-all duration-300 hover:shadow-lg border border-white/10">
+    <div className="glass-card overflow-hidden transition-all duration-300 hover:shadow-lg border border-white/10 dark:border-white/5">
       <div className="p-6">
         <h2 className="text-2xl font-bold gradient-text mb-3">{course.title}</h2>
         
-        <div className="flex items-center text-white/70 text-sm mb-4">
+        <div className="flex items-center text-black/70 dark:text-white/70 text-sm mb-4">
           {course.lastActivity && (
             <>
               <CalendarClock size={16} className="mr-1.5" />
@@ -23,14 +23,14 @@ const CourseCard = ({ course }: CourseCardProps) => {
           )}
         </div>
         
-        <p className="text-white/80 mb-4">{course.description}</p>
+        <p className="text-black/80 dark:text-white/80 mb-4">{course.description}</p>
         
         <div className="mb-4">
           <div className="flex justify-between text-sm mb-1.5">
-            <span>Postęp</span>
-            <span>{course.progress}%</span>
+            <span className="text-black/90 dark:text-white/90">Postęp</span>
+            <span className="text-black/90 dark:text-white/90">{course.progress}%</span>
           </div>
-          <Progress value={course.progress} className="h-2 bg-white/10" />
+          <Progress value={course.progress} className="h-2 bg-white/10 dark:bg-black/30" />
         </div>
         
         <Link

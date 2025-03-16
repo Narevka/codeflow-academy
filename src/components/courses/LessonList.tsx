@@ -14,7 +14,7 @@ interface LessonListProps {
 const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = false }: LessonListProps) => {
   return (
     <div className="space-y-1 mt-4">
-      <h3 className="font-semibold text-white/80 text-sm mb-2">Lekcje</h3>
+      <h3 className="font-semibold text-black/80 dark:text-white/80 text-sm mb-2">Lekcje</h3>
       {lessons.map((lesson) => (
         <Link
           key={lesson.id}
@@ -22,18 +22,18 @@ const LessonList = ({ lessons, courseId, moduleId, activeLessonId, collapsed = f
           className={`flex items-center p-3 rounded-md ${
             lesson.id === activeLessonId
               ? "bg-magenta/20 border-l-4 border-magenta"
-              : "hover:bg-white/5 border-l-4 border-transparent"
+              : "hover:bg-black/5 dark:hover:bg-white/5 border-l-4 border-transparent"
           }`}
         >
           <div className="mr-3">
             {lesson.completed ? (
               <CheckCircle size={18} className="text-green-500" />
             ) : (
-              <Circle size={18} className="text-white/40" />
+              <Circle size={18} className="text-black/40 dark:text-white/40" />
             )}
           </div>
           <div className="flex-1">
-            <span className={`text-sm ${lesson.id === activeLessonId ? "text-white font-medium" : "text-white/80"}`}>
+            <span className={`text-sm ${lesson.id === activeLessonId ? "text-black dark:text-white font-medium" : "text-black/80 dark:text-white/80"}`}>
               {lesson.title}
             </span>
           </div>

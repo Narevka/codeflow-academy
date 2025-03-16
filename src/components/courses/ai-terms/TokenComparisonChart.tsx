@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   Label
 } from "recharts";
+import { useTheme } from '@/contexts/ThemeContext';
 
 // Data for token comparison chart
 const tokenComparisonData = [
@@ -18,26 +19,29 @@ const tokenComparisonData = [
 ];
 
 const TokenComparisonChart = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  
   return (
     <div className="mt-6 mb-6">
       <h3 className="text-xl font-bold text-magenta mb-6 text-center">Możliwości przetwarzania tokenów</h3>
-      <div className="w-full max-w-3xl mx-auto h-[300px] rounded-xl border border-white/20 overflow-hidden bg-gradient-to-br from-[#1E2130] to-[#2A2E3F]">
+      <div className="w-full max-w-3xl mx-auto h-[300px] rounded-xl border border-white/20 overflow-hidden bg-gradient-to-br from-[#1E2130] to-[#2A2E3F] dark:from-[#121218] dark:to-[#1D1F2B]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={tokenComparisonData}
             margin={{ top: 20, right: 30, left: 60, bottom: 40 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(255, 255, 255, 0.1)"} vertical={false} />
             <XAxis 
               dataKey="name" 
               tick={{ fill: 'white', fontSize: 12 }}
-              tickLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
-              axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
+              tickLine={{ stroke: isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.2)' }}
+              axisLine={{ stroke: isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.2)' }}
             />
             <YAxis 
               tick={{ fill: 'white', fontSize: 12 }}
-              tickLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
-              axisLine={{ stroke: 'rgba(255, 255, 255, 0.2)' }}
+              tickLine={{ stroke: isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.2)' }}
+              axisLine={{ stroke: isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.2)' }}
             >
               <Label 
                 value="Ilość tokenów" 
@@ -49,8 +53,8 @@ const TokenComparisonChart = () => {
             </YAxis>
             <Tooltip
               contentStyle={{ 
-                backgroundColor: 'rgba(20, 22, 34, 0.9)', 
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                backgroundColor: isDark ? 'rgba(15, 16, 25, 0.95)' : 'rgba(20, 22, 34, 0.9)', 
+                border: isDark ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid rgba(255, 255, 255, 0.1)',
                 borderRadius: '8px',
                 color: 'white',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
@@ -61,7 +65,7 @@ const TokenComparisonChart = () => {
             <Bar 
               dataKey="tokens" 
               radius={[4, 4, 0, 0]}
-              fill="#0075ff"
+              fill={isDark ? "#2872e5" : "#0075ff"}
               animationDuration={1500}
               barSize={60}
             />
