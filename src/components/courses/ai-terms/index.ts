@@ -1,3 +1,6 @@
 
-export { default as AITermsAccordion } from './AITermsAccordion';
-export { default as TokenComparisonChart } from './TokenComparisonChart';
+import AITermsAccordion from "./AITermsAccordion";
+import TokenComparisonChart from "./TokenComparisonChart";
+import CloudInstallationDiagram from "./CloudInstallationDiagram";
+
+export { AITermsAccordion, TokenComparisonChart, CloudInstallationDiagram };

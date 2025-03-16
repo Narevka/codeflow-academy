@@ -2,7 +2,7 @@
 import { Lesson } from "@/types/course";
 import { useState, useEffect } from "react";
 import { LessonVideoSection, AdditionalVideosSection, TextFormatter } from "./lesson";
-import { AITermsAccordion } from "./ai-terms";
+import { AITermsAccordion, CloudInstallationDiagram } from "./ai-terms";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -22,6 +22,9 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
+  // Check if this is the installation lesson
+  const isInstallationLesson = lesson.id === "lesson-2-1";
+
   return (
     <div className="space-y-6 w-full">
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.displayTitle || lesson.title}</h1>
@@ -33,6 +36,9 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
           <TextFormatter text={lesson.description} />
         </div>
       )}
+
+      {/* Add the cloud installation diagram if this is the installation lesson */}
+      {isInstallationLesson && <CloudInstallationDiagram />}
 
       {lesson.additionalVideos && lesson.additionalVideos.length > 0 && (
         <AdditionalVideosSection videos={lesson.additionalVideos} />
