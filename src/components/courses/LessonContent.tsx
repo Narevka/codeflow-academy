@@ -33,10 +33,10 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       
       {lesson.description && (
         <div className="prose prose-invert max-w-none mt-6">
-          <TextFormatter text={lesson.description} />
-          
-          {/* Add the cloud installation diagram right after the text description for installation lesson */}
-          {isInstallationLesson && <CloudInstallationDiagram />}
+          <TextFormatter 
+            text={lesson.description} 
+            isInstallationLesson={isInstallationLesson} 
+          />
         </div>
       )}
 
