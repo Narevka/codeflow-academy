@@ -77,7 +77,7 @@ const CourseValueProposition = () => {
           <ValueProposition
             icon={<Zap size={24} className="text-magenta" />}
             title="Prosto i intuicyjnie"
-            description="Bez kodowania, bez stresu — wszystko dzięki graficznym narzędziom „drag & drop". Tworzenie aplikacji AI nigdy nie było tak proste i dostępne."
+            description="Bez kodowania, bez stresu - wszystko dzięki graficznym narzędziom drag & drop. Tworzenie aplikacji AI nigdy nie było tak proste i dostępne."
             delay={2}
           />
           
