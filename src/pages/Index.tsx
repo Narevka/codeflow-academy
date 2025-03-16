@@ -1,15 +1,16 @@
 
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import Hero from "../components/home/Hero";
+import HeroEnhanced from "../components/home/HeroEnhanced";
 import CourseTrailer from "../components/home/CourseTrailer";
-import CourseFeatures from "../components/home/CourseFeatures";
-import DemoCourse from "../components/home/DemoCourse";
-import CourseAchievements from "../components/home/CourseAchievements";
+import CourseValueProposition from "../components/home/CourseValueProposition";
 import CourseProgram from "../components/home/CourseProgram";
+import DemoCourse from "../components/home/DemoCourse";
+import CourseOutcomes from "../components/home/CourseOutcomes";
 import Guarantee from "../components/home/Guarantee";
-import Faq from "../components/home/Faq";
+import EnhancedFaq from "../components/home/EnhancedFaq";
 import CallToAction from "../components/home/CallToAction";
+import ContactFormSection from "../components/home/ContactFormSection";
 
 const Index = () => {
   return (
@@ -17,13 +18,13 @@ const Index = () => {
       <Header />
 
       {/* Hero Section */}
-      <Hero />
+      <HeroEnhanced />
 
       {/* Course Trailer Section */}
       <CourseTrailer />
 
       {/* Why Choose This Course */}
-      <CourseFeatures />
+      <CourseValueProposition />
 
       {/* Course Program */}
       <CourseProgram />
@@ -32,13 +33,16 @@ const Index = () => {
       <DemoCourse />
 
       {/* What You Will Achieve */}
-      <CourseAchievements />
+      <CourseOutcomes />
 
       {/* Guarantee Section */}
       <Guarantee />
 
       {/* FAQ Section */}
-      <Faq />
+      <EnhancedFaq />
+
+      {/* Contact Form */}
+      <ContactFormSection />
 
       {/* Call to Action */}
       <CallToAction />
