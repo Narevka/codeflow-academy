@@ -6,13 +6,12 @@ import Footer from "../components/layout/Footer";
 import { useTheme } from "@/contexts/ThemeContext";
 import Hero from "../components/landing/Hero";
 import Features from "../components/landing/Features";
-import Program from "../components/landing/Program";
-import Benefits from "../components/landing/Benefits";
-import Guarantee from "../components/landing/Guarantee";
-import Faq from "../components/landing/Faq";
-import ContactSection from "../components/landing/ContactSection";
-import Cta from "../components/landing/Cta";
+import CourseContent from "../components/landing/CourseContent";
+import Instructors from "../components/landing/Instructors";
 import Testimonials from "../components/landing/Testimonials";
+import Pricing from "../components/landing/Pricing";
+import Faq from "../components/landing/Faq";
+import Cta from "../components/landing/Cta";
 
 const Index = () => {
   const { theme } = useTheme();
@@ -29,7 +28,7 @@ const Index = () => {
     <div 
       className={`min-h-screen ${
         theme === 'dark' 
-          ? 'bg-black text-white' 
+          ? 'bg-gray-950 text-white' 
           : 'bg-white text-gray-900'
       }`}
     >
@@ -38,12 +37,11 @@ const Index = () => {
       <main>
         <Hero />
         <Features />
-        <Program />
-        <Benefits />
+        <CourseContent />
+        <Instructors />
         <Testimonials />
-        <Guarantee />
+        <Pricing />
         <Faq />
-        <ContactSection />
         <Cta />
       </main>
 

@@ -1,16 +1,16 @@
 
 import { motion } from "framer-motion";
-import { Brain, Code, Database, Layers, Lightbulb, Target, UserPlus, Zap } from "lucide-react";
+import { Brain, Code, Database, Lock, Pen, Workflow } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface FeatureProps {
   icon: React.ReactNode;
   title: string;
   description: string;
-  index: number;
+  delay: number;
 }
 
-const Feature = ({ icon, title, description, index }: FeatureProps) => {
+const Feature = ({ icon, title, description, delay }: FeatureProps) => {
   const { theme } = useTheme();
   
   return (
@@ -18,22 +18,20 @@ const Feature = ({ icon, title, description, index }: FeatureProps) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className={`p-6 rounded-xl border transition-all duration-300 hover:border-orange/50 ${
+      transition={{ duration: 0.5, delay: delay * 0.1 }}
+      className={`p-6 rounded-lg ${
         theme === 'dark'
-          ? 'bg-gray-900/50 border-gray-800'
-          : 'bg-white border-gray-200 shadow-sm hover:shadow'
+          ? 'bg-gray-900'
+          : 'bg-white shadow-sm'
       }`}
     >
-      <div className={`w-12 h-12 flex items-center justify-center rounded-lg mb-4 ${
-        theme === 'dark' ? 'bg-orange/20' : 'bg-orange-soft'
+      <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 ${
+        theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'
       }`}>
         {icon}
       </div>
-      <h3 className={`text-xl font-semibold mb-3 ${
-        theme === 'dark' ? 'text-white' : 'text-gray-900'
-      }`}>{title}</h3>
-      <p className={theme === 'dark' ? 'text-white/70' : 'text-gray-600'}>
+      <h3 className="text-lg font-medium mb-3">{title}</h3>
+      <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
         {description}
       </p>
     </motion.div>
@@ -45,100 +43,61 @@ const Features = () => {
   
   const features = [
     {
-      icon: <Target className="w-6 h-6 text-orange" />,
-      title: "Praktyczne podejście",
-      description: "Kurs koncentruje się na praktycznych umiejętnościach, które możesz natychmiast zastosować w swoich projektach."
-    },
-    {
-      icon: <Zap className="w-6 h-6 text-orange" />,
-      title: "Szybkie efekty",
-      description: "Już po pierwszych lekcjach będziesz w stanie tworzyć proste aplikacje wykorzystujące modele językowe."
-    },
-    {
-      icon: <Lightbulb className="w-6 h-6 text-orange" />,
-      title: "Innowacyjne rozwiązania",
-      description: "Poznaj najnowsze trendy i możliwości wykorzystania AI w rozwiązywaniu rzeczywistych problemów."
+      icon: <Workflow className="w-6 h-6 text-orange" />,
+      title: "Intuicyjny interfejs",
+      description: "Flowise wykorzystuje prosty interfejs typu „przeciągnij i upuść", który ułatwia tworzenie złożonych aplikacji AI."
     },
     {
       icon: <Brain className="w-6 h-6 text-orange" />,
-      title: "Poznaj potencjał AI",
-      description: "Zrozum, jak działają duże modele językowe i jak wykorzystać ich potencjał w swoich projektach."
-    },
-    {
-      icon: <Layers className="w-6 h-6 text-orange" />,
-      title: "Automatyzacja procesów",
-      description: "Naucz się automatyzować zadania i procesy wykorzystując możliwości sztucznej inteligencji."
-    },
-    {
-      icon: <Code className="w-6 h-6 text-orange" />,
-      title: "Bez programowania",
-      description: "Twórz zaawansowane rozwiązania bez konieczności pisania kodu - wszystko poprzez intuicyjny interfejs."
+      title: "Moc LLM bez kodowania",
+      description: "Uzyskaj dostęp do najnowocześniejszych dużych modeli językowych bez konieczności pisania kodu."
     },
     {
       icon: <Database className="w-6 h-6 text-orange" />,
-      title: "Integracja z danymi",
-      description: "Dowiesz się, jak łączyć swoje aplikacje AI z zewnętrznymi bazami danych i źródłami informacji."
+      title: "Bazy wiedzy i pamięć",
+      description: "Twórz aplikacje z pamięcią kontekstową i integracją z zewnętrznymi bazami danych i dokumentami."
     },
     {
-      icon: <UserPlus className="w-6 h-6 text-orange" />,
-      title: "Dla każdego poziomu",
-      description: "Kurs został zaprojektowany tak, aby był przystępny dla początkujących, ale wartościowy dla profesjonalistów."
+      icon: <Pen className="w-6 h-6 text-orange" />,
+      title: "Zaawansowane prompty",
+      description: "Opanuj sztukę tworzenia efektywnych promptów, które uzyskują najlepsze rezultaty z modeli AI."
+    },
+    {
+      icon: <Lock className="w-6 h-6 text-orange" />,
+      title: "Bezpieczeństwo danych",
+      description: "Naucz się wdrażać aplikacje AI z zachowaniem najwyższych standardów bezpieczeństwa i prywatności."
+    },
+    {
+      icon: <Code className="w-6 h-6 text-orange" />,
+      title: "API i integracje",
+      description: "Łącz swoje rozwiązania AI z istniejącymi systemami i platformami za pomocą API i webhooków."
     }
   ];
 
   return (
     <section className={`py-20 ${
-      theme === 'dark' ? 'bg-black' : 'bg-gray-50'
+      theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'
     }`}>
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className={`inline-block px-4 py-1 rounded-full text-sm font-medium mb-4 ${
-              theme === 'dark'
-                ? 'bg-orange/20 text-orange'
-                : 'bg-orange-soft text-orange-dark'
-            }`}
-          >
-            Dlaczego warto?
-          </motion.span>
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h2 className="text-3xl font-bold mb-6">
+            Innowacyjne podejście do tworzenia <span className="text-orange">aplikacji AI</span>
+          </h2>
           
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className={`text-3xl md:text-4xl font-bold mb-6 ${
-              theme === 'dark'
-                ? 'text-white'
-                : 'text-gray-900'
-            }`}
-          >
-            Dlaczego warto wybrać ten kurs?
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className={`text-lg ${theme === 'dark' ? 'text-white/70' : 'text-gray-600'}`}
-          >
-            Nasz kurs to kompleksowe podejście do tworzenia aplikacji AI bez kodowania. 
-            Zyskaj umiejętności, które zmienią Twoją karierę.
-          </motion.p>
+          <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+            Nasz kurs wprowadza technologię Flowise jako narzędzie no-code do tworzenia zaawansowanych
+            rozwiązań AI, które dotychczas wymagały specjalistycznej wiedzy programistycznej.
+          </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <Feature
               key={index}
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
-              index={index}
+              delay={index}
             />
           ))}
         </div>
