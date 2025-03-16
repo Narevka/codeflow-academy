@@ -32,10 +32,10 @@ const Index = () => {
         <Hero />
         <Features />
         <CourseContent />
-        <Instructors />
         <Testimonials />
-        <Pricing />
+        <Instructors />
         <Guarantee />
+        <Pricing />
         <Faq />
         <Cta />
       </main>
