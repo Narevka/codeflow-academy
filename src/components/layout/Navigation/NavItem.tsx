@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { useRef, useEffect } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface NavItemProps {
   path: string;
@@ -20,6 +21,7 @@ export const NavItem = ({
   isActive 
 }: NavItemProps) => {
   const ref = useRef<HTMLLIElement>(null);
+  const { theme } = useTheme();
   
   useEffect(() => {
     if (isActive && ref.current) {
@@ -48,7 +50,11 @@ export const NavItem = ({
     >
       <Link
         to={path}
-        className="relative z-10 block cursor-pointer px-4 py-2 text-sm font-medium uppercase text-black dark:text-white mix-blend-difference"
+        className={`relative z-10 block cursor-pointer px-4 py-2 text-sm font-medium uppercase ${
+          theme === 'dark'
+            ? 'text-white mix-blend-difference'
+            : isActive ? 'text-primary' : 'text-gray-700 hover:text-primary'
+        } transition-colors duration-200`}
       >
         {label}
       </Link>

@@ -8,13 +8,13 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --foreground: 240 10% 3.9%;
 
-    --card: 220 20% 97%;
-    --card-foreground: 0 0% 0%;
+    --card: 0 0% 98%;
+    --card-foreground: 240 10% 3.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 240 10% 3.9%;
 
     --primary: 328 87% 43%;
     --primary-foreground: 0 0% 100%;
@@ -22,17 +22,17 @@
     --secondary: 262 77% 51%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 5% 90%;
+    --muted: 240 5% 96%;
     --muted-foreground: 240 5% 40%;
 
-    --accent: 240 5% 95%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 10% 3.9%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 5% 85%;
-    --input: 240 5% 85%;
+    --border: 240 5% 88%;
+    --input: 240 5% 88%;
     --ring: 240 5% 40%;
 
     --radius: 0.5rem;
@@ -48,32 +48,32 @@
   }
 
   .dark {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 95%;
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
 
-    --card: 240 10% 15%;
-    --card-foreground: 0 0% 95%;
+    --card: 240 10% 8%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 15%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 240 10% 8%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 328 87% 43%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 262 77% 51%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 5% 25%;
+    --muted: 240 5% 20%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 240 5% 25%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 240 5% 15%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 95%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5% 26%;
-    --input: 240 5% 26%;
+    --border: 240 5% 20%;
+    --input: 240 5% 20%;
     --ring: 240 5% 65%;
   }
 
@@ -89,15 +89,15 @@
 
 @layer components {
   .glass-panel {
-    @apply bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-lg;
+    @apply bg-white/80 dark:bg-black/20 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-lg shadow-md dark:shadow-none;
   }
 
   .glass-card {
-    @apply bg-white/10 dark:bg-black/20 backdrop-blur-sm border border-white/20 dark:border-white/10 rounded-lg transition-all duration-300 hover:bg-white/15 dark:hover:bg-black/30 hover:border-primary/30;
+    @apply bg-white/90 dark:bg-black/20 backdrop-blur-sm border border-gray-200 dark:border-white/10 rounded-lg transition-all duration-300 hover:bg-white/95 dark:hover:bg-black/30 hover:border-primary/30 shadow-sm dark:shadow-none;
   }
 
   .nav-link {
-    @apply relative text-black/80 dark:text-white/80 hover:text-black dark:hover:text-white transition-colors duration-200 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+    @apply relative text-gray-700 dark:text-white/80 hover:text-black dark:hover:text-white transition-colors duration-200 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
   }
 
   .btn-primary {
@@ -113,7 +113,7 @@
   }
 
   .course-card {
-    @apply bg-card-gradient glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10;
+    @apply bg-white dark:bg-card-gradient glass-card p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10;
   }
 
   .feature-icon {
