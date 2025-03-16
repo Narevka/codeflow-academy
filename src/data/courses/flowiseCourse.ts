@@ -1,4 +1,3 @@
-
 import { Course } from "@/types/course";
 
 export const flowiseCourse: Course = {
@@ -65,7 +64,9 @@ Wybór odpowiedniego modelu zależy od specyfiki zadania. Do zadań prostszych, 
             {
               title: "Dodatkowo o instalacji",
               videoUrl: "mux:ti1ULAh6YUlpwAPWh3FWEyYWN6QIMWInsoA6WCpmdd4",
-              description: `Szczegółowy przewodnik po instalacji Flowise i jego wymaganiach technicznych. W tym materiale omówione są różne metody instalacji, rozwiązywanie typowych problemów oraz optymalizacja środowiska.`
+              description: `Instalacja Flowise na Windows – Lokalnie i w Chmurze
+
+W tej instrukcji omówimy dwa podejścia do instalacji Flowise – instalację lokalną oraz instalację w chmurze. Zanim przejdziemy do szczegółowej konfiguracji, warto zrozumieć, czym różnią się te dwa sposoby instalacji, jakie są ich zalety i wady, oraz dla jakich zastosowań każdy z nich jest optymalny.`
             }
           ],
           completed: true
@@ -209,3 +210,4 @@ Wybór odpowiedniego modelu zależy od specyfiki zadania. Do zadań prostszych, 
     }
   ]
 };
+
