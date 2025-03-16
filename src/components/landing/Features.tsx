@@ -43,32 +43,32 @@ const Features = () => {
   
   const features = [
     {
-      icon: <Workflow className="w-6 h-6 text-orange" />,
+      icon: <Workflow className="w-6 h-6 text-purple" />,
       title: "Intuicyjny interfejs",
-      description: "Flowise wykorzystuje prosty interfejs typu \"przeciągnij i upuść\", który ulatwia tworzenie złożonych aplikacji AI."
+      description: "Flowise wykorzystuje prosty interfejs typu \"przeciagnij i upusc\", który ulatwia tworzenie złożonych aplikacji AI."
     },
     {
-      icon: <Brain className="w-6 h-6 text-orange" />,
+      icon: <Brain className="w-6 h-6 text-purple" />,
       title: "Moc LLM bez kodowania",
       description: "Uzyskaj dostęp do najnowocześniejszych dużych modeli językowych bez konieczności pisania kodu."
     },
     {
-      icon: <Database className="w-6 h-6 text-orange" />,
+      icon: <Database className="w-6 h-6 text-purple" />,
       title: "Bazy wiedzy i pamięć",
       description: "Twórz aplikacje z pamięcią kontekstową i integracją z zewnętrznymi bazami danych i dokumentami."
     },
     {
-      icon: <Pen className="w-6 h-6 text-orange" />,
+      icon: <Pen className="w-6 h-6 text-purple" />,
       title: "Zaawansowane prompty",
       description: "Opanuj sztukę tworzenia efektywnych promptów, które uzyskują najlepsze rezultaty z modeli AI."
     },
     {
-      icon: <Lock className="w-6 h-6 text-orange" />,
+      icon: <Lock className="w-6 h-6 text-purple" />,
       title: "Bezpieczeństwo danych",
       description: "Naucz się wdrażać aplikacje AI z zachowaniem najwyższych standardów bezpieczeństwa i prywatności."
     },
     {
-      icon: <Code className="w-6 h-6 text-orange" />,
+      icon: <Code className="w-6 h-6 text-purple" />,
       title: "API i integracje",
       description: "Łącz swoje rozwiązania AI z istniejącymi systemami i platformami za pomocą API i webhooków."
     }
@@ -81,7 +81,7 @@ const Features = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl font-bold mb-6">
-            Innowacyjne podejście do tworzenia <span className="text-orange">aplikacji AI</span>
+            Innowacyjne podejście do tworzenia <span className="text-purple">aplikacji AI</span>
           </h2>
           
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>

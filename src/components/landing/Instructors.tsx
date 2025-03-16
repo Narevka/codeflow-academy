@@ -24,7 +24,7 @@ const Instructor = ({ name, role, bio, delay }: InstructorProps) => {
     >
       <div className={`w-24 h-24 rounded-full mb-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}></div>
       <h3 className="text-lg font-semibold mb-1">{name}</h3>
-      <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-orange' : 'text-orange-dark'}`}>{role}</p>
+      <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-purple' : 'text-purple'}`}>{role}</p>
       <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{bio}</p>
     </motion.div>
   );
@@ -53,12 +53,12 @@ const Instructors = () => {
 
   return (
     <section className={`py-20 ${
-      theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'
+      theme === 'dark' ? 'bg-gray-950' : 'bg-white'
     }`}>
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl font-bold mb-6">
-            Poznaj <span className="text-orange">ekspertów</span>, którzy poprowadzą Cię przez kurs
+            Poznaj <span className="text-purple">ekspertów</span>, którzy poprowadzą Cię przez kurs
           </h2>
           
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>

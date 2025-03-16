@@ -12,6 +12,7 @@ import Testimonials from "../components/landing/Testimonials";
 import Pricing from "../components/landing/Pricing";
 import Faq from "../components/landing/Faq";
 import Cta from "../components/landing/Cta";
+import GuaranteeSection from "../components/home/GuaranteeSection";
 
 const Index = () => {
   const { theme } = useTheme();
@@ -41,6 +42,7 @@ const Index = () => {
         <Instructors />
         <Testimonials />
         <Pricing />
+        <GuaranteeSection />
         <Faq />
         <Cta />
       </main>

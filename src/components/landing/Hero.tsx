@@ -9,7 +9,7 @@ const Hero = () => {
   
   return (
     <section className={`relative py-20 overflow-hidden ${
-      theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
+      theme === 'dark' ? 'bg-gray-950' : 'bg-white'
     }`}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -21,14 +21,14 @@ const Hero = () => {
             className="lg:col-span-6 xl:col-span-5"
           >
             <div className={`inline-flex items-center px-4 py-2 mb-6 rounded-full text-sm font-medium ${
-              theme === 'dark' ? 'bg-gray-800 text-orange' : 'bg-gray-100 text-orange'
+              theme === 'dark' ? 'bg-gray-800 text-purple' : 'bg-gray-100 text-purple'
             }`}>
-              <span className="flex h-2 w-2 rounded-full bg-orange mr-2"></span>
+              <span className="flex h-2 w-2 rounded-full bg-purple mr-2"></span>
               Kurs online
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-              Twórz zaawansowane <span className="text-orange">aplikacje AI</span> bez umiejętności programowania
+              Twórz zaawansowane <span className="text-purple">aplikacje AI</span> bez umiejętności programowania
             </h1>
             
             <p className={`text-xl mb-8 ${
@@ -46,7 +46,7 @@ const Hero = () => {
                 "Wsparcie merytoryczne przez 12 miesięcy"
               ].map((item, index) => (
                 <div key={index} className="flex items-start">
-                  <CheckCircle2 className="w-5 h-5 text-orange mt-1 mr-3 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-purple mt-1 mr-3 flex-shrink-0" />
                   <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>
                     {item}
                   </p>
@@ -57,7 +57,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link 
                 to="/offer" 
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-md font-medium transition duration-200 bg-orange hover:bg-orange-dark text-white shadow-lg"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-md font-medium transition duration-200 bg-purple hover:bg-purple/90 text-white shadow-lg"
               >
                 Rozpocznij kurs
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -101,13 +101,13 @@ const Hero = () => {
                     ? 'bg-gray-900/80 text-white'
                     : 'bg-white/90 text-gray-900 shadow-md'
                 }`}>
-                  <span className="font-medium">Wizualny interfejs. Bez kodowania. <span className="text-orange">100% rezultatów.</span></span>
+                  <span className="font-medium">Wizualny interfejs. Bez kodowania. <span className="text-purple">100% rezultatów.</span></span>
                 </div>
               </div>
             </div>
             
             {/* Decorative elements */}
-            <div className="absolute -z-10 top-1/3 -right-16 w-64 h-64 rounded-full bg-orange/5 filter blur-3xl"></div>
+            <div className="absolute -z-10 top-1/3 -right-16 w-64 h-64 rounded-full bg-purple/5 filter blur-3xl"></div>
             <div className="absolute -z-10 -bottom-8 -left-16 w-64 h-64 rounded-full bg-purple/5 filter blur-3xl"></div>
           </motion.div>
         </div>

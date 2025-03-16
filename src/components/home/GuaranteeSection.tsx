@@ -9,7 +9,7 @@ const GuaranteeSection = () => {
   
   return (
     <section className={`py-20 relative ${
-      theme === 'dark' ? 'bg-gray-900' : 'bg-white'
+      theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
     }`}>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -24,14 +24,14 @@ const GuaranteeSection = () => {
           transition={{ duration: 0.6 }}
           className={`max-w-3xl mx-auto p-8 text-center rounded-xl border ${
             theme === 'dark'
-              ? 'bg-black/30 backdrop-blur-sm border-gray-800'
-              : 'bg-gray-50 border-gray-100 shadow-md'
+              ? 'bg-gray-900/30 backdrop-blur-sm border-gray-800'
+              : 'bg-white border-gray-100 shadow-md'
           }`}
         >
           <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${
-            theme === 'dark' ? 'bg-orange/20' : 'bg-orange/10'
+            theme === 'dark' ? 'bg-purple/20' : 'bg-purple/10'
           }`}>
-            <Check size={32} className="text-orange" />
+            <Check size={32} className="text-purple" />
           </div>
           
           <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${
@@ -50,8 +50,8 @@ const GuaranteeSection = () => {
             to="/offer" 
             className={`inline-flex items-center justify-center px-6 py-3 rounded-xl transition-all transform hover:scale-105 ${
               theme === 'dark'
-                ? 'bg-orange hover:bg-orange-dark text-white'
-                : 'bg-orange hover:bg-orange-dark text-white'
+                ? 'bg-purple hover:bg-purple/90 text-white'
+                : 'bg-purple hover:bg-purple/90 text-white'
             }`}
           >
             Rozpocznij swoją przygodę z AI już dziś!
