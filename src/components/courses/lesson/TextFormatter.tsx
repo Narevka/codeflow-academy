@@ -14,12 +14,7 @@ const TextFormatter = ({ text }: { text: string }) => {
         if (/^\d+\.\s/.test(paragraph)) {
           return (
             <div key={index} className="mb-6">
-              <h4 className="text-lg font-bold text-primary mb-2">{paragraph.split('\n')[0]}</h4>
-              <div className="pl-4">
-                {paragraph.split('\n').slice(1).map((p, i) => (
-                  <p key={i} className="mb-2 text-base leading-relaxed">{p}</p>
-                ))}
-              </div>
+              <p className="mb-2 text-base leading-relaxed">{paragraph}</p>
             </div>
           );
         }
