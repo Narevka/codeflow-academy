@@ -1,8 +1,7 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
-	darkMode: "class",
+	darkMode: ["class"],
 	content: [
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
@@ -53,14 +52,10 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				orange: '#F97316',
-				'orange-light': '#FEC6A1',
-				'orange-dark': '#EA580C',
-				'orange-soft': '#FDE1D3',
-				purple: '#8b5cf6',
-				dark: '#121212',
+				magenta: '#cf0e81',
+				purple: '#5c26e0',
+				dark: '#000000',
 				'dark-purple': '#1A1F2C',
-				magenta: '#D946EF', // Added magenta color
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -151,9 +146,9 @@ export default {
 			backgroundImage: {
 				'hero-pattern': 'url("/public/lovable-uploads/47b7ddeb-1880-457f-a354-85dfaae75dc0.png")',
 				'network-pattern': 'url("/public/lovable-uploads/1d7bf1cd-3c85-48bc-9805-e81d55d79db5.png")',
-				'gradient-primary': 'linear-gradient(45deg, rgba(24, 7, 66, 0.5) 0%, rgba(249, 115, 22, 0.5) 100%)',
+				'gradient-primary': 'linear-gradient(45deg, rgba(24, 7, 66, 0.5) 0%, rgba(235, 71, 167, 0.5) 100%)',
 				'gradient-dark': 'linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0.7))',
-				'card-gradient': 'linear-gradient(to bottom, rgba(92, 38, 224, 0.1), rgba(249, 115, 22, 0.1))'
+				'card-gradient': 'linear-gradient(to bottom, rgba(92, 38, 224, 0.1), rgba(207, 14, 129, 0.1))'
 			}
 		}
 	},

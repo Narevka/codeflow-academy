@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
@@ -6,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-900 dark:bg-zinc-900 text-white py-12">
+    <footer className="bg-zinc-900 text-white py-12">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Contact Information */}
         <div>
@@ -86,14 +85,9 @@ const Footer = () => {
                 Moje kursy
               </Link>
             </li>
-            <li>
+             <li>
               <Link to="/terms" className="text-white/70 hover:text-magenta transition-colors">
                 Regulamin
-              </Link>
-            </li>
-            <li>
-              <Link to="/privacy" className="text-white/70 hover:text-magenta transition-colors">
-                Polityka prywatności
               </Link>
             </li>
           </motion.ul>

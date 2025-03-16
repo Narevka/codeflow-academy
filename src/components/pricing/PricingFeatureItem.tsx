@@ -18,8 +18,8 @@ const PricingFeatureItem = ({ feature }: PricingFeatureItemProps) => {
       </span>
       <span className={`text-sm ${
         feature.highlight 
-          ? "text-black dark:text-white font-medium" 
-          : "text-black/80 dark:text-white/80"
+          ? "text-white font-medium" 
+          : "text-white/80"
       }`}>
         {feature.text}
       </span>
