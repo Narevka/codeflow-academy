@@ -60,6 +60,7 @@ export default {
 				purple: '#8b5cf6',
 				dark: '#121212',
 				'dark-purple': '#1A1F2C',
+				magenta: '#D946EF', // Added magenta color
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

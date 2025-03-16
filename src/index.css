@@ -44,6 +44,8 @@
     --purple: #8b5cf6;
     --dark-purple: #1A1F2C;
     
+    --magenta: #D946EF;
+    
     --sidebar-background: 240 10% 8%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 30 95% 53%;
@@ -87,6 +89,7 @@
     --orange-light: #FEC6A1;
     --purple: #8b5cf6;
     --dark-purple: #1A1F2C;
+    --magenta: #D946EF;
   }
 
   * {
@@ -157,7 +160,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-magenta;
+  @apply bg-orange;
 }
 
 /* Animations */
