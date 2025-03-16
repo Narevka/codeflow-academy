@@ -31,7 +31,12 @@ const ValueProposition = ({ icon, title, description, delay }: ValuePropositionP
 const CourseValueProposition = () => {
   return (
     <section className="py-20 bg-black relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/public/lovable-uploads/2623215d-9e19-463a-9f39-4326d7372e1f.png')] bg-cover bg-center opacity-10" />
+      {/* Abstract background design */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-purple/5 to-transparent"></div>
+        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-magenta/10 to-transparent rounded-full filter blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-purple/5 rounded-full filter blur-2xl"></div>
+      </div>
       
       <div className="container mx-auto px-4 relative">
         <div className="text-center max-w-3xl mx-auto mb-16">
