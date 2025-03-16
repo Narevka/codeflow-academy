@@ -4,14 +4,15 @@ import { motion } from "framer-motion";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { useTheme } from "@/contexts/ThemeContext";
-import HeroSection from "../components/home/HeroSection";
-import ValueProposition from "../components/home/ValueProposition";
-import CourseModules from "../components/home/CourseModules";
-import Outcomes from "../components/home/Outcomes";
-import GuaranteeSection from "../components/home/GuaranteeSection";
-import FaqSection from "../components/home/FaqSection";
-import Contact from "../components/home/Contact";
-import CtaSection from "../components/home/CtaSection";
+import Hero from "../components/landing/Hero";
+import Features from "../components/landing/Features";
+import Program from "../components/landing/Program";
+import Benefits from "../components/landing/Benefits";
+import Guarantee from "../components/landing/Guarantee";
+import Faq from "../components/landing/Faq";
+import ContactSection from "../components/landing/ContactSection";
+import Cta from "../components/landing/Cta";
+import Testimonials from "../components/landing/Testimonials";
 
 const Index = () => {
   const { theme } = useTheme();
@@ -25,9 +26,7 @@ const Index = () => {
   }, [theme]);
   
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+    <div 
       className={`min-h-screen ${
         theme === 'dark' 
           ? 'bg-black text-white' 
@@ -37,33 +36,19 @@ const Index = () => {
       <Header />
       
       <main>
-        {/* Hero Section */}
-        <HeroSection />
-        
-        {/* Why Choose This Course */}
-        <ValueProposition />
-        
-        {/* Course Program */}
-        <CourseModules />
-        
-        {/* What You Will Achieve */}
-        <Outcomes />
-        
-        {/* Guarantee Section */}
-        <GuaranteeSection />
-        
-        {/* FAQ Section */}
-        <FaqSection />
-        
-        {/* Contact Form */}
-        <Contact />
-        
-        {/* Call to Action */}
-        <CtaSection />
+        <Hero />
+        <Features />
+        <Program />
+        <Benefits />
+        <Testimonials />
+        <Guarantee />
+        <Faq />
+        <ContactSection />
+        <Cta />
       </main>
 
       <Footer />
-    </motion.div>
+    </div>
   );
 };
 
