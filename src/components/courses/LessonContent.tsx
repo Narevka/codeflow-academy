@@ -34,17 +34,17 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       {lesson.description && (
         <div className="prose prose-invert max-w-none mt-6">
           <TextFormatter text={lesson.description} />
+          
+          {/* Add the cloud installation diagram right after the text description for installation lesson */}
+          {isInstallationLesson && <CloudInstallationDiagram />}
         </div>
       )}
-
-      {/* Add the cloud installation diagram if this is the installation lesson */}
-      {isInstallationLesson && <CloudInstallationDiagram />}
 
       {lesson.additionalVideos && lesson.additionalVideos.length > 0 && (
         <AdditionalVideosSection videos={lesson.additionalVideos} />
       )}
       
-      {/* Sekcja z terminami AI w formacie akordeonu */}
+      {/* AI Terms Accordion */}
       <AITermsAccordion />
     </div>
   );

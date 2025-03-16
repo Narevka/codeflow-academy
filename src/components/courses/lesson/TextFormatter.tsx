@@ -14,7 +14,7 @@ const TextFormatter = ({ text }: { text: string }) => {
         if (/^\d+\.\s/.test(paragraph)) {
           return (
             <div key={index} className="mb-6">
-              <p className="mb-2 text-base leading-relaxed">{paragraph}</p>
+              <p className="mb-2 text-base leading-relaxed text-white">{paragraph}</p>
             </div>
           );
         }
@@ -29,7 +29,7 @@ const TextFormatter = ({ text }: { text: string }) => {
             </h3>
           );
         }
-        return <p key={index} className="mb-4 text-base leading-relaxed">{paragraph}</p>;
+        return <p key={index} className="mb-4 text-base leading-relaxed text-white">{paragraph}</p>;
       })}
     </>
   );
