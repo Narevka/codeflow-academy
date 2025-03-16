@@ -12,10 +12,10 @@ export const ThemeToggle = () => {
       pressed={theme === 'dark'} 
       onPressedChange={toggleTheme} 
       aria-label="Toggle theme"
-      className={`p-2 rounded-full transition-colors duration-300 ${
+      className={`p-2 rounded-full transition-all duration-300 ${
         theme === 'dark' 
-          ? 'bg-slate-700 hover:bg-slate-600 text-yellow-300' 
-          : 'bg-yellow-100 hover:bg-yellow-200 text-amber-500'
+          ? 'bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-slate-700' 
+          : 'bg-yellow-100 hover:bg-yellow-200 text-amber-500 border border-yellow-200'
       }`}
     >
       {theme === 'dark' ? (

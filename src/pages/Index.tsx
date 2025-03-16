@@ -9,10 +9,17 @@ import Guarantee from "../components/home/Guarantee";
 import EnhancedFaq from "../components/home/EnhancedFaq";
 import CallToAction from "../components/home/CallToAction";
 import ContactFormSection from "../components/home/ContactFormSection";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Index = () => {
+  const { theme } = useTheme();
+  
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen ${
+      theme === 'dark' 
+        ? 'bg-black text-white' 
+        : 'bg-white text-gray-900'
+    }`}>
       <Header />
 
       {/* Hero Section */}
