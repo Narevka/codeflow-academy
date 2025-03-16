@@ -1,53 +1,69 @@
 
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import HeroEnhanced from "../components/home/HeroEnhanced";
-import CourseValueProposition from "../components/home/CourseValueProposition";
-import CourseProgram from "../components/home/CourseProgram";
-import CourseOutcomes from "../components/home/CourseOutcomes";
-import Guarantee from "../components/home/Guarantee";
-import EnhancedFaq from "../components/home/EnhancedFaq";
-import CallToAction from "../components/home/CallToAction";
-import ContactFormSection from "../components/home/ContactFormSection";
 import { useTheme } from "@/contexts/ThemeContext";
+import HeroSection from "../components/home/HeroSection";
+import ValueProposition from "../components/home/ValueProposition";
+import CourseModules from "../components/home/CourseModules";
+import Outcomes from "../components/home/Outcomes";
+import GuaranteeSection from "../components/home/GuaranteeSection";
+import FaqSection from "../components/home/FaqSection";
+import Contact from "../components/home/Contact";
+import CtaSection from "../components/home/CtaSection";
 
 const Index = () => {
   const { theme } = useTheme();
   
+  // Apply theme class to body for global styling
+  useEffect(() => {
+    document.body.className = theme;
+    return () => {
+      document.body.className = '';
+    };
+  }, [theme]);
+  
   return (
-    <div className={`min-h-screen ${
-      theme === 'dark' 
-        ? 'bg-black text-white' 
-        : 'bg-white text-gray-900'
-    }`}>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className={`min-h-screen ${
+        theme === 'dark' 
+          ? 'bg-black text-white' 
+          : 'bg-white text-gray-900'
+      }`}
+    >
       <Header />
-
-      {/* Hero Section */}
-      <HeroEnhanced />
-
-      {/* Why Choose This Course */}
-      <CourseValueProposition />
-
-      {/* Course Program */}
-      <CourseProgram />
-
-      {/* What You Will Achieve */}
-      <CourseOutcomes />
-
-      {/* Guarantee Section */}
-      <Guarantee />
-
-      {/* FAQ Section */}
-      <EnhancedFaq />
-
-      {/* Contact Form */}
-      <ContactFormSection />
-
-      {/* Call to Action */}
-      <CallToAction />
+      
+      <main>
+        {/* Hero Section */}
+        <HeroSection />
+        
+        {/* Why Choose This Course */}
+        <ValueProposition />
+        
+        {/* Course Program */}
+        <CourseModules />
+        
+        {/* What You Will Achieve */}
+        <Outcomes />
+        
+        {/* Guarantee Section */}
+        <GuaranteeSection />
+        
+        {/* FAQ Section */}
+        <FaqSection />
+        
+        {/* Contact Form */}
+        <Contact />
+        
+        {/* Call to Action */}
+        <CtaSection />
+      </main>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 

@@ -37,6 +37,12 @@
 
     --radius: 0.5rem;
 
+    --magenta: #d946ef;
+    --magenta-600: #c026d3;
+    
+    --purple: #8b5cf6;
+    --dark-purple: #1A1F2C;
+    
     --sidebar-background: 240 10% 8%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 328 87% 43%;
@@ -75,6 +81,10 @@
     --border: 240 5% 20%;
     --input: 240 5% 20%;
     --ring: 240 5% 65%;
+    
+    --magenta: #d946ef;
+    --purple: #8b5cf6;
+    --dark-purple: #1A1F2C;
   }
 
   * {
@@ -84,6 +94,16 @@
   body {
     @apply bg-background text-foreground font-sans transition-colors duration-300;
     font-family: 'Inter', sans-serif;
+  }
+  
+  body.dark {
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  body.light {
+    background-color: #ffffff;
+    color: #1F2937;
   }
 }
 
@@ -157,4 +177,27 @@
 
 .animate-delay-500 {
   animation-delay: 500ms;
+}
+
+.animate-pulse-slow {
+  animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Hide scrollbars but keep functionality */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
 }
