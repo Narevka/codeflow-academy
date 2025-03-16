@@ -2,7 +2,7 @@
 import { Lesson } from "@/types/course";
 import { useState, useEffect } from "react";
 import { LessonVideoSection, AdditionalVideosSection, TextFormatter } from "./lesson";
-import { AITermsAccordion, CloudInstallationDiagram } from "./ai-terms";
+import { AITermsAccordion } from "./ai-terms";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -22,9 +22,6 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
-  // Check if this is the installation lesson
-  const isInstallationLesson = lesson.id === "lesson-2-1";
-
   return (
     <div className="space-y-6 w-full">
       <h1 className="text-2xl md:text-3xl font-bold">{lesson.displayTitle || lesson.title}</h1>
@@ -33,10 +30,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       
       {lesson.description && (
         <div className="prose prose-invert max-w-none mt-6">
-          <TextFormatter 
-            text={lesson.description} 
-            isInstallationLesson={isInstallationLesson} 
-          />
+          <TextFormatter text={lesson.description} />
         </div>
       )}
 
@@ -44,7 +38,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
         <AdditionalVideosSection videos={lesson.additionalVideos} />
       )}
       
-      {/* AI Terms Accordion */}
+      {/* Sekcja z terminami AI w formacie akordeonu */}
       <AITermsAccordion />
     </div>
   );
