@@ -1,4 +1,5 @@
 
+import React from "react";
 import { Brain, Code, Rocket, Target, Users, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 
