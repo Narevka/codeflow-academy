@@ -1,5 +1,5 @@
 
-import React, { Fragment } from "react";
+import React from "react";
 import { CloudInstallationDiagram } from "../ai-terms";
 
 interface TextFormatterProps {
@@ -20,17 +20,18 @@ const TextFormatter = ({ text, isInstallationLesson = false }: TextFormatterProp
     <>
       {paragraphs.map((paragraph, index) => {
         // Check if paragraph is a numbered list item (starts with a number followed by a dot)
+        const isParagraphWithDiagram = isInstallationLesson && paragraph.includes(prototypingTextMarker);
+        
         if (/^\d+\.\s/.test(paragraph)) {
           return (
-            <Fragment key={index}>
+            <React.Fragment key={index}>
               <div className="mb-6">
                 <p className="mb-2 text-base leading-relaxed text-white">{paragraph}</p>
               </div>
-              {/* Insert diagram after the prototyping paragraph if this is the installation lesson */}
-              {isInstallationLesson && paragraph.includes(prototypingTextMarker) && (
+              {isParagraphWithDiagram && (
                 <CloudInstallationDiagram />
               )}
-            </Fragment>
+            </React.Fragment>
           );
         }
         // Check if paragraph is a section heading (all caps or short without punctuation)
@@ -44,7 +45,15 @@ const TextFormatter = ({ text, isInstallationLesson = false }: TextFormatterProp
             </h3>
           );
         }
-        return <p key={index} className="mb-4 text-base leading-relaxed text-white">{paragraph}</p>;
+        
+        return (
+          <React.Fragment key={index}>
+            <p className="mb-4 text-base leading-relaxed text-white">{paragraph}</p>
+            {isParagraphWithDiagram && (
+              <CloudInstallationDiagram />
+            )}
+          </React.Fragment>
+        );
       })}
     </>
   );
