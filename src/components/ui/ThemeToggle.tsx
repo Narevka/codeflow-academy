@@ -15,8 +15,8 @@ export const ThemeToggle = () => {
       aria-label="Toggle theme"
       className={`p-2 rounded-full transition-all duration-300 ${
         theme === 'dark' 
-          ? 'bg-gray-800 hover:bg-gray-700 text-yellow-300 border border-gray-700' 
-          : 'bg-yellow-50 hover:bg-yellow-100 text-amber-500 border border-yellow-100'
+          ? 'bg-gray-800 hover:bg-gray-700 text-orange border border-gray-700' 
+          : 'bg-orange-soft hover:bg-orange-soft/80 text-orange-dark border border-orange-light/30'
       }`}
     >
       <motion.div

@@ -11,20 +11,20 @@ const CtaSection = () => {
     <section className={`py-20 relative overflow-hidden ${
       theme === 'dark' 
         ? 'bg-gradient-to-br from-purple-900/30 to-black' 
-        : 'bg-gradient-to-br from-purple-50 to-white'
+        : 'bg-gradient-to-br from-orange-soft to-white'
     }`}>
       {/* Background elements */}
       <div className="absolute inset-0">
         <div className={`absolute top-1/4 left-1/4 w-64 h-64 rounded-full filter blur-3xl animate-pulse-slow ${
           theme === 'dark'
             ? 'bg-purple-900/20'
-            : 'bg-purple-300/30'
+            : 'bg-orange-light/30'
         }`} />
         
         <div className={`absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full filter blur-3xl animate-pulse-slow animate-delay-200 ${
           theme === 'dark'
-            ? 'bg-magenta/20'
-            : 'bg-magenta/10'
+            ? 'bg-orange/20'
+            : 'bg-orange/10'
         }`} />
       </div>
       
@@ -42,7 +42,7 @@ const CtaSection = () => {
         >
           <h2 className={`text-3xl md:text-4xl font-bold mb-6 ${
             theme === 'dark'
-              ? 'bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-magenta'
+              ? 'bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-light to-orange'
               : 'text-gray-900'
           }`}>
             Gotowy, by rozwinąć swoje umiejętności AI?
@@ -60,8 +60,8 @@ const CtaSection = () => {
               to="/offer" 
               className={`w-full sm:w-auto flex items-center justify-center group px-8 py-4 rounded-xl transition-all transform hover:scale-105 ${
                 theme === 'dark'
-                  ? 'bg-magenta hover:bg-magenta/90 text-white'
-                  : 'bg-magenta hover:bg-magenta/90 text-white'
+                  ? 'bg-orange hover:bg-orange-dark text-white'
+                  : 'bg-orange hover:bg-orange-dark text-white'
               }`}
             >
               Zapisz się na kurs

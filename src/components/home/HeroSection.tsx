@@ -32,20 +32,20 @@ const HeroSection = () => {
       <div className="absolute inset-0 overflow-hidden">
         <div className={`absolute top-0 left-0 right-0 h-full ${
           theme === 'dark'
-            ? 'bg-gradient-to-br from-purple-900/20 via-magenta/10 to-transparent'
-            : 'bg-gradient-to-br from-purple-100/50 via-magenta/5 to-transparent'
+            ? 'bg-gradient-to-br from-purple-900/20 via-orange/10 to-transparent'
+            : 'bg-gradient-to-br from-orange-soft/50 via-orange/5 to-transparent'
         }`} />
         
         <div className={`absolute bottom-0 right-0 w-2/3 h-2/3 rounded-full filter blur-3xl ${
           theme === 'dark'
-            ? 'bg-gradient-to-tl from-magenta/20 via-purple-800/10 to-transparent'
-            : 'bg-gradient-to-tl from-magenta/10 via-purple-300/10 to-transparent'
+            ? 'bg-gradient-to-tl from-orange/20 via-purple-800/10 to-transparent'
+            : 'bg-gradient-to-tl from-orange/10 via-purple-300/10 to-transparent'
         }`} />
         
         <div className={`absolute top-1/4 left-1/4 w-64 h-64 rounded-full filter blur-2xl animate-pulse duration-10000 ${
           theme === 'dark'
             ? 'bg-purple-900/10'
-            : 'bg-purple-300/20'
+            : 'bg-orange-light/20'
         }`} />
       </div>
       
@@ -60,8 +60,8 @@ const HeroSection = () => {
             variants={item}
             className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 ${
               theme === 'dark'
-                ? 'bg-magenta/20 text-magenta'
-                : 'bg-magenta/10 text-magenta-600'
+                ? 'bg-orange/20 text-orange'
+                : 'bg-orange/10 text-orange-dark'
             }`}
           >
             Zostań ekspertem AI bez pisania kodu!
@@ -71,8 +71,8 @@ const HeroSection = () => {
             variants={item}
             className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-8 ${
               theme === 'dark'
-                ? 'bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-magenta'
-                : 'bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-purple-800 to-magenta'
+                ? 'bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-light to-orange'
+                : 'bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-purple-800 to-orange'
             }`}
           >
             Twórz potężne aplikacje oparte na Flowise AI - szybko i intuicyjnie
@@ -98,8 +98,8 @@ const HeroSection = () => {
               to="/offer" 
               className={`w-full sm:w-auto px-8 py-4 rounded-xl transition-all transform hover:scale-105 flex items-center justify-center ${
                 theme === 'dark'
-                  ? 'bg-magenta hover:bg-magenta/90 text-white'
-                  : 'bg-magenta hover:bg-magenta/90 text-white'
+                  ? 'bg-orange hover:bg-orange-dark text-white'
+                  : 'bg-orange hover:bg-orange-dark text-white'
               }`}
             >
               Rozpocznij teraz
@@ -152,19 +152,19 @@ const HeroSection = () => {
                 }`}>
                   <div className={`p-3 rounded-full w-14 h-14 flex items-center justify-center mb-3 ${
                     theme === 'dark'
-                      ? 'bg-magenta/20'
-                      : 'bg-magenta/10'
+                      ? 'bg-orange/20'
+                      : 'bg-orange/10'
                   }`}>
                     {index === 0 ? (
-                      <svg className="w-8 h-8 text-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-8 h-8 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     ) : index === 1 ? (
-                      <svg className="w-8 h-8 text-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-8 h-8 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     ) : (
-                      <svg className="w-8 h-8 text-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="w-8 h-8 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                       </svg>
                     )}

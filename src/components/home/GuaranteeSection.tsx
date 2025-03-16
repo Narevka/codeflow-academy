@@ -29,9 +29,9 @@ const GuaranteeSection = () => {
           }`}
         >
           <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${
-            theme === 'dark' ? 'bg-magenta/20' : 'bg-magenta/10'
+            theme === 'dark' ? 'bg-orange/20' : 'bg-orange/10'
           }`}>
-            <Check size={32} className="text-magenta" />
+            <Check size={32} className="text-orange" />
           </div>
           
           <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${
@@ -50,8 +50,8 @@ const GuaranteeSection = () => {
             to="/offer" 
             className={`inline-flex items-center justify-center px-6 py-3 rounded-xl transition-all transform hover:scale-105 ${
               theme === 'dark'
-                ? 'bg-magenta hover:bg-magenta/90 text-white'
-                : 'bg-magenta hover:bg-magenta/90 text-white'
+                ? 'bg-orange hover:bg-orange-dark text-white'
+                : 'bg-orange hover:bg-orange-dark text-white'
             }`}
           >
             Rozpocznij swoją przygodę z AI już dziś!
