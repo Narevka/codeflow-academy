@@ -1,4 +1,3 @@
-
 import { Course } from "@/types/course";
 
 export const flowiseCourse: Course = {
@@ -59,7 +58,9 @@ GPT-4: Obsługuje do 128 tysięcy tokenów (ok. 300 stron tekstu).
 
 GPT-3.5: Obsługuje do 16 tysięcy tokenów (ok. 14 stron tekstu).
 
-Rozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpływa to na długość konwersacji, którą model może „zapamiętać" oraz przetworzyć.`
+Rozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpływa to na długość konwersacji, którą model może „zapamiętać" oraz przetworzyć.
+
+Szczegółowy przewodnik po instalacji Flowise i jego wymaganiach technicznych. W tym materiale omówione są różne metody instalacji, rozwiązywanie typowych problemów oraz optymalizacja środowiska.`
             }
           ],
           completed: true
@@ -76,7 +77,14 @@ Rozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpły
           title: "Instalacja",
           displayTitle: "Lekcja 2 - Instalacja Flowise na Windows: Lokalnie i w Chmurze",
           description: "W tej lekcji nauczysz się instalować Flowise zarówno lokalnie na systemie Windows, jak i w środowisku chmurowym. Poznasz różnice między obydwoma podejściami i dowiesz się, które z nich wybrać w zależności od Twoich potrzeb.",
-          videoUrl: "https://example.com/video2.mp4",
+          videoUrl: "mux:Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg",
+          additionalVideos: [
+            {
+              title: "Dodatkowo o instalacji",
+              videoUrl: "mux:ti1ULAh6YUlpwAPWh3FWEyYWN6QIMWInsoA6WCpmdd4",
+              description: `Szczegółowy przewodnik po instalacji Flowise i jego wymaganiach technicznych. W tym materiale omówione są różne metody instalacji, rozwiązywanie typowych problemów oraz optymalizacja środowiska.`
+            }
+          ],
           completed: true
         }
       ]

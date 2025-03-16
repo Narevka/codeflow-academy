@@ -1,9 +1,10 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
 import transcriptData1 from "../trans/1.json";
 import transcriptData2 from "../trans/2.json";
+import transcriptData3 from "../trans/3.json";
+import transcriptData4 from "../trans/4.json";
 
 // Helper function to convert Mux transcript format to our app format
 const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[] => {
@@ -85,10 +86,20 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   return refinedSegments;
 };
 
-// Function to get local transcript from src/trans/1.json or src/trans/2.json
+// Function to get local transcript from src/trans/*.json files
 const getLocalTranscript = (playbackId: string | undefined, sourceFile?: string): TranscriptSegment[] => {
   // Choose transcript data source based on sourceFile parameter
-  const transcriptSource = sourceFile === "2.json" ? transcriptData2 : transcriptData1;
+  let transcriptSource;
+  
+  if (sourceFile === "2.json") {
+    transcriptSource = transcriptData2;
+  } else if (sourceFile === "3.json") {
+    transcriptSource = transcriptData3;
+  } else if (sourceFile === "4.json") {
+    transcriptSource = transcriptData4;
+  } else {
+    transcriptSource = transcriptData1; // Default
+  }
   
   // Convert the transcript data to segments
   return convertMuxTranscriptToSegments(transcriptSource);

@@ -23,6 +23,14 @@ const AdditionalVideosSection = ({ videos }: AdditionalVideosSectionProps) => {
             ''
           ).trim() : '';
           
+        // Determine the transcript source file based on the video URL
+        let transcriptSourceFile = "2.json"; // Default for most additional videos
+        
+        // Check the video URL to determine the correct transcript file
+        if (video.videoUrl.includes("ti1ULAh6YUlpwAPWh3FWEyYWN6QIMWInsoA6WCpmdd4")) {
+          transcriptSourceFile = "4.json";
+        }
+        
         return (
           <div key={index} className="space-y-4">
             <h2 className="text-xl font-semibold">
@@ -34,7 +42,7 @@ const AdditionalVideosSection = ({ videos }: AdditionalVideosSectionProps) => {
                 poster={video.thumbnailUrl}
                 title={video.title || `Dodatkowe wideo ${index + 1}`}
                 transcript={video.transcript}
-                transcriptSourceFile="2.json"
+                transcriptSourceFile={transcriptSourceFile}
               />
             )}
             {cleanedDescription && (
