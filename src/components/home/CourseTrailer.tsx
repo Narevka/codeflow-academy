@@ -1,5 +1,7 @@
 
 import { VideoPlayerWithTranscript } from "../ui/video-player";
+import DemoSignupSheet from "./DemoSignupSheet";
+import { ArrowRight } from "lucide-react";
 
 // Sample transcript for the trailer
 const trailerTranscript = [
@@ -26,12 +28,25 @@ const CourseTrailer = () => {
           </p>
         </div>
 
-        <VideoPlayerWithTranscript 
-          src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" 
-          poster="/public/lovable-uploads/af41dcbe-22e6-4e86-a8f3-d5878acd2e55.png"
-          title="Wprowadzenie do kursu Flowise AI"
-          transcript={trailerTranscript}
-        />
+        <div className="mb-10">
+          <VideoPlayerWithTranscript 
+            src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" 
+            poster="/public/lovable-uploads/af41dcbe-22e6-4e86-a8f3-d5878acd2e55.png"
+            title="Wprowadzenie do kursu Flowise AI"
+            transcript={trailerTranscript}
+          />
+        </div>
+
+        <div className="flex justify-center mt-8">
+          <DemoSignupSheet 
+            trigger={
+              <button className="btn-primary flex items-center justify-center px-8 py-3 text-lg">
+                Zobacz pełne demo kursu
+                <ArrowRight size={20} className="ml-2" />
+              </button>
+            }
+          />
+        </div>
       </div>
     </section>
   );

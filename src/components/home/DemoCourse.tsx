@@ -2,6 +2,7 @@
 import { Check, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { VideoPlayerWithTranscript } from "../ui/video-player";
+import DemoSignupSheet from "./DemoSignupSheet";
 
 // Sample transcript for the demo course
 const demoTranscript = [
@@ -67,10 +68,14 @@ const DemoCourse = () => {
               </li>
             </ul>
             <div className="pt-4">
-              <Link to="/offer" className="btn-primary flex items-center justify-center md:inline-flex md:justify-start">
-                Odkryj pełny kurs
-                <ArrowRight size={18} className="ml-2" />
-              </Link>
+              <DemoSignupSheet 
+                trigger={
+                  <button className="btn-primary flex items-center justify-center md:inline-flex md:justify-start">
+                    Zobacz demo
+                    <ArrowRight size={18} className="ml-2" />
+                  </button>
+                }
+              />
             </div>
           </div>
         </div>
