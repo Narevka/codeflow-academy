@@ -92,10 +92,13 @@ const BeforeAfterSection = () => {
               className="aspect-[16/9] w-full h-auto shadow-2xl rounded-xl overflow-hidden"
             >
               <ComparisonSlider
-                beforeContent="// This is code"
-                afterImage="/lovable-uploads/d938f15f-d924-4207-97b6-4e33a01db497.png"
+                secondImage="/lovable-uploads/d938f15f-d924-4207-97b6-4e33a01db497.png"
                 beforeLabel="Tradycyjne kodowanie"
                 afterLabel="Z Flowise AI"
+                slideMode="hover"
+                showHandlebar={true}
+                autoplay={true}
+                autoplayDuration={5000}
               />
             </motion.div>
           </div>
