@@ -77,24 +77,26 @@ const ComparisonSlider = ({
       onMouseDown={handleMouseDown}
       onTouchStart={handleMouseDown}
     >
-      {/* Before image (full width, fixed position) */}
-      <div className="absolute inset-0 h-full w-full">
+      {/* Before image - always fully visible as the background */}
+      <div className="absolute inset-0">
         <img 
           src={beforeImage} 
           alt={beforeLabel} 
           className="h-full w-full object-cover"
+          style={{ position: 'absolute' }}
         />
       </div>
 
-      {/* After image (clipped by the slider position) */}
+      {/* After image - only visible based on slider position */}
       <div 
-        className="absolute inset-0 h-full overflow-hidden" 
+        className="absolute inset-0 overflow-hidden" 
         style={{ width: `${sliderPosition}%` }}
       >
         <img 
           src={afterImage} 
           alt={afterLabel} 
           className="h-full w-full object-cover"
+          style={{ position: 'absolute', right: 0, width: `${100 / (sliderPosition / 100)}%` }}
         />
       </div>
 
