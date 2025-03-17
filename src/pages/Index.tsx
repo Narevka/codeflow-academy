@@ -5,7 +5,6 @@ import HeroEnhanced from "../components/home/HeroEnhanced";
 import BeforeAfterSection from "../components/home/BeforeAfterSection";
 import CourseProgram from "../components/home/CourseProgram";
 import CourseOutcomes from "../components/home/CourseOutcomes";
-import Guarantee from "../components/home/Guarantee";
 import EnhancedFaq from "../components/home/EnhancedFaq";
 import CallToAction from "../components/home/CallToAction";
 import ContactFormSection from "../components/home/ContactFormSection";
@@ -26,9 +25,6 @@ const Index = () => {
 
       {/* What You Will Achieve */}
       <CourseOutcomes />
-
-      {/* Guarantee Section */}
-      <Guarantee />
 
       {/* FAQ Section */}
       <EnhancedFaq />
