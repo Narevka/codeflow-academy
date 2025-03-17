@@ -3,6 +3,7 @@
 import { TypewriterEffectSmooth } from "../ui/typewriter-effect";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import DemoSignupSheet from "./DemoSignupSheet";
 
 export function TypewriterEffectSmoothDemo() {
   const words = [
@@ -34,9 +35,13 @@ export function TypewriterEffectSmoothDemo() {
           Rozpocznij teraz
           <ArrowRight size={18} className="ml-2" />
         </Link>
-        <Link to="/demo" className="btn-secondary w-full sm:w-auto flex items-center justify-center">
-          Zobacz przykładową lekcję
-        </Link>
+        <DemoSignupSheet 
+          trigger={
+            <button className="btn-secondary w-full sm:w-auto flex items-center justify-center">
+              Zobacz przykładową lekcję
+            </button>
+          }
+        />
       </div>
     </div>
   );

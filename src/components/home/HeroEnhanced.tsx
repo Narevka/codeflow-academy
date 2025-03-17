@@ -1,7 +1,10 @@
+
 "use client";
 import React from "react";
 import { Link } from "react-router-dom";
 import { TypewriterEffectSmooth } from "../ui/typewriter-effect";
+import DemoSignupSheet from "./DemoSignupSheet";
+import { ArrowRight } from "lucide-react";
 
 const HeroEnhanced = () => {
   const words = [
@@ -37,9 +40,13 @@ const HeroEnhanced = () => {
           <Link to="/offer" className="w-40 h-10 rounded-xl bg-black border border-transparent text-white text-sm flex items-center justify-center">
             Rozpocznij teraz
           </Link>
-          <Link to="/demo-lesson" className="w-40 h-10 rounded-xl bg-white text-black border border-black text-sm flex items-center justify-center">
-            Zobacz demo
-          </Link>
+          <DemoSignupSheet 
+            trigger={
+              <button className="w-40 h-10 rounded-xl bg-white text-black border border-black text-sm flex items-center justify-center">
+                Zobacz demo
+              </button>
+            }
+          />
         </div>
       </div>
     </section>
