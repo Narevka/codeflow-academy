@@ -52,7 +52,7 @@ export const ComparisonSlider = ({
       const elapsedTime = Date.now() - startTime;
       const progress =
         (elapsedTime % (autoplayDuration * 2)) / autoplayDuration;
-      const percentage = progress <= 1 ? progress * 100 : (2 - progress) * 100;
+      const percentage = progress <= 1 ? 100 - (progress * 100) : 100 - ((2 - progress) * 100);
 
       setSliderXPercent(percentage);
       autoplayRef.current = setTimeout(animate, 16); // ~60fps
