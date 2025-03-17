@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut, Settings, Book } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
+import NavHeader from "../ui/NavHeader";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,11 +15,6 @@ import {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [navPosition, setNavPosition] = useState({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
   const location = useLocation();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -84,21 +79,17 @@ const Header = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav 
-          className="hidden md:block"
-        >
-          <ul 
-            className="relative flex items-center mx-auto w-fit rounded-full border border-black/20 bg-black/5 backdrop-blur-md p-1"
-            onMouseLeave={() => setNavPosition((prev) => ({ ...prev, opacity: 0 }))}
-          >
-            <NavItem path="/" label="START" setPosition={setNavPosition} isActive={isActive("/")} />
-            <NavItem path="/blog" label="BLOG" setPosition={setNavPosition} isActive={isActive("/blog")} />
-            <NavItem path="/offer" label="OFERTA" setPosition={setNavPosition} isActive={isActive("/offer")} />
-            <NavItem path="/contact" label="KONTAKT" setPosition={setNavPosition} isActive={isActive("/contact")} />
-            
-            <NavCursor position={navPosition} />
-          </ul>
+        {/* Desktop Navigation with Animation */}
+        <nav className="hidden md:block">
+          <NavHeader 
+            links={[
+              { path: "/", label: "HOME" },
+              { path: "/offer", label: "PRICING" },
+              { path: "/blog", label: "ABOUT" },
+              { path: "/demo-lesson", label: "SERVICES" },
+              { path: "/contact", label: "CONTACT" }
+            ]}
+          />
         </nav>
 
         {/* User Profile / Login Button */}
@@ -155,28 +146,28 @@ const Header = () => {
           <Link
             to="/"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/") ? "text-black after:scale-x-100" : "text-black/70"}`}
+            className={`nav-link text-xl ${isActive("/") ? "text-black font-bold" : "text-black/70"}`}
           >
             Start
           </Link>
           <Link
             to="/blog"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/blog") ? "text-black after:scale-x-100" : "text-black/70"}`}
+            className={`nav-link text-xl ${isActive("/blog") ? "text-black font-bold" : "text-black/70"}`}
           >
             Blog
           </Link>
           <Link
             to="/offer"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/offer") ? "text-black after:scale-x-100" : "text-black/70"}`}
+            className={`nav-link text-xl ${isActive("/offer") ? "text-black font-bold" : "text-black/70"}`}
           >
             Oferta
           </Link>
           <Link
             to="/contact"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/contact") ? "text-black after:scale-x-100" : "text-black/70"}`}
+            className={`nav-link text-xl ${isActive("/contact") ? "text-black font-bold" : "text-black/70"}`}
           >
             Kontakt
           </Link>
@@ -225,64 +216,5 @@ const Header = () => {
   );
 };
 
-// NavItem component - Updated for mix-blend-difference effect
-const NavItem = ({ 
-  path, 
-  label, 
-  setPosition, 
-  isActive 
-}: { 
-  path: string; 
-  label: string; 
-  setPosition: React.Dispatch<React.SetStateAction<{left: number; width: number; opacity: number}>>;
-  isActive: boolean;
-}) => {
-  const ref = useRef<HTMLLIElement>(null);
-  
-  useEffect(() => {
-    if (isActive && ref.current) {
-      const { width } = ref.current.getBoundingClientRect();
-      setPosition({
-        width,
-        opacity: 1,
-        left: ref.current.offsetLeft,
-      });
-    }
-  }, [isActive, setPosition]);
-
-  return (
-    <li
-      ref={ref}
-      onMouseEnter={() => {
-        if (!ref.current) return;
-        const { width } = ref.current.getBoundingClientRect();
-        setPosition({
-          width,
-          opacity: 1,
-          left: ref.current.offsetLeft,
-        });
-      }}
-      className="relative z-10"
-    >
-      <Link
-        to={path}
-        className="relative z-10 block cursor-pointer px-4 py-2 text-sm font-medium text-black mix-blend-difference"
-      >
-        {label}
-      </Link>
-    </li>
-  );
-};
-
-// NavCursor component - Changed to white background
-const NavCursor = ({ position }: { position: { left: number; width: number; opacity: number } }) => {
-  return (
-    <motion.div
-      animate={position}
-      className="absolute z-0 h-8 rounded-full bg-white"
-      transition={{ type: "spring", stiffness: 350, damping: 25 }}
-    />
-  );
-};
 
 export default Header;
