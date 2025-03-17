@@ -22,9 +22,31 @@ const ComparisonSlider = ({
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Handle slider movement
   const handleSliderChange = useCallback((value: number[]) => {
     setSliderPosition(value[0]);
   }, []);
+
+  // Track mouse position for direct slider control
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    const newPosition = (x / rect.width) * 100;
+    setSliderPosition(newPosition);
+  }, [isDragging]);
+
+  // Similar handler for touch events
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    
+    const touch = e.touches[0];
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(touch.clientX - rect.left, rect.width));
+    const newPosition = (x / rect.width) * 100;
+    setSliderPosition(newPosition);
+  }, [isDragging]);
 
   const handleMouseDown = useCallback(() => {
     setIsDragging(true);
@@ -35,17 +57,26 @@ const ComparisonSlider = ({
   }, []);
 
   useEffect(() => {
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("touchmove", handleTouchMove, { passive: true });
     document.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("touchend", handleMouseUp);
 
     return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("touchend", handleMouseUp);
     };
-  }, [handleMouseUp]);
+  }, [handleMouseMove, handleTouchMove, handleMouseUp]);
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-xl border border-black/10 shadow-xl" ref={containerRef}>
+    <div 
+      className="relative h-full w-full overflow-hidden rounded-xl border border-black/10 shadow-xl cursor-pointer" 
+      ref={containerRef}
+      onMouseDown={handleMouseDown}
+      onTouchStart={handleMouseDown}
+    >
       {/* Before image (full width) */}
       <div className="absolute inset-0 h-full w-full">
         <img 
@@ -64,7 +95,6 @@ const ComparisonSlider = ({
           src={afterImage} 
           alt={afterLabel} 
           className="h-full w-full object-cover"
-          style={{ width: `${100 / (sliderPosition / 100)}%` }}
         />
       </div>
 
