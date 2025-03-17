@@ -7,7 +7,6 @@ import CourseProgram from "../components/home/CourseProgram";
 import CourseOutcomes from "../components/home/CourseOutcomes";
 import EnhancedFaq from "../components/home/EnhancedFaq";
 import CallToAction from "../components/home/CallToAction";
-import ContactFormSection from "../components/home/ContactFormSection";
 
 const Index = () => {
   return (
@@ -28,9 +27,6 @@ const Index = () => {
 
       {/* FAQ Section */}
       <EnhancedFaq />
-
-      {/* Contact Form */}
-      <ContactFormSection />
 
       {/* Call to Action */}
       <CallToAction />
