@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const Guarantee = () => {
   return (
     <section className="py-20 bg-black relative">
-      <div className="absolute inset-0 bg-network-pattern bg-cover bg-fixed opacity-5" />
       <div className="container mx-auto px-4 relative">
         <div className="glass-panel max-w-3xl mx-auto p-8 text-center">
           <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-magenta/20 flex items-center justify-center">
