@@ -87,7 +87,7 @@ const ComparisonSlider = ({
               <span className="text-white"> OpenAI </span>
               <span className="text-[#569cd6]">from</span>
               <span className="text-white"> </span>
-              <span className="text-[#ce9178]">'openai'</span>
+              <span className="text-[#ce9178]">&apos;openai&apos;</span>
               <span className="text-white">;</span>
             </div>
             <div className="flex">
@@ -99,7 +99,7 @@ const ComparisonSlider = ({
               <span className="text-[#569cd6]">const</span>
               <span className="text-white"> openai = </span>
               <span className="text-[#569cd6]">new</span>
-              <span className="text-white"> OpenAI({</span>
+              <span className="text-white"> OpenAI(&#123;</span>
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">4</span>
@@ -109,7 +109,7 @@ const ComparisonSlider = ({
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">5</span>
-              <span className="text-white">});</span>
+              <span className="text-white">&#125;);</span>
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">6</span>
@@ -119,13 +119,13 @@ const ComparisonSlider = ({
               <span className="text-gray-500 mr-4">7</span>
               <span className="text-[#569cd6]">async function</span>
               <span className="text-[#dcdcaa]"> generateResponse</span>
-              <span className="text-white">(prompt) {</span>
+              <span className="text-white">(prompt) &#123;</span>
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">8</span>
               <span className="text-white">  </span>
               <span className="text-[#c586c0]">try</span>
-              <span className="text-white"> {</span>
+              <span className="text-white"> &#123;</span>
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">9</span>
@@ -133,12 +133,12 @@ const ComparisonSlider = ({
               <span className="text-[#569cd6]">const</span>
               <span className="text-white"> response = </span>
               <span className="text-[#569cd6]">await</span>
-              <span className="text-white"> openai.chat.completions.create({</span>
+              <span className="text-white"> openai.chat.completions.create(&#123;</span>
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">10</span>
               <span className="text-white">      model: </span>
-              <span className="text-[#ce9178]">"gpt-4"</span>
+              <span className="text-[#ce9178]">&quot;gpt-4&quot;</span>
               <span className="text-white">,</span>
             </div>
             <div className="flex">
@@ -147,25 +147,25 @@ const ComparisonSlider = ({
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">12</span>
-              <span className="text-white">        {</span>
+              <span className="text-white">        &#123;</span>
               <span className="text-[#9cdcfe]">role</span>
               <span className="text-white">: </span>
-              <span className="text-[#ce9178]">"system"</span>
+              <span className="text-[#ce9178]">&quot;system&quot;</span>
               <span className="text-white">, </span>
               <span className="text-[#9cdcfe]">content</span>
               <span className="text-white">: </span>
-              <span className="text-[#ce9178]">"You are a helpful assistant."</span>
-              <span className="text-white">},</span>
+              <span className="text-[#ce9178]">&quot;You are a helpful assistant.&quot;</span>
+              <span className="text-white">&#125;,</span>
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">13</span>
-              <span className="text-white">        {</span>
+              <span className="text-white">        &#123;</span>
               <span className="text-[#9cdcfe]">role</span>
               <span className="text-white">: </span>
-              <span className="text-[#ce9178]">"user"</span>
+              <span className="text-[#ce9178]">&quot;user&quot;</span>
               <span className="text-white">, </span>
               <span className="text-[#9cdcfe]">content</span>
-              <span className="text-white">: prompt},</span>
+              <span className="text-white">: prompt&#125;,</span>
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">14</span>
@@ -173,7 +173,7 @@ const ComparisonSlider = ({
             </div>
             <div className="flex">
               <span className="text-gray-500 mr-4">15</span>
-              <span className="text-white">    });</span>
+              <span className="text-white">    &#125;);</span>
             </div>
           </pre>
         </div>
