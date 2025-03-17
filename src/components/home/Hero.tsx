@@ -1,6 +1,46 @@
 
+"use client";
+import { TypewriterEffectSmooth } from "../ui/typewriter-effect";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+
+export function TypewriterEffectSmoothDemo() {
+  const words = [
+    {
+      text: "Twórz",
+    },
+    {
+      text: "potężne",
+    },
+    {
+      text: "aplikacje",
+    },
+    {
+      text: "oparte na",
+    },
+    {
+      text: "Flowise AI",
+      className: "gradient-text",
+    },
+  ];
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <p className="text-neutral-200 text-xs sm:text-base">
+        Zostań ekspertem AI bez pisania kodu!
+      </p>
+      <TypewriterEffectSmooth words={words} />
+      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
+        <Link to="/offer" className="btn-primary w-full sm:w-auto flex items-center justify-center">
+          Rozpocznij teraz
+          <ArrowRight size={18} className="ml-2" />
+        </Link>
+        <Link to="/demo" className="btn-secondary w-full sm:w-auto flex items-center justify-center">
+          Zobacz przykładową lekcję
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 const Hero = () => {
   return (
@@ -14,27 +54,11 @@ const Hero = () => {
       {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6 animate-fade-in">
-            <span className="text-white font-medium">Zostań ekspertem AI bez pisania kodu!</span>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-in animate-delay-100">
-            Twórz potężne aplikacje oparte na <span className="gradient-text">Flowise AI</span> - szybko i intuicyjnie
-          </h1>
+          <TypewriterEffectSmoothDemo />
           
           <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto animate-fade-in animate-delay-200">
             Nasz kurs pomoże Ci zbudować zaawansowane aplikacje oparte na sztucznej inteligencji bez konieczności posiadania wiedzy programistycznej. Nauczysz się wykorzystywać platformę Flowise AI do tworzenia chatbotów, asystentów AI i innych narzędzi.
           </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in animate-delay-300">
-            <Link to="/offer" className="btn-primary w-full sm:w-auto flex items-center justify-center">
-              Rozpocznij teraz
-              <ArrowRight size={18} className="ml-2" />
-            </Link>
-            <Link to="/demo" className="btn-secondary w-full sm:w-auto flex items-center justify-center">
-              Zobacz przykładową lekcję
-            </Link>
-          </div>
         </div>
       </div>
       

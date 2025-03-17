@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut, Settings, Book } from "lucide-react";
@@ -70,7 +69,7 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-black/80 backdrop-blur-lg py-3 shadow-lg" : "bg-transparent py-5"
+        scrolled ? "bg-white/80 backdrop-blur-lg py-3 shadow-lg" : "bg-transparent py-5"
       }`}
     >
       <div className="container px-4 mx-auto flex justify-between items-center">
@@ -80,23 +79,23 @@ const Header = () => {
             alt="ToKnowAI Logo" 
             className="h-8 md:h-10 mr-2"
           />
-          <span className="text-white text-2xl font-bold flex items-center">
+          <span className="text-black text-2xl font-bold flex items-center">
             ToKnowAI
           </span>
         </Link>
 
-        {/* Desktop Navigation - Updated Style */}
+        {/* Desktop Navigation */}
         <nav 
           className="hidden md:block"
         >
           <ul 
-            className="relative flex items-center mx-auto w-fit rounded-full border border-white/20 bg-white/5 backdrop-blur-md p-1"
+            className="relative flex items-center mx-auto w-fit rounded-full border border-black/20 bg-black/5 backdrop-blur-md p-1"
             onMouseLeave={() => setNavPosition((prev) => ({ ...prev, opacity: 0 }))}
           >
-            <NavItem path="/" label="Start" setPosition={setNavPosition} isActive={isActive("/")} />
-            <NavItem path="/blog" label="Blog" setPosition={setNavPosition} isActive={isActive("/blog")} />
-            <NavItem path="/offer" label="Oferta" setPosition={setNavPosition} isActive={isActive("/offer")} />
-            <NavItem path="/contact" label="Kontakt" setPosition={setNavPosition} isActive={isActive("/contact")} />
+            <NavItem path="/" label="START" setPosition={setNavPosition} isActive={isActive("/")} />
+            <NavItem path="/blog" label="BLOG" setPosition={setNavPosition} isActive={isActive("/blog")} />
+            <NavItem path="/offer" label="OFERTA" setPosition={setNavPosition} isActive={isActive("/offer")} />
+            <NavItem path="/contact" label="KONTAKT" setPosition={setNavPosition} isActive={isActive("/contact")} />
             
             <NavCursor position={navPosition} />
           </ul>
@@ -106,21 +105,21 @@ const Header = () => {
         <div className="hidden md:flex items-center ml-8">
           {user ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="bg-magenta/20 hover:bg-magenta/30 text-white rounded-full px-4 py-2 font-medium transition-all duration-200 flex items-center">
+              <DropdownMenuTrigger className="bg-blue-500/20 hover:bg-blue-500/30 text-black rounded-full px-4 py-2 font-medium transition-all duration-200 flex items-center">
                 <User size={18} className="mr-2" />
                 Profil
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-black/90 border-white/10 text-white">
-                <DropdownMenuItem className="hover:bg-white/10 cursor-pointer" onClick={() => navigate("/profile")}>
+              <DropdownMenuContent className="bg-white border-black/10 text-black">
+                <DropdownMenuItem className="hover:bg-black/10 cursor-pointer" onClick={() => navigate("/profile")}>
                   <Settings size={16} className="mr-2" />
                   Ustawienia
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-white/10 cursor-pointer" onClick={() => navigate("/my-courses")}>
+                <DropdownMenuItem className="hover:bg-black/10 cursor-pointer" onClick={() => navigate("/my-courses")}>
                   <Book size={16} className="mr-2" />
                   Moje kursy
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-white/10" />
-                <DropdownMenuItem className="hover:bg-white/10 cursor-pointer text-red-400" onClick={handleLogout}>
+                <DropdownMenuSeparator className="bg-black/10" />
+                <DropdownMenuItem className="hover:bg-black/10 cursor-pointer text-red-500" onClick={handleLogout}>
                   <LogOut size={16} className="mr-2" />
                   Wyloguj
                 </DropdownMenuItem>
@@ -129,7 +128,7 @@ const Header = () => {
           ) : (
             <Link 
               to="/auth" 
-              className="bg-magenta hover:bg-magenta/90 text-white rounded-full px-5 py-2 font-medium transition-all duration-200 shadow-lg hover:shadow-magenta/20 hover:scale-105"
+              className="bg-black hover:bg-black/90 text-white rounded-full px-5 py-2 font-medium transition-all duration-200 shadow-lg hover:shadow-black/20 hover:scale-105"
             >
               Dołącz
             </Link>
@@ -139,7 +138,7 @@ const Header = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className="md:hidden text-white focus:outline-none transition-transform duration-300 hover:scale-105"
+          className="md:hidden text-black focus:outline-none transition-transform duration-300 hover:scale-105"
           aria-label="Toggle Menu"
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -148,7 +147,7 @@ const Header = () => {
 
       {/* Mobile Navigation Overlay */}
       <div
-        className={`fixed inset-0 bg-black/95 backdrop-blur-md z-40 flex flex-col justify-center items-center transition-all duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-white/95 backdrop-blur-md z-40 flex flex-col justify-center items-center transition-all duration-300 ease-in-out ${
           isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         } md:hidden`}
       >
@@ -156,28 +155,28 @@ const Header = () => {
           <Link
             to="/"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/") ? "text-white after:scale-x-100" : ""}`}
+            className={`nav-link text-xl ${isActive("/") ? "text-black after:scale-x-100" : "text-black/70"}`}
           >
             Start
           </Link>
           <Link
             to="/blog"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/blog") ? "text-white after:scale-x-100" : ""}`}
+            className={`nav-link text-xl ${isActive("/blog") ? "text-black after:scale-x-100" : "text-black/70"}`}
           >
             Blog
           </Link>
           <Link
             to="/offer"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/offer") ? "text-white after:scale-x-100" : ""}`}
+            className={`nav-link text-xl ${isActive("/offer") ? "text-black after:scale-x-100" : "text-black/70"}`}
           >
             Oferta
           </Link>
           <Link
             to="/contact"
             onClick={closeMenu}
-            className={`nav-link text-xl ${isActive("/contact") ? "text-white after:scale-x-100" : ""}`}
+            className={`nav-link text-xl ${isActive("/contact") ? "text-black after:scale-x-100" : "text-black/70"}`}
           >
             Kontakt
           </Link>
@@ -187,7 +186,7 @@ const Header = () => {
               <Link
                 to="/profile"
                 onClick={closeMenu}
-                className="text-white flex items-center text-xl"
+                className="text-black flex items-center text-xl"
               >
                 <Settings size={20} className="mr-2" />
                 Ustawienia
@@ -195,7 +194,7 @@ const Header = () => {
               <Link
                 to="/my-courses"
                 onClick={closeMenu}
-                className="text-white flex items-center text-xl"
+                className="text-black flex items-center text-xl"
               >
                 <Book size={20} className="mr-2" />
                 Moje kursy
@@ -205,7 +204,7 @@ const Header = () => {
                   handleLogout();
                   closeMenu();
                 }}
-                className="bg-magenta/20 hover:bg-magenta/30 text-white rounded-full px-6 py-3 font-medium transition-all duration-200 mt-4 flex items-center"
+                className="bg-black/10 hover:bg-black/20 text-black rounded-full px-6 py-3 font-medium transition-all duration-200 mt-4 flex items-center"
               >
                 <LogOut size={20} className="mr-2" />
                 Wyloguj się
@@ -215,7 +214,7 @@ const Header = () => {
             <Link
               to="/auth"
               onClick={closeMenu}
-              className="bg-magenta hover:bg-magenta/90 text-white rounded-full px-6 py-3 font-medium transition-all duration-200 shadow-lg hover:shadow-magenta/20 mt-4"
+              className="bg-black hover:bg-black/90 text-white rounded-full px-6 py-3 font-medium transition-all duration-200 shadow-lg hover:shadow-black/20 mt-4"
             >
               Dołącz
             </Link>
@@ -267,7 +266,7 @@ const NavItem = ({
     >
       <Link
         to={path}
-        className="relative z-10 block cursor-pointer px-4 py-2 text-sm font-medium uppercase text-white mix-blend-difference"
+        className="relative z-10 block cursor-pointer px-4 py-2 text-sm font-medium text-black mix-blend-difference"
       >
         {label}
       </Link>
@@ -275,12 +274,12 @@ const NavItem = ({
   );
 };
 
-// NavCursor component - Changed to black background
+// NavCursor component - Changed to white background
 const NavCursor = ({ position }: { position: { left: number; width: number; opacity: number } }) => {
   return (
     <motion.div
       animate={position}
-      className="absolute z-0 h-8 rounded-full bg-black"
+      className="absolute z-0 h-8 rounded-full bg-white"
       transition={{ type: "spring", stiffness: 350, damping: 25 }}
     />
   );

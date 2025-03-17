@@ -12,7 +12,7 @@ import ContactFormSection from "../components/home/ContactFormSection";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
