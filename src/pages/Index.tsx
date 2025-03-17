@@ -9,7 +9,6 @@ import Guarantee from "../components/home/Guarantee";
 import EnhancedFaq from "../components/home/EnhancedFaq";
 import CallToAction from "../components/home/CallToAction";
 import ContactFormSection from "../components/home/ContactFormSection";
-import DemoCourse from "../components/home/DemoCourse";
 
 const Index = () => {
   return (
@@ -21,9 +20,6 @@ const Index = () => {
 
       {/* Before/After Comparison Section */}
       <BeforeAfterSection />
-
-      {/* Demo Course Section */}
-      <DemoCourse />
 
       {/* Course Program */}
       <CourseProgram />
