@@ -92,7 +92,7 @@ const BeforeAfterSection = () => {
               className="aspect-[16/9] w-full h-auto shadow-2xl rounded-xl overflow-hidden"
             >
               <ComparisonSlider
-                beforeImage="/lovable-uploads/a1c38628-4c03-427f-987c-9f87ffbbb673.png"
+                beforeContent="// This is code"
                 afterImage="/lovable-uploads/d938f15f-d924-4207-97b6-4e33a01db497.png"
                 beforeLabel="Tradycyjne kodowanie"
                 afterLabel="Z Flowise AI"

@@ -6,17 +6,17 @@ import { motion } from "framer-motion";
 import { Slider } from "../ui/slider";
 
 interface ComparisonSliderProps {
-  beforeImage: string;
+  beforeContent: string;
   afterImage: string;
   beforeLabel?: string;
   afterLabel?: string;
 }
 
 const ComparisonSlider = ({
-  beforeImage,
+  beforeContent,
   afterImage,
-  beforeLabel = "Before",
-  afterLabel = "After"
+  beforeLabel = "Tradycyjne kodowanie",
+  afterLabel = "Z Flowise AI"
 }: ComparisonSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -77,14 +77,106 @@ const ComparisonSlider = ({
       onMouseDown={handleMouseDown}
       onTouchStart={handleMouseDown}
     >
-      {/* Before image - always fully visible as the background */}
-      <div className="absolute inset-0">
-        <img 
-          src={beforeImage} 
-          alt={beforeLabel} 
-          className="h-full w-full object-cover"
-          style={{ position: 'absolute' }}
-        />
+      {/* Code editor (VSCode style) - always fully visible as the background */}
+      <div className="absolute inset-0 bg-[#1e1e1e] text-white font-mono overflow-y-auto">
+        <div className="p-4 text-sm">
+          <pre className="whitespace-pre-wrap">
+            <div className="flex">
+              <span className="text-gray-500 mr-4">1</span>
+              <span className="text-[#569cd6]">import</span>
+              <span className="text-white"> OpenAI </span>
+              <span className="text-[#569cd6]">from</span>
+              <span className="text-white"> </span>
+              <span className="text-[#ce9178]">'openai'</span>
+              <span className="text-white">;</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">2</span>
+              <span className="text-white"></span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">3</span>
+              <span className="text-[#569cd6]">const</span>
+              <span className="text-white"> openai = </span>
+              <span className="text-[#569cd6]">new</span>
+              <span className="text-white"> OpenAI({</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">4</span>
+              <span className="text-white">  apiKey: process.env.</span>
+              <span className="text-[#9cdcfe]">OPENAI_API_KEY</span>
+              <span className="text-white">,</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">5</span>
+              <span className="text-white">});</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">6</span>
+              <span className="text-white"></span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">7</span>
+              <span className="text-[#569cd6]">async function</span>
+              <span className="text-[#dcdcaa]"> generateResponse</span>
+              <span className="text-white">(prompt) {</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">8</span>
+              <span className="text-white">  </span>
+              <span className="text-[#c586c0]">try</span>
+              <span className="text-white"> {</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">9</span>
+              <span className="text-white">    </span>
+              <span className="text-[#569cd6]">const</span>
+              <span className="text-white"> response = </span>
+              <span className="text-[#569cd6]">await</span>
+              <span className="text-white"> openai.chat.completions.create({</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">10</span>
+              <span className="text-white">      model: </span>
+              <span className="text-[#ce9178]">"gpt-4"</span>
+              <span className="text-white">,</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">11</span>
+              <span className="text-white">      messages: [</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">12</span>
+              <span className="text-white">        {</span>
+              <span className="text-[#9cdcfe]">role</span>
+              <span className="text-white">: </span>
+              <span className="text-[#ce9178]">"system"</span>
+              <span className="text-white">, </span>
+              <span className="text-[#9cdcfe]">content</span>
+              <span className="text-white">: </span>
+              <span className="text-[#ce9178]">"You are a helpful assistant."</span>
+              <span className="text-white">},</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">13</span>
+              <span className="text-white">        {</span>
+              <span className="text-[#9cdcfe]">role</span>
+              <span className="text-white">: </span>
+              <span className="text-[#ce9178]">"user"</span>
+              <span className="text-white">, </span>
+              <span className="text-[#9cdcfe]">content</span>
+              <span className="text-white">: prompt},</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">14</span>
+              <span className="text-white">      ],</span>
+            </div>
+            <div className="flex">
+              <span className="text-gray-500 mr-4">15</span>
+              <span className="text-white">    });</span>
+            </div>
+          </pre>
+        </div>
       </div>
 
       {/* After image - only visible based on slider position */}
