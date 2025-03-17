@@ -77,7 +77,7 @@ const ComparisonSlider = ({
       onMouseDown={handleMouseDown}
       onTouchStart={handleMouseDown}
     >
-      {/* Before image (full width) */}
+      {/* Before image (full width, fixed position) */}
       <div className="absolute inset-0 h-full w-full">
         <img 
           src={beforeImage} 
