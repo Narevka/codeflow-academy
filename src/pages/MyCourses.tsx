@@ -17,22 +17,22 @@ const MyCourses = () => {
   }
 
   return (
-    <div className="min-h-screen bg-dark-purple text-white flex flex-col">
+    <div className="min-h-screen bg-white text-gray-800 flex flex-col">
       <Header />
       
-      <main className="flex-1 py-20 px-4">
+      <main className="flex-1 py-20 px-4 bg-gray-50">
         <div className="container mx-auto max-w-4xl">
           <Breadcrumb className="mb-8">
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">
+                <BreadcrumbLink href="/" className="text-gray-600 hover:text-magenta">
                   <Home size={16} className="mr-1" />
                   Start
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/my-courses">Moje kursy</BreadcrumbLink>
+                <BreadcrumbLink href="/my-courses" className="text-gray-600 hover:text-magenta">Moje kursy</BreadcrumbLink>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -41,7 +41,7 @@ const MyCourses = () => {
             <h1 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
               Moje kursy
             </h1>
-            <p className="text-white/70 text-lg">
+            <p className="text-gray-600 text-lg">
               Tutaj znajdziesz wszystkie swoje zakupione kursy
             </p>
           </div>
@@ -52,7 +52,7 @@ const MyCourses = () => {
                 <CourseCard key={course.id} course={course} />
               ))
             ) : (
-              <div className="text-center text-white/50 py-10 glass-card">
+              <div className="text-center text-gray-500 py-10 bg-white rounded-lg shadow-sm border border-gray-100">
                 <p>Nie masz jeszcze żadnych kursów.</p>
                 <p>Sprawdź naszą ofertę i zacznij naukę już dziś!</p>
               </div>
@@ -67,3 +67,4 @@ const MyCourses = () => {
 };
 
 export default MyCourses;
+

@@ -107,7 +107,7 @@ const EnhancedFaq = () => {
   });
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
+    <section className="py-20 bg-gray-50 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/public/lovable-uploads/40d3d0c0-d9e2-43e5-9bcf-32769ef968df.png')] bg-cover bg-center opacity-5" />
       <div className="container mx-auto px-4 relative">
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -128,7 +128,7 @@ const EnhancedFaq = () => {
             <input
               type="text"
               placeholder="Szukaj w FAQ..."
-              className="w-full py-3 pl-12 pr-4 rounded-xl bg-gray-100 border border-gray-200 focus:border-magenta/50 focus:outline-none focus:ring-2 focus:ring-magenta/20 text-gray-800 placeholder:text-gray-400 transition-all"
+              className="w-full py-3 pl-12 pr-4 rounded-xl bg-white border border-gray-200 focus:border-magenta/50 focus:outline-none focus:ring-2 focus:ring-magenta/20 text-gray-800 placeholder:text-gray-400 transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -141,7 +141,7 @@ const EnhancedFaq = () => {
                 className={`px-4 py-2 rounded-lg transition-all ${
                   activeCategory === "Wszystkie"
                     ? "bg-magenta text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-white text-gray-700 hover:bg-gray-100"
                 }`}
                 onClick={() => setActiveCategory("Wszystkie")}
               >
@@ -153,7 +153,7 @@ const EnhancedFaq = () => {
                   className={`px-4 py-2 rounded-lg transition-all ${
                     activeCategory === category
                       ? "bg-magenta text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      : "bg-white text-gray-700 hover:bg-gray-100"
                   }`}
                   onClick={() => setActiveCategory(category)}
                 >
@@ -164,7 +164,7 @@ const EnhancedFaq = () => {
           </div>
 
           {/* FAQ items */}
-          <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-200 overflow-hidden">
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-200 overflow-hidden">
             {filteredItems.length > 0 ? (
               filteredItems.map((item, index) => (
                 <div key={index} className="overflow-hidden">

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-gray-800 py-12 border-t border-gray-200">
+    <footer className="bg-white text-gray-800 py-12 border-t border-gray-100 shadow-sm">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Contact Information */}
         <div>
@@ -15,7 +15,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-lg font-semibold mb-4"
+            className="text-lg font-semibold mb-4 text-gray-700"
           >
             Kontakt
           </motion.h4>
@@ -60,7 +60,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-lg font-semibold mb-4"
+            className="text-lg font-semibold mb-4 text-gray-700"
           >
             Szybkie linki
           </motion.h4>
@@ -101,7 +101,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="text-lg font-semibold mb-4"
+            className="text-lg font-semibold mb-4 text-gray-700"
           >
             Zapisz się do newslettera
           </motion.h4>
