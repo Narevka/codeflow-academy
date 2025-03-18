@@ -20,12 +20,12 @@ const CourseNavigation = ({ prev, next, courseId }: CourseNavigationProps) => {
       {prev ? (
         <Link
           to={`/my-courses/${courseId}/${prev.moduleId}/${prev.lessonId}`}
-          className="flex items-center text-gray-600 hover:text-magenta"
+          className="flex items-center text-gray-700 hover:text-magenta"
         >
           <ChevronLeft size={20} className="mr-2" />
           <div>
-            <div className="text-xs text-gray-500">Poprzednia lekcja</div>
-            <div className="text-sm">{prev.title}</div>
+            <div className="text-xs text-gray-600">Poprzednia lekcja</div>
+            <div className="text-sm font-medium">{prev.title}</div>
           </div>
         </Link>
       ) : (
@@ -35,11 +35,11 @@ const CourseNavigation = ({ prev, next, courseId }: CourseNavigationProps) => {
       {next && (
         <Link
           to={`/my-courses/${courseId}/${next.moduleId}/${next.lessonId}`}
-          className="flex items-center text-gray-600 hover:text-magenta text-right"
+          className="flex items-center text-gray-700 hover:text-magenta text-right"
         >
           <div>
-            <div className="text-xs text-gray-500">Następna lekcja</div>
-            <div className="text-sm">{next.title}</div>
+            <div className="text-xs text-gray-600">Następna lekcja</div>
+            <div className="text-sm font-medium">{next.title}</div>
           </div>
           <ChevronRight size={20} className="ml-2" />
         </Link>

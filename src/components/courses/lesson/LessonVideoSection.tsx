@@ -19,15 +19,17 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   }
 
   return (
-    <div className="w-full">
-      <h2 className="text-xl font-semibold mb-3 text-gray-800">{lesson.displayTitle || lesson.title}</h2>
-      <VideoPlayerWithTranscript
-        src={lesson.videoUrl}
-        poster={lesson.thumbnailUrl}
-        title={lesson.title}
-        transcript={lesson.transcript}
-        transcriptSourceFile={transcriptSourceFile}
-      />
+    <div className="w-full mb-8">
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">{lesson.displayTitle || lesson.title}</h2>
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+        <VideoPlayerWithTranscript
+          src={lesson.videoUrl}
+          poster={lesson.thumbnailUrl}
+          title={lesson.title}
+          transcript={lesson.transcript}
+          transcriptSourceFile={transcriptSourceFile}
+        />
+      </div>
     </div>
   );
 };
