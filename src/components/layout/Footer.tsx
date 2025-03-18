@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
@@ -5,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-zinc-900 text-white py-12">
+    <footer className="bg-white text-gray-800 py-12 border-t border-gray-200">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Contact Information */}
         <div>
@@ -25,8 +26,8 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="flex items-center mb-2"
           >
-            <MapPin className="mr-2 h-4 w-4 text-white/70" />
-            <span className="text-white/70">Narewka, ul. Hajnowska 1A, 17-220 Narewka</span>
+            <MapPin className="mr-2 h-4 w-4 text-gray-500" />
+            <span className="text-gray-600">Narewka, ul. Hajnowska 1A, 17-220 Narewka</span>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -35,8 +36,8 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex items-center mb-2"
           >
-            <Mail className="mr-2 h-4 w-4 text-white/70" />
-            <a href="mailto:info@toknowai.pl" className="text-white/70 hover:text-magenta transition-colors">
+            <Mail className="mr-2 h-4 w-4 text-gray-500" />
+            <a href="mailto:info@toknowai.pl" className="text-gray-600 hover:text-magenta transition-colors">
               info@toknowai.pl
             </a>
           </motion.div>
@@ -47,8 +48,8 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex items-center"
           >
-            <Phone className="mr-2 h-4 w-4 text-white/70" />
-            <span className="text-white/70">606 340 002</span>
+            <Phone className="mr-2 h-4 w-4 text-gray-500" />
+            <span className="text-gray-600">606 340 002</span>
           </motion.div>
         </div>
 
@@ -71,22 +72,22 @@ const Footer = () => {
             className="list-none space-y-2"
           >
             <li>
-              <Link to="/" className="text-white/70 hover:text-magenta transition-colors">
+              <Link to="/" className="text-gray-600 hover:text-magenta transition-colors">
                 Strona główna
               </Link>
             </li>
             <li>
-              <Link to="/offer" className="text-white/70 hover:text-magenta transition-colors">
+              <Link to="/offer" className="text-gray-600 hover:text-magenta transition-colors">
                 Oferta
               </Link>
             </li>
             <li>
-              <Link to="/my-courses" className="text-white/70 hover:text-magenta transition-colors">
+              <Link to="/my-courses" className="text-gray-600 hover:text-magenta transition-colors">
                 Moje kursy
               </Link>
             </li>
              <li>
-              <Link to="/terms" className="text-white/70 hover:text-magenta transition-colors">
+              <Link to="/terms" className="text-gray-600 hover:text-magenta transition-colors">
                 Regulamin
               </Link>
             </li>
@@ -109,7 +110,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.7 }}
-            className="text-white/70 mb-4"
+            className="text-gray-600 mb-4"
           >
             Otrzymuj informacje o nowych kursach i promocjach.
           </motion.p>
@@ -125,7 +126,7 @@ const Footer = () => {
         transition={{ duration: 0.5, delay: 0.8 }}
         className="text-center mt-8"
       >
-        <p className="text-white/50 text-sm">
+        <p className="text-gray-500 text-sm">
           © {new Date().getFullYear()} ToKnowAI. Wszelkie prawa zastrzeżone.
         </p>
       </motion.div>

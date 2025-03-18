@@ -107,14 +107,14 @@ const EnhancedFaq = () => {
   });
 
   return (
-    <section className="py-20 bg-dark-purple relative overflow-hidden">
+    <section className="py-20 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/public/lovable-uploads/40d3d0c0-d9e2-43e5-9bcf-32769ef968df.png')] bg-cover bg-center opacity-5" />
       <div className="container mx-auto px-4 relative">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
             FAQ - Najczęściej zadawane pytania
           </h2>
-          <p className="text-white/70 text-lg">
+          <p className="text-gray-600 text-lg">
             Masz pytania? Znajdziesz tutaj odpowiedzi na najczęściej zadawane pytania!
           </p>
         </div>
@@ -123,12 +123,12 @@ const EnhancedFaq = () => {
           {/* Search bar */}
           <div className="relative mb-8">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search size={18} className="text-white/50" />
+              <Search size={18} className="text-gray-400" />
             </div>
             <input
               type="text"
               placeholder="Szukaj w FAQ..."
-              className="w-full py-3 pl-12 pr-4 rounded-xl bg-white/5 border border-white/10 focus:border-magenta/50 focus:outline-none focus:ring-2 focus:ring-magenta/20 text-white placeholder:text-white/40 transition-all"
+              className="w-full py-3 pl-12 pr-4 rounded-xl bg-gray-100 border border-gray-200 focus:border-magenta/50 focus:outline-none focus:ring-2 focus:ring-magenta/20 text-gray-800 placeholder:text-gray-400 transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -141,7 +141,7 @@ const EnhancedFaq = () => {
                 className={`px-4 py-2 rounded-lg transition-all ${
                   activeCategory === "Wszystkie"
                     ? "bg-magenta text-white"
-                    : "bg-white/5 text-white/70 hover:bg-white/10"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
                 onClick={() => setActiveCategory("Wszystkie")}
               >
@@ -153,7 +153,7 @@ const EnhancedFaq = () => {
                   className={`px-4 py-2 rounded-lg transition-all ${
                     activeCategory === category
                       ? "bg-magenta text-white"
-                      : "bg-white/5 text-white/70 hover:bg-white/10"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                   onClick={() => setActiveCategory(category)}
                 >
@@ -164,18 +164,18 @@ const EnhancedFaq = () => {
           </div>
 
           {/* FAQ items */}
-          <div className="bg-card-gradient glass-card rounded-xl border border-white/10 divide-y divide-white/10 overflow-hidden">
+          <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-200 overflow-hidden">
             {filteredItems.length > 0 ? (
               filteredItems.map((item, index) => (
                 <div key={index} className="overflow-hidden">
                   <button
-                    className="w-full text-left p-6 flex justify-between items-center focus:outline-none transition-colors hover:bg-white/5"
+                    className="w-full text-left p-6 flex justify-between items-center focus:outline-none transition-colors hover:bg-gray-50"
                     onClick={() => toggleItem(item.question)}
                     aria-expanded={openItem === item.question}
                   >
                     <div className="flex items-start">
                       <MessageCircleQuestion size={20} className="text-magenta flex-shrink-0 mt-1 mr-3" />
-                      <span className="text-xl font-medium text-white">{item.question}</span>
+                      <span className="text-xl font-medium text-gray-800">{item.question}</span>
                     </div>
                     <span className="ml-4 flex-shrink-0 text-magenta">
                       {openItem === item.question ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -189,10 +189,10 @@ const EnhancedFaq = () => {
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="overflow-hidden bg-white/5"
+                        className="overflow-hidden bg-gray-50"
                       >
                         <div className="p-6 pt-0 pl-14">
-                          <p className="text-white/80">{item.answer}</p>
+                          <p className="text-gray-600">{item.answer}</p>
                         </div>
                       </motion.div>
                     )}
@@ -201,7 +201,7 @@ const EnhancedFaq = () => {
               ))
             ) : (
               <div className="p-8 text-center">
-                <p className="text-white/70">Nie znaleziono odpowiedzi na Twoje pytanie.</p>
+                <p className="text-gray-500">Nie znaleziono odpowiedzi na Twoje pytanie.</p>
                 <p className="text-magenta mt-2">Skontaktuj się z nami bezpośrednio na info@toknowai.pl</p>
               </div>
             )}
