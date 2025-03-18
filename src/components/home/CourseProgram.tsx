@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { BookOpen, Check, ChevronRight, Cpu, Database, LineChart, LucideIcon, RotateCw, Server, Settings, Sparkles, Workflow } from "lucide-react";
+import { BookOpen, Check, ChevronRight, Cpu, Database, LineChart, RotateCw, Server, Settings, Sparkles, Workflow } from "lucide-react";
 
 interface CourseModuleItem {
   id: number;
@@ -128,14 +128,14 @@ const CourseProgram = () => {
   };
 
   return (
-    <section className="py-20 bg-dark-purple relative overflow-hidden">
+    <section className="py-20 bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/public/lovable-uploads/afb57166-3152-43ef-9f3f-a8f4d8351ea6.png')] bg-cover bg-center opacity-5" />
       <div className="container mx-auto px-4 relative">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
             Program kursu
           </h2>
-          <p className="text-white/70 text-lg">
+          <p className="text-gray-600 text-lg">
             Kompleksowy program nauczania krok po kroku, który przeprowadzi Cię od podstaw do 
             zaawansowanych aplikacji opartych na Flowise AI.
           </p>
@@ -143,30 +143,30 @@ const CourseProgram = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
           <div className="col-span-1 sticky top-24 self-start h-fit">
-            <div className="bg-card-gradient glass-card p-5 rounded-xl border border-white/10">
-              <h3 className="text-xl font-semibold mb-6 text-white">Moduły kursu</h3>
+            <div className="bg-white shadow-lg p-5 rounded-xl border border-gray-100">
+              <h3 className="text-xl font-semibold mb-6 text-gray-800">Moduły kursu</h3>
               <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin">
                 {modules.map((module) => (
                   <button
                     key={module.id}
                     className={`w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center ${
                       activeModule === module.id
-                        ? "bg-magenta/20 border-magenta/50 border"
-                        : "bg-white/5 hover:bg-white/10 border border-white/10"
+                        ? "bg-magenta/10 border-magenta/50 border"
+                        : "bg-gray-50 hover:bg-gray-100 border border-gray-100"
                     }`}
                     onClick={() => handleModuleClick(module.id)}
                   >
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
-                      activeModule === module.id ? "bg-magenta" : "bg-white/10"
+                      activeModule === module.id ? "bg-magenta" : "bg-gray-200"
                     }`}>
-                      <module.icon size={20} className={activeModule === module.id ? "text-white" : "text-white/70"} />
+                      <module.icon size={20} className={activeModule === module.id ? "text-white" : "text-gray-600"} />
                     </div>
                     <div>
-                      <span className="text-white font-medium">Moduł {module.id}</span>
-                      <p className="text-white/70 text-sm">{module.title}</p>
+                      <span className={`${activeModule === module.id ? "text-magenta" : "text-gray-800"} font-medium`}>Moduł {module.id}</span>
+                      <p className="text-gray-600 text-sm">{module.title}</p>
                     </div>
                     <ChevronRight size={18} className={`ml-auto transition-transform ${
-                      activeModule === module.id ? "text-magenta rotate-90" : "text-white/40"
+                      activeModule === module.id ? "text-magenta rotate-90" : "text-gray-400"
                     }`} />
                   </button>
                 ))}
@@ -178,21 +178,21 @@ const CourseProgram = () => {
             {modules
               .filter((module) => module.id === activeModule)
               .map((module) => (
-                <div key={module.id} className="bg-card-gradient glass-card p-6 rounded-xl border border-white/10 animate-fade-in">
+                <div key={module.id} className="bg-white shadow-lg p-6 rounded-xl border border-gray-100 animate-fade-in">
                   <div className="flex items-center mb-6">
-                    <div className="bg-magenta/20 p-3 rounded-xl mr-4">
+                    <div className="bg-magenta/10 p-3 rounded-xl mr-4">
                       <module.icon size={24} className="text-magenta" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-semibold text-white">
+                      <h3 className="text-2xl font-semibold text-gray-800">
                         Moduł {module.id}: {module.title}
                       </h3>
-                      <p className="text-white/70">{module.description}</p>
+                      <p className="text-gray-600">{module.description}</p>
                     </div>
                   </div>
                   
-                  <div className="bg-white/5 rounded-xl p-5 border border-white/10">
-                    <h4 className="text-lg font-medium mb-5 text-white inline-flex items-center">
+                  <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                    <h4 className="text-lg font-medium mb-5 text-gray-800 inline-flex items-center">
                       <BookOpen size={18} className="mr-2 text-magenta" />
                       Czego się nauczysz:
                     </h4>
@@ -202,7 +202,7 @@ const CourseProgram = () => {
                           <span className="mr-3 bg-magenta/20 p-1 rounded-full mt-1">
                             <Check size={14} className="text-magenta" />
                           </span>
-                          <span className="text-white/80">{lesson}</span>
+                          <span className="text-gray-700">{lesson}</span>
                         </li>
                       ))}
                     </ul>
