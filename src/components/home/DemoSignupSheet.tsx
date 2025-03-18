@@ -114,7 +114,7 @@ const DemoSignupSheet = ({ trigger }: DemoSignupSheetProps) => {
                 className="w-full md:w-auto px-6 py-2.5 bg-black text-white font-medium rounded-full 
                 hover:bg-black/90 transition-colors flex items-center justify-center gap-2"
               >
-                {isSubmitting ? "Zapisywanie..." : "Dołączam"}
+                {isSubmitting ? "Zapisywanie..." : "Odblokuj darmową lekcję"}
                 {!isSubmitting && <span className="text-yellow-400">🔥</span>}
               </button>
             </form>
