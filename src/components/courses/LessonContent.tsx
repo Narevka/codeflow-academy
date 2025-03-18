@@ -24,12 +24,12 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
 
   return (
     <div className="space-y-6 w-full">
-      <h1 className="text-2xl md:text-3xl font-bold">{lesson.displayTitle || lesson.title}</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-gray-800">{lesson.displayTitle || lesson.title}</h1>
       
       {lesson.videoUrl && <LessonVideoSection lesson={lesson} />}
       
       {lesson.description && (
-        <div className="prose prose-invert max-w-none mt-6">
+        <div className="prose max-w-none mt-6 text-gray-700">
           <TextFormatter text={lesson.description} />
         </div>
       )}

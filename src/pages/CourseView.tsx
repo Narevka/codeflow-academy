@@ -80,7 +80,7 @@ const CourseView = () => {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-dark-purple text-white flex flex-col">
+      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
         <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
@@ -97,14 +97,14 @@ const CourseView = () => {
   // Show error state  
   if (error || !course) {
     return (
-      <div className="min-h-screen bg-dark-purple text-white flex flex-col">
+      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
         <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
             <div className="text-center py-20">
-              <p className="text-xl text-red-400">{error || "Course not found"}</p>
+              <p className="text-xl text-red-500">{error || "Course not found"}</p>
               <div className="mt-4">
-                <a href="/my-courses" className="text-blue-400 hover:underline">Go back to My Courses</a>
+                <a href="/my-courses" className="text-blue-500 hover:underline">Go back to My Courses</a>
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ const CourseView = () => {
   const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
   return (
-    <div className="min-h-screen bg-dark-purple text-white flex flex-col">
+    <div className="min-h-screen bg-white text-gray-800 flex flex-col">
       <Header />
       
       <main className="flex-1 py-6 px-4">

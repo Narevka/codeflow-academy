@@ -20,7 +20,7 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
 
   return (
     <div className="w-full">
-      <h2 className="text-xl font-semibold mb-3">{lesson.displayTitle || lesson.title}</h2>
+      <h2 className="text-xl font-semibold mb-3 text-gray-800">{lesson.displayTitle || lesson.title}</h2>
       <VideoPlayerWithTranscript
         src={lesson.videoUrl}
         poster={lesson.thumbnailUrl}

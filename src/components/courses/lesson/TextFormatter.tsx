@@ -14,7 +14,7 @@ const TextFormatter = ({ text }: { text: string }) => {
         if (/^\d+\.\s/.test(paragraph)) {
           return (
             <div key={index} className="mb-6">
-              <p className="mb-2 text-base leading-relaxed">{paragraph}</p>
+              <p className="mb-2 text-base leading-relaxed text-gray-700">{paragraph}</p>
             </div>
           );
         }
@@ -24,12 +24,12 @@ const TextFormatter = ({ text }: { text: string }) => {
           paragraph.toUpperCase() === paragraph
         ) {
           return (
-            <h3 key={index} className="text-xl font-bold text-primary mt-8 mb-4">
+            <h3 key={index} className="text-xl font-bold text-magenta mt-8 mb-4">
               {paragraph}
             </h3>
           );
         }
-        return <p key={index} className="mb-4 text-base leading-relaxed">{paragraph}</p>;
+        return <p key={index} className="mb-4 text-base leading-relaxed text-gray-700">{paragraph}</p>;
       })}
     </>
   );

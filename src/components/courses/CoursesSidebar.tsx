@@ -37,15 +37,15 @@ const CoursesSidebar = ({
   );
   
   if (!modules || modules.length === 0) {
-    return <div className="glass-card p-4 w-full">No lessons available</div>;
+    return <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 w-full">No lessons available</div>;
   }
 
   // Create the sidebar content
   const sidebarContent = (
-    <Sidebar className="glass-card p-4 w-full transition-all duration-300">
+    <Sidebar className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 w-full transition-all duration-300">
       <SidebarBody className="sticky top-24">
         <div className="space-y-1 relative">
-          <h3 className={`font-semibold text-white text-lg mb-4 ${!sidebarOpen ? 'opacity-0' : ''}`}>
+          <h3 className={`font-semibold text-gray-800 text-lg mb-4 ${!sidebarOpen ? 'opacity-0' : ''}`}>
             Lekcje
           </h3>
           
@@ -55,8 +55,8 @@ const CoursesSidebar = ({
             
             // Icon based on lesson completion status
             const icon = lesson.completed ? 
-              <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-dark-purple flex items-center justify-center text-xs font-bold text-dark-purple">{lessonNumber}</div> : 
-              <div className="w-6 h-6 border-2 border-neutral-300 dark:border-white/60 rounded-full z-10 flex-shrink-0 bg-dark-purple flex items-center justify-center text-xs font-bold text-white/80">{lessonNumber}</div>;
+              <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-white flex items-center justify-center text-xs font-bold text-white">{lessonNumber}</div> : 
+              <div className="w-6 h-6 border-2 border-gray-300 rounded-full z-10 flex-shrink-0 bg-white flex items-center justify-center text-xs font-bold text-gray-700">{lessonNumber}</div>;
 
             return (
               <SidebarLink
@@ -70,8 +70,8 @@ const CoursesSidebar = ({
                 completed={lesson.completed}
                 className={`rounded-md py-3 ${
                   isActive
-                    ? "bg-magenta/20 border-l-4 border-magenta -ml-4 pl-4"
-                    : "hover:bg-white/10 border-l-4 border-transparent -ml-4 pl-4"
+                    ? "bg-magenta/10 border-l-4 border-magenta -ml-4 pl-4 text-magenta"
+                    : "hover:bg-gray-100 border-l-4 border-transparent -ml-4 pl-4 text-gray-700"
                 }`}
               />
             );

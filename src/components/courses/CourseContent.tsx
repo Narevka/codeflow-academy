@@ -42,7 +42,7 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next, sidebar
   if (!activeLesson) {
     return (
       <motion.div 
-        className="glass-card min-h-[600px] h-full flex flex-col overflow-hidden"
+        className="bg-white shadow-sm border border-gray-200 rounded-lg min-h-[600px] h-full flex flex-col overflow-hidden"
         animate={animate ? (sidebarOpen ? contentStyle.normal : contentStyle.expanded) : contentStyle.normal}
         transition={{ 
           duration: 0.25, 
@@ -51,7 +51,7 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next, sidebar
         style={{ willChange: "width" }}
       >
         <div className="text-center py-20 flex-1">
-          <p className="text-xl">Wybierz lekcję z menu, aby rozpocząć naukę.</p>
+          <p className="text-xl text-gray-700">Wybierz lekcję z menu, aby rozpocząć naukę.</p>
         </div>
       </motion.div>
     );
@@ -59,7 +59,7 @@ const CourseContent = ({ course, activeModule, activeLesson, prev, next, sidebar
 
   return (
     <motion.div 
-      className="glass-card min-h-[600px] h-full flex flex-col overflow-hidden"
+      className="bg-white shadow-sm border border-gray-200 rounded-lg min-h-[600px] h-full flex flex-col overflow-hidden"
       animate={animate ? (sidebarOpen ? contentStyle.normal : contentStyle.expanded) : contentStyle.normal}
       transition={{ 
         duration: 0.25, 

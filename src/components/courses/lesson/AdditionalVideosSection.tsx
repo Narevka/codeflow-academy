@@ -33,7 +33,7 @@ const AdditionalVideosSection = ({ videos }: AdditionalVideosSectionProps) => {
         
         return (
           <div key={index} className="space-y-4">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold text-gray-800">
               {video.title || `Dodatkowe wideo ${index + 1}`}
             </h2>
             {video.videoUrl && (
@@ -46,7 +46,7 @@ const AdditionalVideosSection = ({ videos }: AdditionalVideosSectionProps) => {
               />
             )}
             {cleanedDescription && (
-              <div className="prose prose-invert max-w-none">
+              <div className="prose max-w-none text-gray-700">
                 <TextFormatter text={cleanedDescription} />
               </div>
             )}
