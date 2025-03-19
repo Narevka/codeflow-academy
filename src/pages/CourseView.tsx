@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
@@ -20,12 +21,14 @@ const CourseView = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Move sidebar state to component top level
   const sidebarRef = useRef<HTMLDivElement>(null);
 
+  // Load course data 
   useEffect(() => {
     console.log("CourseView mounted, courseId:", courseId);
     
+    // Reset state on navigation
     setLoading(true);
     setError(null);
     
@@ -36,9 +39,11 @@ const CourseView = () => {
       if (foundCourse) {
         setCourse(foundCourse);
         
+        // Find active module and lesson based on URL params
         let activeModuleFound = null;
         let activeLessonFound = null;
 
+        // First look for the exact module and lesson in URL
         if (moduleId && lessonId) {
           activeModuleFound = foundCourse.modules.find(m => m.id === moduleId) || null;
           
@@ -47,6 +52,7 @@ const CourseView = () => {
           }
         }
         
+        // If no specific module/lesson in URL, use the first available
         if (!activeModuleFound && foundCourse.modules.length > 0) {
           activeModuleFound = foundCourse.modules[0];
         }
@@ -68,19 +74,10 @@ const CourseView = () => {
     setLoading(false);
   }, [courseId, moduleId, lessonId]);
 
-  useEffect(() => {
-    const mainElement = document.querySelector('main');
-    if (mainElement) {
-      mainElement.setAttribute('data-sidebar-collapsed', (!sidebarOpen).toString());
-    }
-    
-    if (sidebarRef.current) {
-      sidebarRef.current.setAttribute('data-sidebar-collapsed', (!sidebarOpen).toString());
-    }
-  }, [sidebarOpen]);
-
+  // Auth state logging for debugging
   console.log("Auth state:", { user, authLoading });
 
+  // Show loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-white text-gray-800 flex flex-col">
@@ -97,6 +94,7 @@ const CourseView = () => {
     );
   }
 
+  // Show error state  
   if (error || !course) {
     return (
       <div className="min-h-screen bg-white text-gray-800 flex flex-col">
@@ -122,7 +120,7 @@ const CourseView = () => {
     <div className="min-h-screen bg-white text-gray-800 flex flex-col">
       <Header />
       
-      <main className="flex-1 py-6 px-4" data-sidebar-collapsed={(!sidebarOpen).toString()}>
+      <main className="flex-1 py-6 px-4">
         <div className="container mx-auto">
           {course && (
             <>
@@ -132,9 +130,12 @@ const CourseView = () => {
                 activeModule={activeModule || undefined} 
               />
               
+              {/* Use a flex layout instead of grid for more fluid responsive behavior */}
               <div className="w-full">
+                {/* Use the top-level sidebar state */}
                 <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen}>
                   <div className="flex flex-col lg:flex-row relative">
+                    {/* Sidebar - direct lesson list */}
                     <motion.div 
                       ref={sidebarRef}
                       className="flex-shrink-0 w-full lg:w-1/4 xl:w-1/5"
@@ -145,17 +146,17 @@ const CourseView = () => {
                         maxWidth: sidebarOpen ? "100%" : "60px",
                       }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
-                      data-sidebar-collapsed={(!sidebarOpen).toString()}
                     >
                       <CoursesSidebar
                         modules={course.modules}
                         courseId={course.id}
                         activeModuleId={activeModule?.id}
                         activeLessonId={activeLesson?.id}
-                        noProvider={true}
+                        noProvider={true} // Flag to avoid nested SidebarProvider
                       />
                     </motion.div>
                     
+                    {/* Main content - lesson */}
                     <div 
                       className="flex-grow transition-all duration-300"
                     >
