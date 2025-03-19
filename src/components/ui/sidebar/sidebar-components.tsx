@@ -46,14 +46,14 @@ export const Sidebar = ({
             .active-lesson {
               position: relative;
               border-left: 4px solid #cf0e81; /* Magenta color */
-              margin-left: -16px;
+              margin-left: -8px; /* Reduced from -16px to prevent overlap */
               padding-left: calc(10px + 3px); /* Adjust padding to account for border */
             }
             
             .inactive-lesson {
               position: relative;
               border-left: 4px solid transparent;
-              margin-left: -16px;
+              margin-left: -8px; /* Reduced from -16px to prevent overlap */
               padding-left: calc(10px + 3px);
             }
             
@@ -61,15 +61,27 @@ export const Sidebar = ({
             [data-sidebar-collapsed="true"] .active-lesson {
               border-left-width: 4px;
               border-right: 4px solid #cf0e81; /* Add right border for collapsed view */
-              margin-left: -16px;
+              margin-left: -8px;
               margin-right: -4px; /* Negative margin for right border */
               padding-left: calc(10px + 3px);
             }
             
             /* Text spacing when expanded so it doesn't overlap with numbers */
             [data-sidebar-collapsed="false"] .sidebar-link-text {
-              margin-left: 6px;
+              margin-left: 20px; /* Increased to avoid overlap with lesson numbers */
               padding-left: 2px;
+            }
+            
+            /* Mobile styles */
+            @media (max-width: 768px) {
+              .active-lesson, .inactive-lesson {
+                margin-left: 0px; 
+                padding-left: 14px;
+              }
+              
+              [data-sidebar-collapsed="false"] .sidebar-link-text {
+                margin-left: 10px;
+              }
             }
           `}
         </style>
