@@ -73,6 +73,10 @@ const CourseView = () => {
     if (mainElement) {
       mainElement.setAttribute('data-sidebar-collapsed', (!sidebarOpen).toString());
     }
+    
+    if (sidebarRef.current) {
+      sidebarRef.current.setAttribute('data-sidebar-collapsed', (!sidebarOpen).toString());
+    }
   }, [sidebarOpen]);
 
   console.log("Auth state:", { user, authLoading });
@@ -141,6 +145,7 @@ const CourseView = () => {
                         maxWidth: sidebarOpen ? "100%" : "60px",
                       }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
+                      data-sidebar-collapsed={(!sidebarOpen).toString()}
                     >
                       <CoursesSidebar
                         modules={course.modules}
