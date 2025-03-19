@@ -23,7 +23,6 @@ export interface Lesson {
   completed: boolean;
   transcript?: TranscriptSegment[];
   additionalVideos?: AdditionalVideo[];
-  isQuest?: boolean;  // New property to mark special quest lessons
 }
 
 export interface Module {
