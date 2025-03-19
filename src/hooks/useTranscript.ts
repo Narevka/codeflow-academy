@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
+import transcriptData1 from "../trans/1.json";
+import transcriptData2 from "../trans/2.json";
+import transcriptData3 from "../trans/3.json";
+import transcriptData4 from "../trans/4.json";
 
 // Helper function to convert Mux transcript format to our app format
 const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[] => {
@@ -84,9 +88,21 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
 
 // Function to get local transcript from src/trans/*.json files
 const getLocalTranscript = (playbackId: string | undefined, sourceFile?: string): TranscriptSegment[] => {
-  // Local transcripts have been removed
-  console.log("Local transcripts are no longer available");
-  return [];
+  // Choose transcript data source based on sourceFile parameter
+  let transcriptSource;
+  
+  if (sourceFile === "2.json") {
+    transcriptSource = transcriptData2;
+  } else if (sourceFile === "3.json") {
+    transcriptSource = transcriptData3;
+  } else if (sourceFile === "4.json") {
+    transcriptSource = transcriptData4;
+  } else {
+    transcriptSource = transcriptData1; // Default
+  }
+  
+  // Convert the transcript data to segments
+  return convertMuxTranscriptToSegments(transcriptSource);
 };
 
 // Function to fetch transcript
@@ -96,7 +112,13 @@ const fetchTranscript = async (playbackId: string | undefined, sourceFile?: stri
   }
 
   try {
-    // Skip local transcript check as files have been removed
+    // First try to get from local JSON file
+    const localTranscript = getLocalTranscript(playbackId, sourceFile);
+    if (localTranscript && localTranscript.length > 0) {
+      console.log("Using local transcript file", sourceFile || "1.json");
+      console.log(`Generated ${localTranscript.length} transcript segments`);
+      return localTranscript;
+    }
 
     // Otherwise try database or other fallback methods
     console.log("No local transcript available, checking database...");

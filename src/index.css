@@ -6,48 +6,44 @@
 
 @layer base {
   :root {
-    /* Kolory podstawowe */
-    --primary: 328 87% 43%;      /* Magenta (#cf0e81) - zachowany z marką */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 240 10% 8%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 10% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 328 87% 43%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 262 77% 51%;    /* Fiolet (#5c26e0) - zachowany z marką */
+    --secondary: 262 77% 51%;
     --secondary-foreground: 0 0% 100%;
-    
-    /* Jasne tło dla całego kursu */
-    --background: 0 0% 100%;     /* Biały */
-    --foreground: 240 10% 4%;    /* Prawie czarny */
-    
-    /* Komponenty UI */
-    --card: 240 10% 99%;         /* Bardzo jasny szary */
-    --card-foreground: 240 10% 4%;
-    --muted: 210 20% 98%;
-    --muted-foreground: 240 5% 40%;
-    --border: 240 5% 90%;
 
-    --popover: var(--card);
-    --popover-foreground: var(--card-foreground);
-    
+    --muted: 240 5% 15%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 240 5% 15%;
+    --accent-foreground: 0 0% 100%;
+
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 100%;
-    
-    --input: var(--border);
+
+    --border: 240 5% 20%;
+    --input: 240 5% 20%;
     --ring: 240 5% 65%;
+
     --radius: 0.5rem;
 
-    /* Sidebar dla kompatybilności */
-    --sidebar-background: var(--card);
-    --sidebar-foreground: var(--foreground);
-    --sidebar-primary: var(--primary);
-    --sidebar-primary-foreground: var(--primary-foreground);
-    --sidebar-accent: var(--secondary);
-    --sidebar-accent-foreground: var(--secondary-foreground);
-    --sidebar-border: var(--border);
-    --sidebar-ring: var(--ring);
-    
-    /* Subtelne gradienty */
-    --gradient-primary: linear-gradient(135deg, hsl(328 87% 43% / 0.9), hsl(262 77% 51% / 0.9));
-    --gradient-subtle: linear-gradient(135deg, hsl(328 87% 43% / 0.05), hsl(262 77% 51% / 0.05));
-    --border-gradient: linear-gradient(to right, hsl(328 87% 43% / 0.3), hsl(262 77% 51% / 0.3));
+    --sidebar-background: 240 10% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 328 87% 43%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 5% 20%;
+    --sidebar-ring: 240 5% 65%;
   }
 
   * {
@@ -131,117 +127,4 @@
 
 .animate-delay-500 {
   animation-delay: 500ms;
-}
-
-/* Nowe komponenty dla minimalistycznego designu */
-@layer components {
-  /* Przyciski z delikatnym gradientem */
-  .btn-primary-subtle {
-    @apply relative px-4 py-2 text-sm font-medium text-white rounded-md transition-all duration-200 shadow-sm;
-    background: var(--gradient-primary);
-  }
-  .btn-primary-subtle:hover {
-    @apply shadow-md;
-    transform: translateY(-1px);
-  }
-  
-  /* Karty z delikatnym cieniem */
-  .card-simple {
-    @apply relative rounded-lg border border-border bg-card p-4 transition-all duration-200 shadow-sm;
-  }
-  .card-simple:hover {
-    @apply border-primary/20 shadow-md;
-  }
-  
-  /* Moduł kursu - minimalistyczny */
-  .course-module {
-    @apply relative rounded-lg border border-border overflow-hidden transition-all duration-200 mb-2;
-  }
-  .course-module:hover {
-    @apply border-primary/20 shadow-sm;
-  }
-  
-  /* Lekcja - minimalistyczna */
-  .lesson-item {
-    @apply relative flex items-center gap-2 rounded-md px-3 py-2 transition-all duration-200;
-  }
-  .lesson-item:hover {
-    @apply bg-muted;
-  }
-  .lesson-item-active {
-    @apply bg-primary/5 border-l-2 border-primary;
-  }
-  
-  /* Quest - minimalistyczny */
-  .quest-item {
-    @apply relative rounded-md ml-6 mt-1 mb-3 border-l-2 border-primary/30 pl-3 py-2 bg-muted;
-  }
-  .quest-item:hover {
-    @apply bg-primary/5;
-  }
-  
-  /* Prosty tekst primary dla nagłówków */
-  .heading-primary {
-    @apply font-bold text-primary;
-  }
-
-  /* Prosty sidebar */
-  .sidebar-simple {
-    @apply relative bg-card border-r border-border overflow-hidden;
-  }
-  
-  .sidebar-content {
-    @apply relative z-10 p-4 h-full overflow-y-auto;
-  }
-}
-
-/* Custom scrollbar - jaśniejsza wersja */
-::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.5);
-}
-
-/* Animacje keyframes */
-@keyframes pulse {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.3; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes slide-down {
-  from { height: 0; opacity: 0; }
-  to { height: var(--radix-collapsible-content-height); opacity: 1; }
-}
-
-@keyframes slide-up {
-  from { height: var(--radix-collapsible-content-height); opacity: 1; }
-  to { height: 0; opacity: 0; }
-}
-
-.animate-slide-down {
-  animation: slide-down 300ms ease-out forwards;
-}
-
-.animate-slide-up {
-  animation: slide-up 300ms ease-out forwards;
-}
-
-.animate-pulse-slow {
-  animation: pulse 4s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
 }

@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { userCourses } from "@/data/coursesData";
 import { Course, Lesson, Module } from "@/types/course";
-import { CoursesSidebar, QuestSidebar } from "@/components/courses";
+import CoursesSidebar from "@/components/courses/CoursesSidebar";
 import CourseHeader from "@/components/courses/CourseHeader";
 import CourseContent from "@/components/courses/CourseContent";
 import { useCourseNavigation } from "@/hooks/useCourseNavigation";
@@ -82,9 +82,9 @@ const CourseView = () => {
   console.log("Auth state:", { user, authLoading });
 
   if (loading) {
-  return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <Header />
+    return (
+      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
+        <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
             <div className="text-center py-20">
@@ -99,7 +99,7 @@ const CourseView = () => {
 
   if (error || !course) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
         <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
@@ -119,10 +119,10 @@ const CourseView = () => {
   const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-white text-gray-800 flex flex-col">
       <Header />
       
-      <main className="flex-1 py-6 px-4 bg-background" data-sidebar-collapsed={(!sidebarOpen).toString()}>
+      <main className="flex-1 py-6 px-4" data-sidebar-collapsed={(!sidebarOpen).toString()}>
         <div className="container mx-auto">
           {course && (
             <>
@@ -147,29 +147,13 @@ const CourseView = () => {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       data-sidebar-collapsed={(!sidebarOpen).toString()}
                     >
-                      {course.id === "webdev-fundamentals" ? (
-                        <QuestSidebar
-                          course={course}
-                          currentLessonId={activeLesson?.id}
-                          onLessonSelect={(lessonId) => {
-                            // Find the module containing this lesson
-                            const module = course.modules.find(m => 
-                              m.lessons.some(l => l.id === lessonId)
-                            );
-                            if (module && lessonId) {
-                              window.location.href = `/courses/${course.id}/${module.id}/${lessonId}`;
-                            }
-                          }}
-                        />
-                      ) : (
-                        <CoursesSidebar
-                          modules={course.modules}
-                          courseId={course.id}
-                          activeModuleId={activeModule?.id}
-                          activeLessonId={activeLesson?.id}
-                          noProvider={true}
-                        />
-                      )}
+                      <CoursesSidebar
+                        modules={course.modules}
+                        courseId={course.id}
+                        activeModuleId={activeModule?.id}
+                        activeLessonId={activeLesson?.id}
+                        noProvider={true}
+                      />
                     </motion.div>
                     
                     <div 

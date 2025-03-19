@@ -1,12 +1,9 @@
+
 import { Course } from "@/types/course";
-import { webDevCourse } from "./webdev/index";
-import { newCourse } from "./new-course/index";
+import { flowiseCourse } from "./flowiseCourse";
 
 // Export all courses
-export const userCourses: Course[] = [
-  webDevCourse,
-  newCourse
-];
+export const userCourses: Course[] = [flowiseCourse];
 
 // Export individual courses for direct access
-export { webDevCourse, newCourse };
+export { flowiseCourse };
