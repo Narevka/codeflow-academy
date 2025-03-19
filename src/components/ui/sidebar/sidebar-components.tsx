@@ -133,7 +133,7 @@ export const SidebarLink = ({
           willChange: "transform, opacity",
           pointerEvents: !open && animate ? "none" : "auto"
         }}
-        className="text-neutral-100 dark:text-white text-base font-medium group-hover/sidebar:translate-x-1 transition-all duration-150 whitespace-nowrap overflow-hidden !p-0 !m-0"
+        className="text-gray-800 dark:text-white text-base font-medium group-hover/sidebar:translate-x-1 transition-all duration-150 whitespace-nowrap overflow-hidden !p-0 !m-0"
       >
         {link.label}
       </motion.span>
