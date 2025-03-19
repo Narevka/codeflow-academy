@@ -55,8 +55,8 @@ const CoursesSidebar = ({
             
             // Icon based on lesson completion status
             const icon = lesson.completed ? 
-              <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-white flex items-center justify-center text-xs font-bold text-white">{lessonNumber}</div> : 
-              <div className="w-6 h-6 border-2 border-gray-300 rounded-full z-10 flex-shrink-0 bg-white flex items-center justify-center text-xs font-bold text-gray-700">{lessonNumber}</div>;
+              <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-white flex items-center justify-center text-xs font-bold text-white ml-3">{lessonNumber}</div> : 
+              <div className="w-6 h-6 border-2 border-gray-300 rounded-full z-10 flex-shrink-0 bg-white flex items-center justify-center text-xs font-bold text-gray-700 ml-3">{lessonNumber}</div>;
 
             return (
               <SidebarLink
