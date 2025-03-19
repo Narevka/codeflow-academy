@@ -43,33 +43,45 @@ export const Sidebar = ({
       >
         <style>
           {`
-            .active-lesson {
+            /* Base styling for all lesson items */
+            .inactive-lesson, .active-lesson {
               position: relative;
-              border-left: 4px solid #cf0e81; /* Magenta color */
-              margin-left: -16px;
-              padding-left: calc(10px + 8px); /* Increased padding from 10px+3px to 10px+8px to move border away from number */
+              padding-left: 10px;
             }
             
+            /* Inactive lesson styling */
             .inactive-lesson {
-              position: relative;
               border-left: 4px solid transparent;
               margin-left: -16px;
-              padding-left: calc(10px + 3px);
             }
             
-            /* Ensure the active indicator is visible when collapsed */
-            [data-sidebar-collapsed="true"] .active-lesson {
-              border-left-width: 4px;
-              border-right: 4px solid #cf0e81; /* Add right border for collapsed view */
+            /* Active lesson styling - expanded view */
+            .active-lesson {
+              background-color: rgba(207, 14, 129, 0.1); /* Light magenta background */
+              border-left: 4px solid #cf0e81; /* Magenta left border */
               margin-left: -16px;
-              margin-right: 0px; /* Changed from -4px to 0px to ensure the right border is fully visible */
-              padding-left: calc(10px + 8px); /* Increased padding to match non-collapsed state */
+              padding-left: 20px; /* Increased padding to move content right */
             }
             
-            /* Text spacing when expanded so it doesn't overlap with numbers */
-            [data-sidebar-collapsed="false"] .sidebar-link-text {
-              margin-left: 12px; /* Increased from 6px to 12px */
-              padding-left: 4px; /* Increased from 2px to 4px */
+            /* Active lesson - collapsed view */
+            [data-sidebar-collapsed="true"] .active-lesson {
+              border-left: none; /* Remove left border in collapsed view */
+              border-right: 4px solid #cf0e81; /* Add right border in collapsed view */
+              padding-right: 10px; /* Add padding on right */
+              padding-left: 10px; /* Adjust left padding */
+              background-color: rgba(207, 14, 129, 0.1); /* Light magenta background */
+            }
+            
+            /* Fix spacing between number and text in expanded view */
+            .sidebar-link-text {
+              margin-left: 16px !important; /* Increased spacing from numbers */
+            }
+            
+            /* Increase icon position spacing from left border */
+            .active-lesson > div:first-of-type {
+              margin-left: 8px; /* Push icon/number away from the left border */
+              position: relative; /* Ensure proper stacking */
+              z-index: 5; /* Keep above the background */
             }
           `}
         </style>
