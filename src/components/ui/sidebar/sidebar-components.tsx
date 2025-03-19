@@ -47,7 +47,7 @@ export const Sidebar = ({
               position: relative;
               border-left: 4px solid #cf0e81; /* Magenta color */
               margin-left: -16px;
-              padding-left: calc(10px + 3px); /* Adjust padding to account for border */
+              padding-left: calc(10px + 8px); /* Increased padding from 10px+3px to 10px+8px to move border away from number */
             }
             
             .inactive-lesson {
@@ -62,14 +62,14 @@ export const Sidebar = ({
               border-left-width: 4px;
               border-right: 4px solid #cf0e81; /* Add right border for collapsed view */
               margin-left: -16px;
-              margin-right: -4px; /* Negative margin for right border */
-              padding-left: calc(10px + 3px);
+              margin-right: 0px; /* Changed from -4px to 0px to ensure the right border is fully visible */
+              padding-left: calc(10px + 8px); /* Increased padding to match non-collapsed state */
             }
             
             /* Text spacing when expanded so it doesn't overlap with numbers */
             [data-sidebar-collapsed="false"] .sidebar-link-text {
-              margin-left: 6px;
-              padding-left: 2px;
+              margin-left: 12px; /* Increased from 6px to 12px */
+              padding-left: 4px; /* Increased from 2px to 4px */
             }
           `}
         </style>
