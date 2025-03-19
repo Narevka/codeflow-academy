@@ -7,7 +7,7 @@ import {
   SidebarProvider
 } from "@/components/ui/sidebar";
 import { useState } from "react";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Trophy } from "lucide-react";
 
 interface CoursesSidebarProps {
   modules: Module[];
@@ -53,22 +53,36 @@ const CoursesSidebar = ({
             const isActive = lesson.id === activeLessonId;
             const lessonNumber = index + 1;
             
-            // Icon based on lesson completion status
-            const icon = lesson.completed ? 
-              <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-white flex items-center justify-center text-xs font-bold text-white absolute left-0">{lessonNumber}</div> : 
-              <div className="w-6 h-6 border-2 border-gray-300 rounded-full z-10 flex-shrink-0 bg-white flex items-center justify-center text-xs font-bold text-gray-700 absolute left-0">{lessonNumber}</div>;
+            // Icon based on lesson completion status and quest status
+            let icon;
+            
+            if (lesson.isQuest) {
+              // Quest lesson with trophy icon
+              icon = lesson.completed ? 
+                <div className="w-6 h-6 bg-amber-500 rounded-full z-10 flex-shrink-0 border-2 border-white flex items-center justify-center text-xs font-bold text-white absolute left-0">
+                  <Trophy size={14} />
+                </div> : 
+                <div className="w-6 h-6 border-2 border-amber-300 rounded-full z-10 flex-shrink-0 bg-white flex items-center justify-center text-xs font-bold text-amber-500 absolute left-0">
+                  <Trophy size={14} />
+                </div>;
+            } else {
+              // Regular lesson with number
+              icon = lesson.completed ? 
+                <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-white flex items-center justify-center text-xs font-bold text-white absolute left-0">{lessonNumber}</div> : 
+                <div className="w-6 h-6 border-2 border-gray-300 rounded-full z-10 flex-shrink-0 bg-white flex items-center justify-center text-xs font-bold text-gray-700 absolute left-0">{lessonNumber}</div>;
+            }
 
             return (
               <SidebarLink
                 key={lesson.id}
                 link={{
-                  label: `${lesson.title}`,
+                  label: `${lesson.title}${lesson.isQuest ? ' (Quest)' : ''}`,
                   href: `/my-courses/${courseId}/${lesson.moduleId}/${lesson.id}`,
                   icon: icon
                 }}
                 isActive={isActive}
                 completed={lesson.completed}
-                className={`rounded-md py-3 pl-10 ${
+                className={`rounded-md py-3 pl-12 ${
                   isActive
                     ? "bg-magenta/10 text-magenta font-medium active-lesson"
                     : "hover:bg-gray-100 text-gray-700 inactive-lesson"

@@ -1,9 +1,9 @@
 
 import { Course } from "@/types/course";
-import { flowiseCourse } from "./flowiseCourse";
+import { langchainCourse } from "./langchainCourse";
 
 // Export all courses
-export const userCourses: Course[] = [flowiseCourse];
+export const userCourses: Course[] = [langchainCourse];
 
 // Export individual courses for direct access
-export { flowiseCourse };
+export { langchainCourse };
