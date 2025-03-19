@@ -30,11 +30,11 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
   };
 
   return (
-    <div className="sidebar-background w-full max-w-xs h-full overflow-hidden border-r border-border">
-      <div className="sidebar-content p-4 h-full overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-6 gradient-heading">{course.title}</h2>
+    <div className="sidebar-simple w-full max-w-xs h-full overflow-hidden">
+      <div className="sidebar-content">
+        <h2 className="text-xl font-bold mb-5 heading-primary">{course.title}</h2>
         
-        <div className="space-y-4">
+        <div className="space-y-3">
           {course.modules.map((module, moduleIndex) => (
             <Collapsible 
               key={module.id} 
@@ -45,22 +45,20 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
               <CollapsibleTrigger asChild>
                 <Button 
                   variant="ghost" 
-                  className="w-full flex items-center justify-between p-3 group hover:bg-primary/5"
+                  className="w-full flex items-center justify-between p-3 text-foreground/90 hover:bg-muted"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-medium group-hover:scale-110 transition-transform">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 text-primary font-medium text-sm">
                       {moduleIndex + 1}
                     </div>
-                    <span className="font-medium group-hover:translate-x-1 transition-transform">
+                    <span className="font-medium">
                       {module.title}
                     </span>
                   </div>
-                  <div className="transform transition-transform duration-300">
-                    {openModules[module.id] ? 
-                      <ChevronUp size={18} className="text-primary animate-pulse-slow" /> : 
-                      <ChevronDown size={18} className="text-foreground/70" />
-                    }
-                  </div>
+                  {openModules[module.id] ? 
+                    <ChevronUp size={16} className="text-primary/70" /> : 
+                    <ChevronDown size={16} className="text-foreground/50" />
+                  }
                 </Button>
               </CollapsibleTrigger>
               
@@ -74,16 +72,17 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
                       <div key={lesson.id}>
                         <Button
                           variant="ghost"
-                          className={`lesson-item ${isSelected ? 'lesson-item-active' : ''}`}
+                          className={`w-full text-left justify-start py-2 px-3 mb-1 rounded-md transition-all duration-200
+                            ${isSelected ? 'bg-primary/5 border-l-2 border-primary' : 'border-l-2 border-transparent hover:bg-muted'}`}
                           onClick={() => onLessonSelect(lesson.id)}
                         >
                           <div className="flex items-center gap-2">
                             {lesson.completed ? (
-                              <CheckCircle size={16} className="text-primary transition-transform" />
+                              <CheckCircle size={14} className="text-primary" />
                             ) : (
-                              <Circle size={16} className="text-foreground/70 group-hover:text-primary transition-colors" />
+                              <Circle size={14} className="text-muted-foreground" />
                             )}
-                            <span className="group-hover:translate-x-1 transition-transform">
+                            <span className="text-sm">
                               {moduleIndex + 1}.{lessonIndex + 1} {lesson.title}
                             </span>
                           </div>
@@ -91,15 +90,12 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
                         
                         {isQuest && (
                           <div className="quest-item">
-                            <div className="relative pl-3 py-2">
-                              <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary via-accent to-secondary"></div>
-                              <div className="flex items-center gap-2">
-                                <Sparkles size={16} className="text-primary animate-pulse" />
-                                <div className="text-sm font-medium text-primary">Quest</div>
-                              </div>
-                              <div className="text-xs text-foreground/70 mt-1">
-                                Zastosuj wiedzę w praktyce
-                              </div>
+                            <div className="flex items-center gap-2">
+                              <Sparkles size={14} className="text-primary" />
+                              <div className="text-sm font-medium text-primary/80">Quest</div>
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-1">
+                              Zastosuj wiedzę w praktyce
                             </div>
                           </div>
                         )}

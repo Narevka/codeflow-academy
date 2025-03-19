@@ -83,7 +83,7 @@ const CourseView = () => {
 
   if (loading) {
   return (
-    <div className="min-h-screen course-theme bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
@@ -99,7 +99,7 @@ const CourseView = () => {
 
   if (error || !course) {
     return (
-      <div className="min-h-screen course-theme bg-background text-foreground flex flex-col">
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
         <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
@@ -119,10 +119,10 @@ const CourseView = () => {
   const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
   return (
-    <div className="min-h-screen course-theme bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Header />
       
-      <main className="flex-1 py-6 px-4" data-sidebar-collapsed={(!sidebarOpen).toString()}>
+      <main className="flex-1 py-6 px-4 bg-background" data-sidebar-collapsed={(!sidebarOpen).toString()}>
         <div className="container mx-auto">
           {course && (
             <>
