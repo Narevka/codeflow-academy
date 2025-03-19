@@ -40,58 +40,6 @@ export const Sidebar = ({
         onMouseEnter={() => actualSetOpen(true)}
         onMouseLeave={() => actualSetOpen(false)}
       >
-        <style>
-          {`
-            /* Neutral base styles for both active and inactive lessons */
-            .inactive-lesson, .active-lesson {
-              position: relative;
-              padding-left: 10px;
-              transition: all 0.2s ease;
-            }
-            
-            /* Basic inactive lesson style */
-            .inactive-lesson {
-              background-color: transparent;
-            }
-            
-            /* Active lesson styling for both states */
-            .active-lesson {
-              background-color: rgba(207, 14, 129, 0.1);
-              position: relative;
-            }
-            
-            /* Add magenta indicator for active lesson */
-            .active-lesson::after {
-              content: '';
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              width: 4px;
-              background-color: #cf0e81;
-            }
-            
-            /* Expanded view - magenta indicator on left */
-            [data-sidebar-collapsed="false"] .active-lesson::after {
-              left: 0;
-            }
-            
-            /* Collapsed view - magenta indicator on right */
-            [data-sidebar-collapsed="true"] .active-lesson::after {
-              right: 0;
-            }
-            
-            /* Give numbers more space in expanded view */
-            [data-sidebar-collapsed="false"] .active-lesson > div:first-child,
-            [data-sidebar-collapsed="false"] .inactive-lesson > div:first-child {
-              margin-left: 8px;
-            }
-            
-            /* Position text with more space to avoid overlapping number in expanded view */
-            [data-sidebar-collapsed="false"] .sidebar-link-text {
-              margin-left: 16px !important;
-            }
-          `}
-        </style>
         {children}
       </motion.div>
     </SidebarProvider>
@@ -185,7 +133,7 @@ export const SidebarLink = ({
           willChange: "transform, opacity",
           pointerEvents: !open && animate ? "none" : "auto"
         }}
-        className="text-gray-800 dark:text-white text-base font-medium group-hover/sidebar:translate-x-1 transition-all duration-150 whitespace-nowrap overflow-hidden !p-0 !m-0 sidebar-link-text"
+        className="text-gray-800 dark:text-white text-base font-medium group-hover/sidebar:translate-x-1 transition-all duration-150 whitespace-nowrap overflow-hidden !p-0 !m-0 sidebar-link-text pl-4"
       >
         {link.label}
       </motion.span>
