@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { userCourses } from "@/data/coursesData";
 import { Course, Lesson, Module } from "@/types/course";
-import CoursesSidebar from "@/components/courses/CoursesSidebar";
+import { CoursesSidebar, QuestSidebar } from "@/components/courses";
 import CourseHeader from "@/components/courses/CourseHeader";
 import CourseContent from "@/components/courses/CourseContent";
 import { useCourseNavigation } from "@/hooks/useCourseNavigation";
@@ -147,13 +147,23 @@ const CourseView = () => {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       data-sidebar-collapsed={(!sidebarOpen).toString()}
                     >
-                      <CoursesSidebar
-                        modules={course.modules}
-                        courseId={course.id}
-                        activeModuleId={activeModule?.id}
-                        activeLessonId={activeLesson?.id}
-                        noProvider={true}
-                      />
+                      {course.id === "webdev-fundamentals" ? (
+                        <QuestSidebar
+                          modules={course.modules}
+                          courseId={course.id}
+                          activeModuleId={activeModule?.id}
+                          activeLessonId={activeLesson?.id}
+                          noProvider={true}
+                        />
+                      ) : (
+                        <CoursesSidebar
+                          modules={course.modules}
+                          courseId={course.id}
+                          activeModuleId={activeModule?.id}
+                          activeLessonId={activeLesson?.id}
+                          noProvider={true}
+                        />
+                      )}
                     </motion.div>
                     
                     <div 
