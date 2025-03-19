@@ -68,7 +68,7 @@ const CoursesSidebar = ({
                 }}
                 isActive={isActive}
                 completed={lesson.completed}
-                className={`rounded-md py-3 pl-12 ${
+                className={`rounded-md py-3 pl-14 ${
                   isActive
                     ? "bg-magenta/10 text-magenta font-medium active-lesson"
                     : "hover:bg-gray-100 text-gray-700 inactive-lesson"

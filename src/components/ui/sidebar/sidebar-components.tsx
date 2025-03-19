@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 import { Link, LinkProps } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -60,14 +61,14 @@ export const Sidebar = ({
             [data-sidebar-collapsed="true"] .active-lesson {
               border-left-width: 4px;
               border-right: 4px solid #cf0e81; /* Add right border for collapsed view */
-              margin-left: -12px; /* Adjusted to prevent overlap with number */
+              margin-left: -8px; /* Adjusted to prevent overlap with number */
               margin-right: -4px; /* Negative margin for right border */
               padding-left: calc(10px + 3px);
             }
             
             /* Text spacing when expanded so it doesn't overlap with numbers */
             [data-sidebar-collapsed="false"] .sidebar-link-text {
-              margin-left: 14px; /* Increased spacing to prevent overlap with lesson numbers */
+              margin-left: 20px; /* Increased spacing to prevent overlap with lesson numbers */
               padding-left: 2px;
             }
           `}
