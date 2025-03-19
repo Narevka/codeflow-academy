@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Course } from '@/types/course';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, CheckCircle, Circle } from 'lucide-react';
+import { ChevronDown, ChevronUp, CheckCircle, Circle, Sparkles, BookOpen } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface QuestSidebarProps {
@@ -30,69 +30,87 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
   };
 
   return (
-    <div className="w-full max-w-xs p-4 h-full overflow-y-auto bg-background border-r">
-      <h2 className="text-2xl font-bold mb-6">{course.title}</h2>
-      
-      <div className="space-y-4">
-        {course.modules.map((module, moduleIndex) => (
-          <Collapsible 
-            key={module.id} 
-            open={openModules[module.id]} 
-            onOpenChange={() => toggleModule(module.id)}
-            className="border rounded-md overflow-hidden"
-          >
-            <CollapsibleTrigger asChild>
-              <Button 
-                variant="ghost" 
-                className="w-full flex items-center justify-between p-3 rounded-none"
-              >
-                <div className="flex items-center">
-                  <span>{moduleIndex + 1}. {module.title}</span>
-                </div>
-                {openModules[module.id] ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-              </Button>
-            </CollapsibleTrigger>
-            
-            <CollapsibleContent>
-              <div className="p-2 space-y-1">
-                {module.lessons.map((lesson, lessonIndex) => {
-                  const isQuest = isQuestLesson(lessonIndex);
-                  const isSelected = currentLessonId === lesson.id;
-                  
-                  return (
-                    <div key={lesson.id}>
-                      <Button
-                        variant={isSelected ? "secondary" : "ghost"}
-                        className={`w-full text-left justify-start py-2 px-3 ${isSelected ? 'bg-secondary/50' : ''}`}
-                        onClick={() => onLessonSelect(lesson.id)}
-                      >
-                        <div className="flex items-center gap-2">
-                          {lesson.completed ? (
-                            <CheckCircle size={16} className="text-green-500" />
-                          ) : (
-                            <Circle size={16} />
-                          )}
-                          <span>
-                            {moduleIndex + 1}.{lessonIndex + 1} {lesson.title}
-                          </span>
-                        </div>
-                      </Button>
-                      
-                      {isQuest && (
-                        <div className="ml-6 mt-1 mb-3 border-l-2 border-primary pl-3 py-1">
-                          <div className="text-sm font-medium text-primary">Quest</div>
-                          <div className="text-xs text-muted-foreground">
-                            Zastosuj wiedzę w praktyce
-                          </div>
-                        </div>
-                      )}
+    <div className="sidebar-background w-full max-w-xs h-full overflow-hidden border-r border-border">
+      <div className="sidebar-content p-4 h-full overflow-y-auto">
+        <h2 className="text-2xl font-bold mb-6 gradient-heading">{course.title}</h2>
+        
+        <div className="space-y-4">
+          {course.modules.map((module, moduleIndex) => (
+            <Collapsible 
+              key={module.id} 
+              open={openModules[module.id]} 
+              onOpenChange={() => toggleModule(module.id)}
+              className="course-module"
+            >
+              <CollapsibleTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  className="w-full flex items-center justify-between p-3 group hover:bg-primary/5"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-medium group-hover:scale-110 transition-transform">
+                      {moduleIndex + 1}
                     </div>
-                  );
-                })}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-        ))}
+                    <span className="font-medium group-hover:translate-x-1 transition-transform">
+                      {module.title}
+                    </span>
+                  </div>
+                  <div className="transform transition-transform duration-300">
+                    {openModules[module.id] ? 
+                      <ChevronUp size={18} className="text-primary animate-pulse-slow" /> : 
+                      <ChevronDown size={18} className="text-foreground/70" />
+                    }
+                  </div>
+                </Button>
+              </CollapsibleTrigger>
+              
+              <CollapsibleContent className="animate-slide-down">
+                <div className="p-2 space-y-1">
+                  {module.lessons.map((lesson, lessonIndex) => {
+                    const isQuest = isQuestLesson(lessonIndex);
+                    const isSelected = currentLessonId === lesson.id;
+                    
+                    return (
+                      <div key={lesson.id}>
+                        <Button
+                          variant="ghost"
+                          className={`lesson-item ${isSelected ? 'lesson-item-active' : ''}`}
+                          onClick={() => onLessonSelect(lesson.id)}
+                        >
+                          <div className="flex items-center gap-2">
+                            {lesson.completed ? (
+                              <CheckCircle size={16} className="text-primary transition-transform" />
+                            ) : (
+                              <Circle size={16} className="text-foreground/70 group-hover:text-primary transition-colors" />
+                            )}
+                            <span className="group-hover:translate-x-1 transition-transform">
+                              {moduleIndex + 1}.{lessonIndex + 1} {lesson.title}
+                            </span>
+                          </div>
+                        </Button>
+                        
+                        {isQuest && (
+                          <div className="quest-item">
+                            <div className="relative pl-3 py-2">
+                              <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary via-accent to-secondary"></div>
+                              <div className="flex items-center gap-2">
+                                <Sparkles size={16} className="text-primary animate-pulse" />
+                                <div className="text-sm font-medium text-primary">Quest</div>
+                              </div>
+                              <div className="text-xs text-foreground/70 mt-1">
+                                Zastosuj wiedzę w praktyce
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -6,44 +6,84 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-
-    --card: 240 10% 8%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 240 10% 8%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 328 87% 43%;
+    /* Podstawowe kolory dla całej aplikacji */
+    --primary: 195 100% 45%;      /* Cyjanowy niebieski */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 262 77% 51%;
+    --secondary: 320 90% 55%;     /* Elektryczny róż */
     --secondary-foreground: 0 0% 100%;
-
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 5% 65%;
-
-    --accent: 240 5% 15%;
+    
+    --accent: 270 90% 60%;        /* Fiolet */
     --accent-foreground: 0 0% 100%;
 
+    /* Kolory dla jasnego motywu (strona główna) */
+    --background-light: 210 30% 98%;
+    --foreground-light: 230 25% 15%;
+    --card-light: 0 0% 100%;
+    --card-foreground-light: 230 25% 15%;
+    --muted-light: 210 20% 90%;
+    --muted-foreground-light: 210 20% 40%;
+    --border-light: 210 20% 85%;
+
+    /* Kolory dla ciemnego motywu (kurs) */
+    --background-dark: 230 25% 12%;
+    --foreground-dark: 0 0% 100%;
+    --card-dark: 230 30% 15%;
+    --card-foreground-dark: 0 0% 100%;
+    --muted-dark: 230 20% 25%;
+    --muted-foreground-dark: 230 10% 70%;
+    --border-dark: 230 20% 20%;
+
+    /* Ustawienie kontekstowe - domyślne dla jasnego motywu */
+    --background: var(--background-light);
+    --foreground: var(--foreground-light);
+    --card: var(--card-light);
+    --card-foreground: var(--card-foreground-light);
+    --muted: var(--muted-light);
+    --muted-foreground: var(--muted-foreground-light);
+    --border: var(--border-light);
+    
+    --popover: var(--card);
+    --popover-foreground: var(--card-foreground);
+    
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 240 5% 20%;
-    --input: 240 5% 20%;
+    
+    --input: var(--border);
     --ring: 240 5% 65%;
-
     --radius: 0.5rem;
 
-    --sidebar-background: 240 10% 8%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 328 87% 43%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 15%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 240 5% 20%;
-    --sidebar-ring: 240 5% 65%;
+    /* Sidebar (zachowane dla kompatybilności) */
+    --sidebar-background: var(--card-dark);
+    --sidebar-foreground: var(--foreground-dark);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border-dark);
+    --sidebar-ring: var(--ring);
+
+    /* Gradienty */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-subtle: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--accent) / 0.2));
+    --gradient-button: linear-gradient(to right, hsl(var(--primary)), hsl(var(--secondary)));
+    
+    /* Efekty */
+    --glow-primary: 0 0 15px hsl(var(--primary) / 0.5);
+    --glow-accent: 0 0 15px hsl(var(--accent) / 0.5);
+  }
+
+  /* Klasa nadpisująca dla obszaru kursu */
+  .course-theme {
+    --background: var(--background-dark);
+    --foreground: var(--foreground-dark);
+    --card: var(--card-dark);
+    --card-foreground: var(--card-foreground-dark);
+    --muted: var(--muted-dark);
+    --muted-foreground: var(--muted-foreground-dark);
+    --border: var(--border-dark);
+    --popover: var(--card-dark);
+    --popover-foreground: var(--foreground-dark);
   }
 
   * {
@@ -127,4 +167,128 @@
 
 .animate-delay-500 {
   animation-delay: 500ms;
+}
+
+/* Nowe komponenty dla hybrydowego designu */
+@layer components {
+  /* Przyciski z gradientem */
+  .btn-gradient {
+    @apply relative overflow-hidden rounded-lg px-5 py-2.5 font-medium text-white transition-all duration-300;
+    background: var(--gradient-button);
+  }
+  .btn-gradient:hover {
+    box-shadow: var(--glow-primary);
+    transform: translateY(-2px);
+  }
+  
+  /* Karty z glassmorphism */
+  .card-glass {
+    @apply relative rounded-lg border border-border/50 bg-card/80 backdrop-blur-sm p-4 transition-all duration-300;
+  }
+  .card-glass:hover {
+    @apply border-primary/30 shadow-md;
+  }
+  
+  /* Moduł kursu */
+  .course-module {
+    @apply relative rounded-lg border border-border overflow-hidden transition-all duration-300 mb-3;
+  }
+  .course-module:hover {
+    @apply border-primary/30 shadow-sm;
+  }
+  
+  /* Lekcja */
+  .lesson-item {
+    @apply relative flex items-center gap-2 rounded-md px-3 py-2 transition-all duration-200;
+  }
+  .lesson-item:hover {
+    @apply bg-primary/10 translate-x-1;
+  }
+  .lesson-item-active {
+    @apply bg-primary/15 border-l-2 border-primary;
+  }
+  
+  /* Quest */
+  .quest-item {
+    @apply relative rounded-md overflow-hidden ml-6 mt-1 mb-3 border border-primary/20 transition-all duration-300;
+    background: var(--gradient-subtle);
+  }
+  .quest-item:hover {
+    transform: scale(1.02);
+    box-shadow: var(--glow-primary);
+  }
+  
+  /* Gradient text dla nagłówków */
+  .gradient-heading {
+    @apply font-bold text-transparent bg-clip-text;
+    background-image: var(--gradient-primary);
+  }
+
+  /* Sidebar tło */
+  .sidebar-background {
+    @apply relative bg-card overflow-hidden;
+  }
+  
+  .sidebar-background::before {
+    content: '';
+    @apply absolute inset-0 opacity-20 pointer-events-none;
+    background: 
+      radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.5) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, hsl(var(--accent) / 0.5) 0%, transparent 40%);
+    animation: pulse 8s ease-in-out infinite alternate;
+  }
+  
+  .sidebar-content {
+    @apply relative z-10;
+  }
+}
+
+/* Custom scrollbar dla ciemnego motywu */
+.course-theme ::-webkit-scrollbar-track {
+  background: hsl(var(--background-dark));
+}
+
+.course-theme ::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-dark));
+}
+
+.course-theme ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
+
+/* Animacje keyframes */
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slide-down {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-collapsible-content-height); opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { height: var(--radix-collapsible-content-height); opacity: 1; }
+  to { height: 0; opacity: 0; }
+}
+
+.animate-slide-down {
+  animation: slide-down 300ms ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 300ms ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

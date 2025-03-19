@@ -82,9 +82,9 @@ const CourseView = () => {
   console.log("Auth state:", { user, authLoading });
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
-        <Header />
+  return (
+    <div className="min-h-screen course-theme bg-background text-foreground flex flex-col">
+      <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
             <div className="text-center py-20">
@@ -99,7 +99,7 @@ const CourseView = () => {
 
   if (error || !course) {
     return (
-      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
+      <div className="min-h-screen course-theme bg-background text-foreground flex flex-col">
         <Header />
         <main className="flex-1 py-6 px-4">
           <div className="container mx-auto">
@@ -119,7 +119,7 @@ const CourseView = () => {
   const { prev, next } = useCourseNavigation(course, activeModule, activeLesson);
 
   return (
-    <div className="min-h-screen bg-white text-gray-800 flex flex-col">
+    <div className="min-h-screen course-theme bg-background text-foreground flex flex-col">
       <Header />
       
       <main className="flex-1 py-6 px-4" data-sidebar-collapsed={(!sidebarOpen).toString()}>
