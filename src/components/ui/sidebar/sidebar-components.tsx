@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { Link, LinkProps } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -43,45 +42,53 @@ export const Sidebar = ({
       >
         <style>
           {`
-            /* Base styling for all lesson items */
+            /* Neutral base styles for both active and inactive lessons */
             .inactive-lesson, .active-lesson {
               position: relative;
               padding-left: 10px;
+              transition: all 0.2s ease;
             }
             
-            /* Inactive lesson styling */
+            /* Basic inactive lesson style */
             .inactive-lesson {
-              border-left: 4px solid transparent;
-              margin-left: -16px;
+              background-color: transparent;
             }
             
-            /* Active lesson styling - expanded view */
+            /* Active lesson styling for both states */
             .active-lesson {
-              background-color: rgba(207, 14, 129, 0.1); /* Light magenta background */
-              border-left: 4px solid #cf0e81; /* Magenta left border */
-              margin-left: -16px;
-              padding-left: 20px; /* Increased padding to move content right */
+              background-color: rgba(207, 14, 129, 0.1);
+              position: relative;
             }
             
-            /* Active lesson - collapsed view */
-            [data-sidebar-collapsed="true"] .active-lesson {
-              border-left: none; /* Remove left border in collapsed view */
-              border-right: 4px solid #cf0e81; /* Add right border in collapsed view */
-              padding-right: 10px; /* Add padding on right */
-              padding-left: 10px; /* Adjust left padding */
-              background-color: rgba(207, 14, 129, 0.1); /* Light magenta background */
+            /* Add magenta indicator for active lesson */
+            .active-lesson::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              width: 4px;
+              background-color: #cf0e81;
             }
             
-            /* Fix spacing between number and text in expanded view */
-            .sidebar-link-text {
-              margin-left: 16px !important; /* Increased spacing from numbers */
+            /* Expanded view - magenta indicator on left */
+            [data-sidebar-collapsed="false"] .active-lesson::after {
+              left: 0;
             }
             
-            /* Increase icon position spacing from left border */
-            .active-lesson > div:first-of-type {
-              margin-left: 8px; /* Push icon/number away from the left border */
-              position: relative; /* Ensure proper stacking */
-              z-index: 5; /* Keep above the background */
+            /* Collapsed view - magenta indicator on right */
+            [data-sidebar-collapsed="true"] .active-lesson::after {
+              right: 0;
+            }
+            
+            /* Give numbers more space in expanded view */
+            [data-sidebar-collapsed="false"] .active-lesson > div:first-child,
+            [data-sidebar-collapsed="false"] .inactive-lesson > div:first-child {
+              margin-left: 8px;
+            }
+            
+            /* Position text with more space to avoid overlapping number in expanded view */
+            [data-sidebar-collapsed="false"] .sidebar-link-text {
+              margin-left: 16px !important;
             }
           `}
         </style>

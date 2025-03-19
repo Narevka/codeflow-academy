@@ -70,7 +70,7 @@ const CoursesSidebar = ({
                 completed={lesson.completed}
                 className={`rounded-md py-3 pl-10 ${
                   isActive
-                    ? "text-magenta font-medium active-lesson"
+                    ? "bg-magenta/10 text-magenta font-medium active-lesson"
                     : "hover:bg-gray-100 text-gray-700 inactive-lesson"
                 }`}
               />
