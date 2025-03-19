@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
@@ -47,7 +48,7 @@
     --popover-foreground: var(--card-foreground);
     
     --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 98%;
     
     --input: var(--border);
     --ring: 240 5% 65%;
@@ -194,7 +195,7 @@
     @apply relative rounded-lg border border-border overflow-hidden transition-all duration-300 mb-3;
   }
   .course-module:hover {
-    @apply border-primary/30 shadow-sm;
+    @apply border-magenta/30 shadow-sm;
   }
   
   /* Lekcja */
@@ -202,26 +203,26 @@
     @apply relative flex items-center gap-2 rounded-md px-3 py-2 transition-all duration-200;
   }
   .lesson-item:hover {
-    @apply bg-primary/10 translate-x-1;
+    @apply bg-magenta/10 translate-x-1;
   }
   .lesson-item-active {
-    @apply bg-primary/15 border-l-2 border-primary;
+    @apply bg-magenta/15 border-l-2 border-magenta;
   }
   
   /* Quest */
   .quest-item {
-    @apply relative rounded-md overflow-hidden ml-6 mt-1 mb-3 border border-primary/20 transition-all duration-300;
-    background: var(--gradient-subtle);
+    @apply relative rounded-md overflow-hidden ml-6 mt-1 mb-3 border border-magenta/20 transition-all duration-300;
+    background: linear-gradient(135deg, rgba(207, 14, 129, 0.05), rgba(92, 38, 224, 0.05));
   }
   .quest-item:hover {
     transform: scale(1.02);
-    box-shadow: var(--glow-primary);
+    box-shadow: 0 0 15px rgba(207, 14, 129, 0.2);
   }
   
   /* Gradient text dla nagłówków */
   .gradient-heading {
     @apply font-bold text-transparent bg-clip-text;
-    background-image: var(--gradient-primary);
+    background-image: linear-gradient(135deg, #cf0e81, #5c26e0);
   }
 
   /* Sidebar tło */
@@ -233,8 +234,8 @@
     content: '';
     @apply absolute inset-0 opacity-20 pointer-events-none;
     background: 
-      radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.5) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, hsl(var(--accent) / 0.5) 0%, transparent 40%);
+      radial-gradient(circle at 20% 30%, rgba(207, 14, 129, 0.5) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(92, 38, 224, 0.5) 0%, transparent 40%);
     animation: pulse 8s ease-in-out infinite alternate;
   }
   
@@ -253,7 +254,7 @@
 }
 
 .course-theme ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+  background: #cf0e81;
 }
 
 /* Animacje keyframes */
