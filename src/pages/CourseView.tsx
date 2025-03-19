@@ -147,7 +147,7 @@ const CourseView = () => {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       data-sidebar-collapsed={(!sidebarOpen).toString()}
                     >
-                      {course.id === "webdev-fundamentals" ? (
+                      {course.id === "webdev-fundamentals" || course.id === "flowise-ai" ? (
                         <QuestSidebar
                           course={course}
                           currentLessonId={activeLesson?.id}

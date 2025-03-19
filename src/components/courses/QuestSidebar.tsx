@@ -25,8 +25,9 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
   };
 
   const isQuestLesson = (lessonIndex: number) => {
-    // Display a quest every 2 lessons (0-indexed: lesson 1, 3, 5, etc.)
-    return lessonIndex % 2 === 1;
+    // Display quests after specific lessons (0-indexed: lessons 2, 5, 7, 9)
+    // This corresponds to lessons 3, 6, 8, 10 in 1-indexed numbering
+    return [2, 5, 7, 9].includes(lessonIndex);
   };
 
   return (

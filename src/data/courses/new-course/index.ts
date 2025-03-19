@@ -1,704 +1,1116 @@
 import { Course } from "@/types/course";
 
 export const newCourse: Course = {
-  id: "react-fundamentals",
-  title: "Podstawy React.js",
-  description: "Kompletny kurs wprowadzający do tworzenia nowoczesnych interfejsów użytkownika przy pomocy biblioteki React.js.",
+  id: "flowise-ai",
+  title: "Flowise AI - Tworzenie Przepływów AI",
+  description: "Kompletny kurs wprowadzający do tworzenia zaawansowanych przepływów AI przy pomocy platformy Flowise AI.",
   progress: 0,
   modules: [
     {
-      id: "mod-react-basics",
-      title: "Wprowadzenie do React",
+      id: "mod-flowise-basics",
+      title: "Flowise AI",
       completed: false,
       lessons: [
         {
-          id: "react-introduction",
-          title: "Czym jest React?",
-          displayTitle: "Wprowadzenie do React.js",
-          videoUrl: "https://example.com/videos/react-intro.mp4",
+          id: "flowise-introduction",
+          title: "Wprowadzenie",
+          displayTitle: "Wprowadzenie do Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-intro.mp4",
           thumbnailUrl: "/placeholder.svg",
           completed: false,
           description: `
-# Wprowadzenie do React.js
+# Wprowadzenie do Flowise AI
 
-React to biblioteka JavaScript stworzona przez Facebooka, która służy do budowania interfejsów użytkownika, szczególnie aplikacji jednostronicowych (SPA - Single Page Applications). React został zaprojektowany, aby rozwiązać problem tworzenia złożonych UI z danymi, które zmieniają się w czasie.
+Flowise AI to open-source'owa platforma typu no-code/low-code, która umożliwia łatwe tworzenie niestandardowych przepływów pracy AI przy użyciu LangChain w przyjaznym interfejsie graficznym.
 
-## Dlaczego React?
+## Czym jest Flowise AI?
 
-- **Deklaratywny** - React sprawia, że tworzenie interaktywnych UI jest przewidywalne i łatwe do debugowania
-- **Oparty na komponentach** - buduj niezależne, wielokrotnego użytku komponenty zarządzające swoim stanem
-- **Możliwość użycia w różnych środowiskach** - renderuj na serwerze, w aplikacjach mobilnych (React Native) i na urządzeniach stacjonarnych
-- **Efektywny** - wykorzystuje Virtual DOM do minimalizacji operacji na rzeczywistym DOM
+Flowise AI to narzędzie, które pozwala na:
+- Wizualne budowanie przepływów AI bez znajomości kodu
+- Łączenie różnych modeli językowych (LLM) z własnymi danymi
+- Tworzenie chatbotów, asystentów i innych aplikacji AI
+- Łatwe integrowanie z istniejącymi systemami
 
-## Historia Reacta
+## Kluczowe możliwości
 
-React został stworzony przez Jordana Walke, inżyniera Facebooka, i został po raz pierwszy użyty w News Feedzie Facebooka w 2011 roku, a następnie w Instagramie w 2012 roku. Został udostępniony jako open source w maju 2013 roku.
+- **Intuicyjny interfejs użytkownika** - przeciągaj i upuszczaj komponenty, aby tworzyć złożone przepływy AI
+- **Gotowe komponenty** - korzystaj z predefiniowanych bloków do łączenia modeli, pamięci, baz wiedzy i innych funkcji
+- **Zarządzanie przepływami** - zapisuj, eksportuj i importuj swoje przepływy do ponownego wykorzystania
+- **Wdrażanie jako API** - udostępniaj swoje przepływy jako API REST
+- **Integracja z popularnymi modelami** - GPT-4, Mistral, Llama, Claude i wiele innych
 
-## Ekosystem React
+## Dlaczego warto używać Flowise AI?
 
-Oprócz samej biblioteki, ekosystem React składa się z wielu narzędzi i bibliotek:
+Flowise AI eliminuje barierę techniczną związaną z tworzeniem aplikacji opartych na sztucznej inteligencji. Zamiast pisać setki linii kodu, możesz wizualnie projektować przepływy pracy, które:
 
-- **React DOM** - pakiet do renderowania komponentów React w przeglądarce
-- **React Router** - rozwiązanie do nawigacji w aplikacjach React
-- **Redux/Context API** - narzędzia do zarządzania globalnym stanem
-- **Next.js/Gatsby** - frameworki oparte na React
-- **React Native** - platforma do tworzenia natywnych aplikacji mobilnych
+- Odpowiadają na pytania na podstawie własnych danych
+- Analizują i streszczają dokumenty
+- Tworzą spersonalizowane treści
+- Automatyzują procesy decyzyjne
 
-## "Hello World" w React
+## Jak działa Flowise AI?
 
-Oto prosty przykład komponentu React:
+Flowise AI jest zbudowany na bazie frameworka LangChain, który został stworzony do łączenia modeli językowych z zewnętrznymi źródłami danych i aplikacjami. Flowise dodaje do tego warstwę wizualną, umożliwiając:
 
-\`\`\`jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
+1. Wybór odpowiednich komponentów (modeli, narzędzi, pamięci)
+2. Połączenie ich w logiczny przepływ
+3. Skonfigurowanie parametrów każdego komponentu
+4. Testowanie i optymalizację przepływu
+5. Wdrożenie jako API
 
-function HelloWorld() {
-  return <h1>Hello, World!</h1>;
-}
-
-ReactDOM.render(
-  <HelloWorld />,
-  document.getElementById('root')
-);
-\`\`\`
-
-W następnych lekcjach poznamy bardziej zaawansowane możliwości React, takie jak stan, hooki, obsługa zdarzeń i wiele więcej.
+W kolejnych lekcjach dowiesz się, jak zainstalować Flowise AI, stworzyć swoje pierwsze przepływy i wykorzystać pełen potencjał tej platformy.
           `
         },
         {
-          id: "jsx-components",
-          title: "JSX i komponenty",
-          displayTitle: "JSX i komponenty w React",
-          videoUrl: "https://example.com/videos/jsx-components.mp4",
+          id: "flowise-installation",
+          title: "Instalacja",
+          displayTitle: "Instalacja Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-installation.mp4",
           thumbnailUrl: "/placeholder.svg",
           completed: false,
           description: `
-# JSX i komponenty w React
+# Instalacja Flowise AI
 
-JSX (JavaScript XML) to rozszerzenie składni JavaScript, które pozwala nam pisać wyrażenia podobne do HTML bezpośrednio w kodzie JavaScript. Komponenty to podstawowe elementy budowy interfejsów w React.
+Flowise AI można zainstalować na kilka sposobów, w zależności od twoich potrzeb i środowiska. W tej lekcji omówimy najbardziej popularne metody instalacji.
 
-## JSX - podstawy
+## Wymagania wstępne
 
-JSX wygląda jak HTML, ale ma moc JavaScript:
+Przed rozpoczęciem instalacji upewnij się, że posiadasz:
 
-\`\`\`jsx
-const element = <h1>Hello, world!</h1>;
+- Node.js (wersja 18 lub nowsza)
+- NPM (Node Package Manager)
+- Dostęp do terminala/wiersza poleceń
+
+## Metoda 1: Instalacja globalna przez NPM
+
+Najszybszym i najprostszym sposobem na rozpoczęcie pracy z Flowise jest instalacja globalna przez NPM:
+
+\`\`\`bash
+npm install -g flowise
 \`\`\`
 
-JSX można zagnieżdżać i używać wyrażeń JavaScript wewnątrz nawiasów klamrowych:
+Po zakończeniu instalacji, możesz uruchomić Flowise za pomocą komendy:
 
-\`\`\`jsx
-const name = 'John';
-const element = <h1>Hello, {name}!</h1>;
+\`\`\`bash
+npx flowise start
 \`\`\`
 
-### Różnice między JSX a HTML:
+Ta komenda uruchomi serwer Flowise oraz interfejs użytkownika, który domyślnie będzie dostępny pod adresem \`http://localhost:3000\`.
 
-1. **className zamiast class**:
-   \`\`\`jsx
-   <div className="container">...</div>
+## Metoda 2: Klonowanie repozytorium GitHub
+
+Jeśli chcesz mieć więcej kontroli nad kodem źródłowym lub planujesz wprowadzać własne modyfikacje, możesz sklonować oficjalne repozytorium GitHub:
+
+\`\`\`bash
+git clone https://github.com/FlowiseAI/Flowise.git
+\`\`\`
+
+Następnie, przejdź do sklonowanego katalogu i zainstaluj zależności:
+
+\`\`\`bash
+cd Flowise
+npm install
+\`\`\`
+
+Teraz możesz zbudować i uruchomić aplikację:
+
+\`\`\`bash
+npm run build
+npm start
+\`\`\`
+
+## Metoda 3: Używanie Docker
+
+Jeśli preferujesz używanie kontenerów Docker, Flowise udostępnia oficjalny obraz Docker:
+
+\`\`\`bash
+docker run -d --name flowise -p 3000:3000 flowiseai/flowise
+\`\`\`
+
+Możesz również użyć Docker Compose, tworząc plik \`docker-compose.yml\`:
+
+\`\`\`yaml
+version: '3'
+services:
+  flowise:
+    image: flowiseai/flowise
+    ports:
+      - "3000:3000"
+    volumes:
+      - ~/.flowise:/root/.flowise
+    environment:
+      - PORT=3000
+      - DATABASE_PATH=/root/.flowise
+      - APIKEY_PATH=/root/.flowise
+\`\`\`
+
+A następnie uruchamiając:
+
+\`\`\`bash
+docker-compose up -d
+\`\`\`
+
+## Konfiguracja po instalacji
+
+Po pomyślnej instalacji i uruchomieniu Flowise, powinieneś móc uzyskać dostęp do interfejsu użytkownika pod adresem \`http://localhost:3000\` (lub innym portem, jeśli został zmieniony).
+
+### Ustawienia środowiskowe
+
+Flowise obsługuje różne zmienne środowiskowe, które można skonfigurować tworząc plik \`.env\` w głównym katalogu:
+
+\`\`\`
+PORT=3000
+DATABASE_TYPE=sqlite
+DATABASE_PATH=~/.flowise
+APIKEY_PATH=~/.flowise
+LOG_PATH=~/.flowise/logs
+BLOB_STORAGE_PATH=~/.flowise/storage
+\`\`\`
+
+## Weryfikacja instalacji
+
+Aby zweryfikować, że Flowise został poprawnie zainstalowany:
+
+1. Otwórz przeglądarkę i przejdź do \`http://localhost:3000\`
+2. Powinieneś zobaczyć interfejs użytkownika Flowise z pustym obszarem roboczym
+3. Kliknij przycisk "Utwórz nowy przepływ", aby utworzyć swój pierwszy projekt
+
+W następnej lekcji dowiemy się jak aktualizować Flowise do najnowszych wersji.
+          `
+        },
+        {
+          id: "flowise-updating",
+          title: "Aktualizowanie",
+          displayTitle: "Aktualizowanie Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-updating.mp4",
+          thumbnailUrl: "/placeholder.svg",
+          completed: false,
+          description: `
+# Aktualizowanie Flowise AI
+
+Regularne aktualizacje Flowise AI są ważne, aby mieć dostęp do najnowszych funkcji, komponentów i poprawek bezpieczeństwa. W tej lekcji dowiesz się, jak skutecznie aktualizować i zarządzać swoją instalacją Flowise.
+
+## Sprawdzanie aktualnej wersji
+
+Przed aktualizacją warto sprawdzić, jaką wersję Flowise obecnie używasz. Możesz to zrobić na kilka sposobów:
+
+1. **W interfejsie użytkownika** - numer wersji jest zwykle wyświetlany w dolnej części panelu bocznego.
+2. **W terminalu** - jeśli zainstalowałeś Flowise globalnie, możesz użyć:
+   \`\`\`bash
+   npx flowise --version
    \`\`\`
 
-2. **camelCase dla atrybutów**:
-   \`\`\`jsx
-   <button onClick={handleClick}>Kliknij mnie</button>
+## Aktualizacja instalacji globalnej NPM
+
+Jeśli zainstalowałeś Flowise globalnie za pomocą NPM, aktualizacja jest bardzo prosta:
+
+\`\`\`bash
+npm update -g flowise
+\`\`\`
+
+Po zakończeniu aktualizacji, uruchom ponownie Flowise:
+
+\`\`\`bash
+npx flowise start
+\`\`\`
+
+## Aktualizacja instalacji z GitHub
+
+Jeśli sklonowałeś repozytorium GitHub, wykonaj następujące kroki, aby zaktualizować do najnowszej wersji:
+
+1. Przejdź do katalogu projektu:
+   \`\`\`bash
+   cd ścieżka/do/twojego/Flowise
    \`\`\`
 
-3. **Samozamykające się tagi**:
-   \`\`\`jsx
-   <img src="image.jpg" alt="Obraz" />
+2. Pobierz najnowsze zmiany z repozytorium:
+   \`\`\`bash
+   git pull origin main
    \`\`\`
 
-## Komponenty w React
+3. Zainstaluj nowe zależności:
+   \`\`\`bash
+   npm install
+   \`\`\`
 
-Komponenty pozwalają podzielić UI na niezależne, wielokrotnego użytku części. Istnieją dwa główne typy komponentów:
+4. Zbuduj projekt na nowo:
+   \`\`\`bash
+   npm run build
+   \`\`\`
 
-### Komponenty funkcyjne
+5. Uruchom zaktualizowaną wersję:
+   \`\`\`bash
+   npm start
+   \`\`\`
 
-\`\`\`jsx
-function Welcome(props) {
-  return <h1>Witaj, {props.name}</h1>;
-}
-\`\`\`
+## Aktualizacja za pomocą Docker
 
-### Komponenty klasowe
+Jeśli używasz Dockera, musisz pobrać najnowszy obraz i utworzyć nowy kontener:
 
-\`\`\`jsx
-import React, { Component } from 'react';
+1. Pobierz najnowszy obraz:
+   \`\`\`bash
+   docker pull flowiseai/flowise:latest
+   \`\`\`
 
-class Welcome extends Component {
-  render() {
-    return <h1>Witaj, {this.props.name}</h1>;
-  }
-}
-\`\`\`
+2. Zatrzymaj i usuń aktualny kontener:
+   \`\`\`bash
+   docker stop flowise
+   docker rm flowise
+   \`\`\`
 
-W dzisiejszych czasach komponenty funkcyjne są preferowane ze względu na hooki React.
+3. Utwórz nowy kontener z najnowszym obrazem:
+   \`\`\`bash
+   docker run -d --name flowise -p 3000:3000 -v ~/.flowise:/root/.flowise flowiseai/flowise:latest
+   \`\`\`
 
-## Kompozycja komponentów
+## Quest: Plan aktualizacji Flowise
 
-Komponenty mogą odwoływać się do innych komponentów w swoich wyjściach:
+Jako zadanie praktyczne, stwórz kompleksowy plan aktualizacji dla instalacji Flowise w środowisku produkcyjnym:
 
-\`\`\`jsx
-function App() {
-  return (
-    <div>
-      <Welcome name="Sara" />
-      <Welcome name="Cahal" />
-      <Welcome name="Edite" />
-    </div>
-  );
-}
-\`\`\`
+1. Opracuj strategię tworzenia kopii zapasowych przed aktualizacją, uwzględniającą:
+   - Eksport wszystkich przepływów jako pliki JSON
+   - Kopię zapasową bazy danych i plików konfiguracyjnych
+   - Dokumentację obecnych ustawień i zmiennych środowiskowych
 
-## Props - właściwości komponentów
+2. Zaplanuj okno serwisowe dla aktualizacji:
+   - Wybierz czas niskiego ruchu
+   - Przygotuj komunikat dla użytkowników
+   - Oszacuj czas potrzebny na aktualizację
 
-Props to dane przekazywane do komponentu od rodzica:
+3. Stwórz listę kontrolną procesu aktualizacji:
+   - Kroki weryfikacji kopii zapasowych
+   - Sekwencja poleceń do wykonania
+   - Punkty kontrolne do sprawdzenia po każdym kroku
 
-\`\`\`jsx
-function Welcome(props) {
-  return <h1>Witaj, {props.name}</h1>;
-}
+4. Opracuj plan awaryjny:
+   - Procedura przywracania poprzedniej wersji
+   - Kroki odzyskiwania danych z kopii zapasowych
+   - Osoby kontaktowe w przypadku problemów
 
-function App() {
-  return <Welcome name="John" />;
-}
-\`\`\`
+5. Przygotuj listę testów po aktualizacji:
+   - Sprawdzenie dostępności interfejsu
+   - Weryfikacja działania kluczowych przepływów
+   - Testy integracji z zewnętrznymi systemami
 
-Props są tylko do odczytu. Komponenty nie powinny modyfikować swoich props.
-
-## Quest: Budowanie galerii zdjęć
-
-Stwórz prostą galerię zdjęć w React, składającą się z następujących komponentów:
-1. \`Gallery\` - główny kontener
-2. \`ImageCard\` - pojedyncza karta ze zdjęciem, tytułem i opisem
-3. \`ImageDescription\` - komponent wyświetlający opis zdjęcia
-
-Galeria powinna wyświetlać 3-4 różne zdjęcia (możesz użyć placeholders jak https://placekitten.com/). Komponent \`ImageCard\` powinien przyjmować props: \`imageSrc\`, \`title\` i \`description\`.
-
-Pamiętaj o właściwej strukturze komponentów i przekazywaniu props!
-          `
-        }
-      ]
-    },
-    {
-      id: "mod-react-state",
-      title: "Stan i cykl życia",
-      completed: false,
-      lessons: [
-        {
-          id: "state-lifecycle",
-          title: "Stan i cykl życia",
-          displayTitle: "Stan i cykl życia komponentów",
-          videoUrl: "https://example.com/videos/state-lifecycle.mp4",
-          thumbnailUrl: "/placeholder.svg",
-          completed: false,
-          description: `
-# Stan i cykl życia komponentów
-
-Stan (state) to dane, które są zarządzane przez komponent i mogą się zmieniać w czasie, wpływając na jego renderowanie. Cykl życia to fazy, przez które przechodzi komponent od momentu jego utworzenia do usunięcia.
-
-## Stan (State)
-
-Stan pozwala komponentom React na dynamiczne reagowanie na zmiany danych. W przeciwieństwie do props, stan jest w pełni kontrolowany przez komponent.
-
-### Stan w komponentach funkcyjnych (z hook useState)
-
-\`\`\`jsx
-import React, { useState } from 'react';
-
-function Counter() {
-  // Deklaracja stanu z początkową wartością 0
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <p>Kliknąłeś {count} razy</p>
-      <button onClick={() => setCount(count + 1)}>
-        Kliknij mnie
-      </button>
-    </div>
-  );
-}
-\`\`\`
-
-### Stan w komponentach klasowych
-
-\`\`\`jsx
-import React, { Component } from 'react';
-
-class Counter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: 0 }; // Inicjalizacja stanu
-  }
-
-  render() {
-    return (
-      <div>
-        <p>Kliknąłeś {this.state.count} razy</p>
-        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-          Kliknij mnie
-        </button>
-      </div>
-    );
-  }
-}
-\`\`\`
-
-### Kilka ważnych zasad dotyczących stanu:
-
-1. Nie modyfikuj stanu bezpośrednio: używaj \`setState\` lub funkcji setter z \`useState\`
-2. Aktualizacje stanu mogą być asynchroniczne
-3. Aktualizacje stanu są scalane w komponentach klasowych
-
-## Cykl życia komponentów
-
-### W komponentach klasowych
-
-Komponenty klasowe mają następujące metody cyklu życia:
-
-1. **Montowanie**:
-   - \`constructor()\` - inicjalizacja
-   - \`render()\` - renderowanie komponentu
-   - \`componentDidMount()\` - po wyrenderowaniu komponentu
-
-2. **Aktualizacja**:
-   - \`shouldComponentUpdate()\` - decyduje czy potrzebna jest aktualizacja
-   - \`render()\` - ponowne renderowanie
-   - \`componentDidUpdate()\` - po aktualizacji komponentu
-
-3. **Odmontowywanie**:
-   - \`componentWillUnmount()\` - przed usunięciem komponentu
-
-### W komponentach funkcyjnych (z hook useEffect)
-
-Hook \`useEffect\` zastępuje metody cyklu życia:
-
-\`\`\`jsx
-import React, { useState, useEffect } from 'react';
-
-function Example() {
-  const [count, setCount] = useState(0);
-
-  // Podobne do componentDidMount i componentDidUpdate
-  useEffect(() => {
-    document.title = \`Kliknąłeś \${count} razy\`;
-    
-    // Podobne do componentWillUnmount - funkcja czyszcząca
-    return () => {
-      document.title = 'React App';
-    };
-  }, [count]); // Uruchamia efekt tylko gdy zmieni się count
-
-  return (
-    <div>
-      <p>Kliknąłeś {count} razy</p>
-      <button onClick={() => setCount(count + 1)}>
-        Kliknij mnie
-      </button>
-    </div>
-  );
-}
-\`\`\`
-
-## Quest: Zegar z obsługą różnych stref czasowych
-
-Stwórz aplikację zegara, która:
-1. Pokazuje aktualny czas, odświeżany co sekundę
-2. Pozwala wybrać różne strefy czasowe z listy
-3. Wyświetla datę w wybranym formacie (12h/24h)
-4. Posiada funkcję stopera z przyciskami start/stop/reset
-5. Zapisuje ostatnio wybraną strefę czasową po ponownym uruchomieniu
-
-Wykorzystaj useState do przechowywania wybranej strefy i formatu, oraz useEffect do aktualizacji czasu i obsługi timera.
+Przedstaw swój plan w formie dokumentu, który mógłby służyć jako standardowa procedura operacyjna dla przyszłych aktualizacji.
           `
         },
         {
-          id: "handling-events",
-          title: "Obsługa zdarzeń",
-          displayTitle: "Obsługa zdarzeń w React",
-          videoUrl: "https://example.com/videos/handling-events.mp4",
+          id: "flowise-basics",
+          title: "Podstawy",
+          displayTitle: "Podstawy Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-basics.mp4",
           thumbnailUrl: "/placeholder.svg",
           completed: false,
           description: `
-# Obsługa zdarzeń w React
+# Podstawy Flowise AI
 
-Obsługa zdarzeń w React jest podobna do obsługi zdarzeń w DOM, ale z kilkoma różnicami syntaktycznymi.
+W tej lekcji poznasz podstawowe koncepcje Flowise AI oraz jak zacząć tworzyć swoje pierwsze przepływy. Nawet bez doświadczenia w programowaniu, będziesz w stanie stworzyć własne aplikacje AI.
 
-## Podstawy obsługi zdarzeń
+## Interfejs użytkownika Flowise
 
-W React:
-- Nazwy zdarzeń są zapisywane camelCase (np. \`onClick\` zamiast \`onclick\`)
-- Przekazujemy funkcje jako handlery zdarzeń, a nie stringi
-- Nie możemy zwrócić \`false\` aby zapobiec domyślnemu zachowaniu - musimy użyć \`preventDefault\`
+Po uruchomieniu Flowise i otwarciu go w przeglądarce, zobaczysz interfejs użytkownika składający się z kilku głównych elementów:
 
-### Przykład:
+1. **Pasek boczny** - zawiera listę przepływów i pozwala na tworzenie nowych
+2. **Obszar roboczy** - główny obszar do wizualnego projektowania przepływów
+3. **Panel komponentów** - lista dostępnych bloków, które można dodać do przepływu
+4. **Panel konfiguracji** - miejsce do konfiguracji wybranych komponentów
+5. **Pasek narzędzi** - zawiera funkcje takie jak zapisywanie, testowanie i wdrażanie
 
-\`\`\`jsx
-// HTML
-<button onclick="activateLasers()">
-  Aktywuj lasery
-</button>
+## Kluczowe koncepcje
 
-// React
-<button onClick={activateLasers}>
-  Aktywuj lasery
-</button>
-\`\`\`
+Zanim zaczniesz tworzyć przepływy, ważne jest zrozumienie kilku podstawowych koncepcji:
 
-## Zapobieganie domyślnemu zachowaniu
+### Przepływy (Flows)
 
-\`\`\`jsx
-function Form() {
-  function handleSubmit(e) {
-    e.preventDefault(); // Zapobiega przeładowaniu strony
-    console.log('Formularz został wysłany.');
-  }
+Przepływ to wizualna reprezentacja sekwencji kroków, które aplikacja AI będzie wykonywać. Składa się z połączonych ze sobą węzłów (komponentów), które przetwarzają dane w określony sposób.
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <button type="submit">Wyślij</button>
-    </form>
-  );
-}
-\`\`\`
+### Komponenty (Nodes)
 
-## Wiązanie metod w klasach
+Komponenty to bloki budulcowe przepływu. Każdy komponent ma określoną funkcję, wejścia i wyjścia. Komponenty mogą być:
+- Modelami językowymi (jak GPT-4, Claude)
+- Narzędziami do przetwarzania danych
+- Pamięcią
+- Łącznikami do baz danych
+- Elementami logiki i warunkowania
 
-W komponentach klasowych musimy zadbać o poprawne wiązanie metod:
+### Połączenia (Connections)
 
-\`\`\`jsx
-class Toggle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {isToggleOn: true};
-    
-    // Wiązanie konieczne dla poprawnego działania 'this'
-    this.handleClick = this.handleClick.bind(this);
-  }
+Połączenia określają, jak dane przepływają między komponentami. Każde połączenie zaczyna się od wyjścia jednego komponentu i kończy na wejściu innego.
 
-  handleClick() {
-    this.setState(prevState => ({
-      isToggleOn: !prevState.isToggleOn
-    }));
-  }
+### Zmienne (Variables)
 
-  render() {
-    return (
-      <button onClick={this.handleClick}>
-        {this.state.isToggleOn ? 'ON' : 'OFF'}
-      </button>
-    );
-  }
-}
-\`\`\`
+Zmienne pozwalają na przechowywanie i przekazywanie informacji między różnymi częściami przepływu.
 
-## Najczęściej używane zdarzenia
+## Podstawowe typy komponentów
 
-- \`onClick\` - kliknięcie
-- \`onChange\` - zmiana w polu formularza
-- \`onSubmit\` - wysłanie formularza
-- \`onMouseEnter\`, \`onMouseLeave\` - zdarzenia myszy
-- \`onKeyDown\`, \`onKeyUp\` - zdarzenia klawiatury
-- \`onFocus\`, \`onBlur\` - fokusowanie elementu
+Flowise oferuje różne kategorie komponentów:
 
-## Quest: Interaktywna galeria zdjęć
+1. **Modele językowe (LLMs)** - takie jak OpenAI, Antropic Claude, Llama, Mistral
+2. **Embeddingi** - konwertują tekst na wektory liczbowe
+3. **Pamięć** - przechowują historię konwersacji
+4. **Łańcuchy** - łączą komponenty w sekwencje operacji
+5. **Narzędzia** - dodają specjalne funkcje jak kalkulatory czy wyszukiwarki
+6. **Źródła danych** - łączą z bazami danych i dokumentami
+7. **Parsery** - przetwarzają dane w różnych formatach
+8. **Wyjścia** - udostępniają wyniki użytkownikowi
 
-Stwórz interaktywną galerię zdjęć, która:
-1. Wyświetla miniatury zdjęć w siatce
-2. Po kliknięciu na miniaturę pokazuje powiększone zdjęcie w modalnym oknie
-3. Pozwala nawigować między zdjęciami za pomocą przycisków lub klawiszy strzałek
-4. Umożliwia dodawanie zdjęć do ulubionych
-5. Filtruje zdjęcia według kategorii
+## Podstawowe operacje
 
-Użyj różnych zdarzeń do obsługi interakcji użytkownika.
-          `
-        }
-      ]
-    },
-    {
-      id: "mod-react-advanced",
-      title: "Komponenty zaawansowane",
-      completed: false,
-      lessons: [
-        {
-          id: "conditional-rendering",
-          title: "Renderowanie warunkowe",
-          displayTitle: "Renderowanie warunkowe w React",
-          videoUrl: "https://example.com/videos/conditional-rendering.mp4",
-          thumbnailUrl: "/placeholder.svg",
-          completed: false,
-          description: `
-# Renderowanie warunkowe w React
+Podczas pracy z Flowise będziesz wykonywać następujące operacje:
 
-Renderowanie warunkowe w React działa tak samo jak warunki w JavaScript. Pozwala tworzyć komponenty, które renderują różne elementy w zależności od stanu aplikacji.
+1. **Tworzenie przepływu** - rozpoczęcie nowego projektu
+2. **Dodawanie komponentów** - przeciąganie ich z panelu na obszar roboczy
+3. **Konfiguracja komponentów** - ustawianie parametrów w panelu konfiguracji
+4. **Łączenie komponentów** - tworzenie połączeń między wyjściami i wejściami
+5. **Testowanie** - uruchamianie przepływu, aby sprawdzić jego działanie
+6. **Zapisywanie i eksportowanie** - zachowywanie pracy i dzielenie się nią
+7. **Wdrażanie** - udostępnianie przepływu jako API lub chatbota
 
-## Podstawy renderowania warunkowego
+## Pierwsze kroki
 
-### Używanie if-else
+Aby rozpocząć pracę z Flowise:
 
-\`\`\`jsx
-function Greeting({ isLoggedIn }) {
-  if (isLoggedIn) {
-    return <UserGreeting />;
-  }
-  return <GuestGreeting />;
-}
-\`\`\`
+1. Uruchom aplikację i przejdź do interfejsu użytkownika
+2. Kliknij "Nowy przepływ" i nadaj mu nazwę
+3. Zapoznaj się z dostępnymi komponentami
+4. Spróbuj stworzyć prosty przepływ, np. chatbota opartego o model GPT
 
-### Wyrażenia warunkowe w JSX
-
-\`\`\`jsx
-function Greeting({ isLoggedIn }) {
-  return (
-    <div>
-      {isLoggedIn ? <UserGreeting /> : <GuestGreeting />}
-    </div>
-  );
-}
-\`\`\`
-
-## Ukrywanie komponentów
-
-Czasami chcemy ukryć komponent. Możemy to zrobić zwracając \`null\`:
-
-\`\`\`jsx
-function WarningBanner({ warn }) {
-  if (!warn) {
-    return null;
-  }
-
-  return (
-    <div className="warning">
-      Uwaga!
-    </div>
-  );
-}
-\`\`\`
-
-## Operatory logiczne z krótkim obwodem
-
-\`\`\`jsx
-function Mailbox({ unreadMessages }) {
-  return (
-    <div>
-      <h1>Witaj!</h1>
-      {unreadMessages.length > 0 && (
-        <h2>
-          Masz {unreadMessages.length} nieprzeczytanych wiadomości.
-        </h2>
-      )}
-    </div>
-  );
-}
-\`\`\`
-
-## Quest: Aplikacja pogodowa z różnymi widokami
-
-Stwórz aplikację pogodową, która:
-1. Wyświetla różne ikony w zależności od warunków (słońce, deszcz, śnieg)
-2. Pokazuje alert przy ekstremalnych temperaturach
-3. Umożliwia przełączanie między stopniami Celsjusza i Fahrenheita
-4. Wyświetla dodatkowe informacje na żądanie użytkownika
-5. Dostosowuje interfejs do pory dnia (jasny w dzień, ciemny w nocy)
-
-Wykorzystaj różne techniki renderowania warunkowego.
+W kolejnych lekcjach będziemy budować coraz bardziej zaawansowane przepływy, wykorzystując pełen potencjał Flowise AI.
           `
         },
         {
-          id: "lists-keys",
-          title: "Listy i klucze",
-          displayTitle: "Listy i klucze w React",
-          videoUrl: "https://example.com/videos/lists-keys.mp4",
+          id: "flowise-first-flow",
+          title: "Pierwszy flow",
+          displayTitle: "Tworzenie pierwszego flow w Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-first-flow.mp4",
           thumbnailUrl: "/placeholder.svg",
           completed: false,
           description: `
-# Listy i klucze w React
+# Tworzenie pierwszego flow w Flowise AI
 
-Efektywne renderowanie list elementów jest ważną umiejętnością w React. Klucze (keys) pomagają React identyfikować, które elementy listy zostały zmienione, dodane lub usunięte.
+W tej lekcji stworzymy od początku do końca kompletny przepływ AI, który potrafi odpowiadać na pytania na podstawie własnych dokumentów. Ten typ aplikacji jest często nazywany chatbotem opartym o dokumenty (document-based chatbot).
 
-## Renderowanie wielu komponentów
+## Planowanie przepływu
 
-Do renderowania list w React używamy metody \`map()\`:
+Przed rozpoczęciem pracy, warto zaplanować, co nasz przepływ ma osiągnąć:
 
-\`\`\`jsx
-function NumberList({ numbers }) {
-  const listItems = numbers.map((number) =>
-    <li key={number.toString()}>
-      {number}
-    </li>
-  );
-  
-  return (
-    <ul>{listItems}</ul>
-  );
-}
-\`\`\`
+1. Załadować i przetworzyć dokumenty (PDF, teksty, itp.)
+2. Przekształcić dokumenty w formę zrozumiałą dla AI (wektory)
+3. Przechowywać te reprezentacje w bazie wektorowej
+4. Przyjmować pytania od użytkownika
+5. Wyszukiwać odpowiednie fragmenty dokumentów
+6. Formułować odpowiedzi na podstawie tych fragmentów i modelu językowego
 
-## Klucze (Keys)
+## Krok 1: Przygotowanie dokumentów
 
-Klucze pomagają React identyfikować elementy listy. Gdy elementy są aktualizowane, React decyduje które z nich należy ponownie renderować.
+Najpierw musimy dodać komponenty do ładowania i przetwarzania dokumentów:
 
-### Wybór kluczy
+1. **Dodaj komponent ładowania dokumentów**:
+   - Przeciągnij "Document Loaders" na obszar roboczy
+   - Skonfiguruj go wybierając typ pliku (np. PDF, CSV, TXT)
+   - Dodaj ścieżkę do dokumentu lub URL
 
-1. **Najlepszy wybór**: unikalne ID danych
-2. **Alternatywnie**: indeks jako klucz (używaj tylko gdy nie masz stabilnych ID)
+2. **Dodaj komponent rozdzielania tekstu**:
+   - Przeciągnij "Text Splitter" i połącz go z wyjściem komponentu ładowania
+   - Skonfiguruj parametry jak rozmiar kawałka (chunk size) i nakładanie się (overlap)
+   - Zalecane ustawienia początkowe: chunk size 1000, overlap 200
 
-### Reguły dotyczące kluczy
+## Krok 2: Tworzenie bazy wektorowej
 
-- Klucze muszą być unikalne wśród rodzeństwa, ale nie globalnie
-- Klucze nie są przekazywane do komponentów jako props
-- Do tworzenia kluczy najlepiej używać stabilnych, unikalnych identyfikatorów
+Teraz przekształcimy dokumenty w wektory i zapiszemy je:
 
-## Quest: Interaktywna lista zadań
+1. **Dodaj model embeddings**:
+   - Przeciągnij model "Embeddings" (np. OpenAIEmbeddings)
+   - Skonfiguruj go podając klucz API jeśli jest wymagany
 
-Stwórz aplikację do zarządzania zadaniami, która:
-1. Wyświetla listę zadań z możliwością dodawania nowych
-2. Umożliwia oznaczanie zadań jako wykonane oraz ich usuwanie
-3. Filtruje zadania (wszystkie/aktywne/ukończone)
-4. Pozwala na edycję istniejących zadań
-5. Grupuje zadania według priorytetów lub kategorii
+2. **Dodaj bazę wektorową**:
+   - Przeciągnij "Vector Store" (np. FAISS, Chroma, Pinecone)
+   - Połącz wyjście "Text Splitter" i "Embeddings" do wejść "Vector Store"
+   - Skonfiguruj opcje przechowywania (pamięć lub dysk)
 
-Pamiętaj o prawidłowym używaniu kluczy dla wszystkich dynamicznie generowanych elementów.
+## Krok 3: Konfiguracja modelu języka do generowania odpowiedzi
+
+1. **Dodaj model językowy**:
+   - Przeciągnij model LLM (np. "ChatOpenAI", "Anthropic Claude")
+   - Skonfiguruj model określając parametry jak:
+     - Temperature (wpływa na kreatywność, niższa = bardziej deterministyczne odpowiedzi)
+     - Max tokens (maksymalna długość odpowiedzi)
+     - Dodatkowe instrukcje systemowe (system message)
+
+2. **Dodaj komponent Retrieval QA Chain**:
+   - Przeciągnij "Retrieval QA Chain" na obszar roboczy
+   - Połącz wyjście bazy wektorowej do wejścia "Vector Store"
+   - Połącz wyjście modelu języka do wejścia "LLM"
+   - Skonfiguruj szablon promptu określający, jak model ma korzystać z odzyskanych kontekstów
+
+## Krok 4: Dodanie interfejsu chatbota
+
+1. **Dodaj komponent chatbota**:
+   - Przeciągnij "Chatbot" na obszar roboczy
+   - Połącz wyjście "Retrieval QA Chain" do wejścia "Chatbot"
+   - Skonfiguruj opcje jak nazwa chatbota i komunikaty powitalne
+
+## Krok 5: Testowanie i debugowanie
+
+1. **Zapisz przepływ**:
+   - Nadaj przepływowi opisową nazwę
+   - Kliknij "Zapisz"
+
+2. **Testuj przepływ**:
+   - Przejdź do zakładki "Chatbot"
+   - Zadaj pytanie związane z treścią twoich dokumentów
+   - Obserwuj odpowiedź i oceniaj jej jakość
+
+3. **Debugowanie**:
+   - Jeśli odpowiedzi nie są satysfakcjonujące, wróć do edycji przepływu
+   - Sprawdź logi i wartości pośrednie (debugMode)
+   - Dostosuj parametry jak liczba odzyskiwanych dokumentów, chunk size lub instrukcje systemowe
+
+## Wskazówki dla lepszych wyników
+
+- **Prompty systemowe**: Dodaj szczegółowe instrukcje dla modelu LLM, np. "Odpowiadaj tylko na podstawie dostarczonych dokumentów. Jeśli nie znasz odpowiedzi, powiedz to szczerze."
+- **Metadata**: Dodaj metadane do fragmentów dokumentów (jak tytuł źródłowy, data, autor), aby poprawić kontekst
+- **Filtrowanie**: Użyj filtrów metadata, aby ograniczyć wyszukiwanie do konkretnych dokumentów
+- **Łańcuch myślenia**: Skonfiguruj prompt tak, aby model "myślał na głos" przed udzieleniem ostatecznej odpowiedzi
           `
         },
         {
-          id: "forms-controlled",
-          title: "Formularze i komponenty kontrolowane",
-          displayTitle: "Formularze i komponenty kontrolowane",
-          videoUrl: "https://example.com/videos/forms-controlled.mp4",
+          id: "flowise-monitoring",
+          title: "Monitorowanie",
+          displayTitle: "Monitorowanie przepływów w Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-monitoring.mp4",
           thumbnailUrl: "/placeholder.svg",
           completed: false,
           description: `
-# Formularze i komponenty kontrolowane w React
+# Monitorowanie przepływów w Flowise AI
 
-Formularze w React różnią się nieco od standardowych formularzy HTML, ponieważ elementy formularza naturalnie utrzymują swój własny stan. W React popularnym podejściem jest używanie "komponentów kontrolowanych".
+W tej lekcji nauczysz się monitorować, debugować i optymalizować przepływy w Flowise AI. Skuteczne monitorowanie jest kluczowe dla zapewnienia niezawodności, identyfikowania problemów i optymalizacji kosztów.
 
-## Komponenty kontrolowane
+## Podstawy monitorowania w Flowise
 
-W komponentach kontrolowanych, stan formularza jest zarządzany przez React:
+Flowise oferuje kilka wbudowanych narzędzi do monitorowania:
 
-\`\`\`jsx
-import { useState } from 'react';
+1. **Logi wykonania przepływu** - szczegółowa historia działań przepływu
+2. **Debugowanie w czasie rzeczywistym** - śledzenie przepływu danych przez komponenty
+3. **Metryki wydajności** - pomiar czasów odpowiedzi i wykorzystania zasobów
+4. **Monitorowanie kosztów** - śledzenie wykorzystania tokenu i kosztów API
 
-function NameForm() {
-  const [value, setValue] = useState('');
+## Debugowanie przepływów
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+### Tryb debugowania
 
-  const handleSubmit = (event) => {
-    alert('Wysłano imię: ' + value);
-    event.preventDefault();
-  };
+Aby włączyć tryb debugowania:
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Imię:
-        <input type="text" value={value} onChange={handleChange} />
-      </label>
-      <input type="submit" value="Wyślij" />
-    </form>
-  );
-}
-\`\`\`
+1. Otwórz swój przepływ w edytorze
+2. Włącz opcję "Debug Mode" w prawym górnym rogu
+3. Uruchom przepływ w trybie chatbota lub przez API
 
-## Różne typy elementów formularza
+W trybie debugowania, Flowise pokazuje:
+- Wartości pośrednie w każdym węźle
+- Czasy wykonania każdego komponentu
+- Pełne zapytania i odpowiedzi do/z modeli LLM
+- Szczegółowe błędy i ostrzeżenia
 
-- Textarea (\`<textarea value={text} onChange={handleChange} />\`)
-- Select (\`<select value={option} onChange={handleChange}>\`)
-- Input typu checkbox (\`<input type="checkbox" checked={checked} onChange={handleChange} />\`)
-- Input typu radio (\`<input type="radio" checked={selected === 'option1'} />\`)
+## Quest: Monitorowanie i optymalizacja przepływu
 
-## Quest: Formularz rejestracji
+Jako zadanie praktyczne, zoptymalizuj istniejący przepływ Flowise:
 
-Stwórz formularz rejestracji z walidacją, który:
-1. Zawiera pola: imię, nazwisko, email, hasło, potw. hasła
-2. Przeprowadza walidację w czasie rzeczywistym (min. długość, format email)
-3. Wyświetla komunikaty o błędach pod odpowiednimi polami
-4. Blokuje przycisk "Zarejestruj" jeśli formularz zawiera błędy
-5. Wyświetla podsumowanie po poprawnym wypełnieniu
+1. Włącz tryb debugowania i zidentyfikuj wąskie gardła w swoim przepływie
+2. Analizuj wykorzystanie tokenów i zaimplementuj co najmniej dwie optymalizacje kosztów
+3. Skonfiguruj alert dla długiego czasu odpowiedzi (powyżej 5 sekund)
+4. Przeprowadź test obciążeniowy swojego przepływu i udokumentuj wyniki
+5. Zaproponuj i wdróż ulepszenia oparte na wynikach monitorowania
 
-Użyj komponentów kontrolowanych i zaimplementuj kompleksową walidację.
+Przedstaw raport dokumentujący stan przed i po optymalizacji, wraz z analizą wyników i uzasadnieniem wprowadzonych zmian.
           `
         },
         {
-          id: "hooks-intro",
-          title: "Wprowadzenie do hooków",
-          displayTitle: "Hooki - współczesne podejście do Reacta",
-          videoUrl: "https://example.com/videos/hooks-intro.mp4",
+          id: "flowise-prompt-chain",
+          title: "Prompt Chain",
+          displayTitle: "Łańcuchy promptów w Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-prompt-chains.mp4",
           thumbnailUrl: "/placeholder.svg",
           completed: false,
           description: `
-# Wprowadzenie do hooków w React
+# Łańcuchy promptów w Flowise AI
 
-Hooki, wprowadzone w React 16.8, pozwalają używać stanu i innych funkcji React bez pisania klas. Sprawiają, że kod jest bardziej przejrzysty i łatwiejszy w ponownym użyciu.
+W tej lekcji poznasz zaawansowaną technikę tworzenia łańcuchów promptów (Prompt Chains) w Flowise AI. Łańcuchy promptów pozwalają na tworzenie wieloetapowych procesów rozumowania, gdzie wynik jednego etapu staje się wejściem dla kolejnego.
 
-## Podstawowe hooki
+## Czym są łańcuchy promptów?
 
-### useState
+Łańcuchy promptów to technika, która umożliwia modelom językowym rozwiązywanie złożonych problemów poprzez podzielenie ich na mniejsze, sekwencyjne kroki. Zamiast próbować uzyskać kompletną odpowiedź za jednym razem, model wykonuje serię powiązanych ze sobą zapytań i odpowiedzi.
 
-\`useState\` pozwala funkcyjnym komponentom przechowywać stan lokalny:
+## Korzyści z używania łańcuchów promptów
 
-\`\`\`jsx
-import React, { useState } from 'react';
+- **Lepsza jakość odpowiedzi** - model może skupić się na każdym kroku osobno
+- **Większa kontrola nad procesem** - możesz wpływać na każdy etap rozumowania
+- **Transparentność** - możesz śledzić, jak model dochodzi do końcowych wniosków
+- **Redukcja błędów** - łatwiej wykryć i skorygować problemy w konkretnym kroku
 
-function Counter() {
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <p>Kliknąłeś {count} razy</p>
-      <button onClick={() => setCount(count + 1)}>
-        Kliknij mnie
-      </button>
-    </div>
+## Implementacja łańcuchów promptów w Flowise
+
+### Krok 1: Planowanie łańcucha
+
+Przed rozpoczęciem pracy nad łańcuchem promptów, zaplanuj:
+- Jakie są główne etapy rozumowania?
+- Jakie informacje powinny być przekazywane między etapami?
+- Jakie instrukcje potrzebuje model na każdym etapie?
+
+### Krok 2: Tworzenie sekwencji komponentów
+
+W Flowise możesz stworzyć łańcuch promptów na kilka sposobów:
+
+1. **Używając komponentu SequentialChain**:
+   - Dodaj komponent "Sequential Chain" do obszaru roboczego
+   - Dla każdego kroku w sekwencji, dodaj komponent "LLM Chain"
+   - Skonfiguruj każdy LLM Chain z odpowiednim szablonem promptu
+   - Połącz LLM Chains z Sequential Chain, określając kolejność wykonania
+
+2. **Łącząc komponenty bezpośrednio**:
+   - Dodaj pierwszy komponent LLM lub Chat Model
+   - Dodaj kolejny komponent, który będzie używał wyjścia pierwszego
+   - Połącz wyjście pierwszego komponentu z odpowiednim wejściem drugiego
+   - Kontynuuj dodawanie kolejnych etapów w łańcuchu
+
+### Krok 3: Projektowanie promptów dla każdego etapu
+
+Każdy etap w łańcuchu wymaga starannie zaprojektowanego promptu:
+
+1. **Etap początkowy**: Prompt powinien jasno określać zadanie i format oczekiwanego wyniku, np.:
+   \`\`\`
+   Twoim zadaniem jest analiza poniższego tekstu i wyodrębnienie kluczowych faktów.
+   Tekst: {{$input}}
+   Wypisz tylko fakty, każdy w nowej linii, bez dodatkowych komentarzy.
+   \`\`\`
+
+2. **Etapy pośrednie**: Prompty powinny odnosić się do wyniku poprzedniego etapu i określać kolejne kroki, np.:
+           \`\`\`
+
+## Przykłady zastosowań łańcuchów promptów
+
+Łańcuchy promptów są szczególnie przydatne w następujących scenariuszach:
+
+1. **Złożone rozumowanie** - np. rozwiązywanie problemów matematycznych krok po kroku
+2. **Generowanie wieloetapowych treści** - np. tworzenie artykułu przez outline, szkic i ostateczną wersję
+3. **Analiza i synteza informacji** - np. analiza dokumentu, wyodrębnienie kluczowych punktów, a następnie stworzenie podsumowania
+4. **Weryfikacja własnych odpowiedzi** - np. wygenerowanie odpowiedzi, a następnie jej sprawdzenie i korekta
+
+## Quest: Implementacja łańcucha promptów dla analizy tekstu
+
+Jako zadanie praktyczne, stwórz łańcuch promptów w Flowise AI do zaawansowanej analizy tekstu:
+
+1. Pierwszy etap: Ekstrakcja kluczowych tematów i pojęć z tekstu wejściowego
+2. Drugi etap: Analiza relacji między wyodrębnionymi tematami
+3. Trzeci etap: Identyfikacja luk informacyjnych i potencjalnych nieścisłości
+4. Czwarty etap: Generowanie pogłębionej analizy z odniesieniami do oryginalnego tekstu
+
+Zaimplementuj ten łańcuch w Flowise, przetestuj go na przykładowym tekście i udokumentuj wyniki każdego kroku. Eksperymentuj z różnymi instrukcjami dla każdego etapu, aby zobaczyć jak wpływają na jakość końcowej analizy.
+          `
+        },
+        {
+          id: "flowise-external-api",
+          title: "Zewnętrzne API",
+          displayTitle: "Integracja z zewnętrznymi API w Flowise",
+          videoUrl: "https://example.com/videos/flowise-external-api.mp4",
+          thumbnailUrl: "/placeholder.svg",
+          completed: false,
+          description: `
+# Integracja z zewnętrznymi API w Flowise
+
+W tej lekcji nauczysz się, jak integrować przepływy Flowise z zewnętrznymi API, co znacząco rozszerza możliwości twoich aplikacji AI. Dzięki integracji z API, twoje chatboty i asystenci mogą uzyskiwać dostęp do aktualnych danych, wykonywać operacje w zewnętrznych systemach i łączyć możliwości AI z istniejącymi serwisami.
+
+## Dlaczego warto integrować z zewnętrznymi API?
+
+Integracja z API pozwala na:
+- Dostęp do aktualnych informacji (pogoda, kursy walut, wiadomości)
+- Wykonywanie operacji w zewnętrznych systemach (tworzenie zamówień, rezerwacji)
+- Pobieranie danych z baz danych i systemów biznesowych
+- Łączenie możliwości różnych usług w jednym rozwiązaniu
+
+## Metody integracji z API w Flowise
+
+Flowise oferuje kilka sposobów integracji z zewnętrznymi API:
+
+### 1. Komponent API Tool
+
+Najłatwiejszym sposobem jest użycie komponentu "API Tool":
+
+1. Dodaj komponent "API Tool" do obszaru roboczego
+2. Skonfiguruj parametry:
+   - URL endpointu
+   - Metoda HTTP (GET, POST, PUT, DELETE)
+   - Nagłówki (headers) z uwierzytelnianiem
+   - Parametry zapytania lub ciało (body)
+3. Połącz komponent API Tool z modelem językowym za pomocą komponentu "Agent"
+
+### 2. Custom Tool
+
+Dla bardziej złożonych integracji możesz stworzyć własne narzędzie:
+
+1. Dodaj komponent "Custom Tool" do obszaru roboczego
+2. Zdefiniuj kod narzędzia używając JavaScript, np.:
+   \`\`\`javascript
+   const axios = require('axios');
+   
+   async function fetchWeather(location) {
+     const API_KEY = 'your_api_key';
+     const response = await axios.get(
+       'https://api.weatherapi.com/v1/current.json?key=' + API_KEY + '&q=' + location
+     );
+     return JSON.stringify(response.data.current);
+   }
+   
+   module.exports = fetchWeather;
+   \`\`\`
+3. Skonfiguruj opis narzędzia, aby model wiedział, kiedy go używać
+4. Połącz Custom Tool z agentem
+
+### 3. Webhook
+
+Możesz również utworzyć webhook, aby odbierać dane z zewnętrznych systemów:
+
+1. Wdróż swój przepływ jako API
+2. Skonfiguruj endpoint, który będzie odbierał żądania
+3. Przetwarzaj przychodzące dane w przepływie
+
+## Praktyczne przykłady integracji API
+
+### Integracja z API pogodowym
+
+1. Dodaj komponent "API Tool" i skonfiguruj go do połączenia z API pogodowym
+2. Skonfiguruj prompt modelu, aby wiedział, kiedy zapytać o pogodę:
+   \`\`\`
+   Jeśli użytkownik pyta o pogodę, użyj API Tool, aby uzyskać aktualne informacje pogodowe.
+   Lokalizacja powinna być wyodrębniona z zapytania użytkownika.
+   \`\`\`
+
+### Integracja z API wiadomości
+
+1. Skonfiguruj komponent API do łączenia się z serwisem wiadomości
+2. Użyj promptu, który zachęca model do aktualizowania informacji:
+   \`\`\`
+   Kiedy użytkownik prosi o aktualne wiadomości, użyj API Tool, aby pobrać najnowsze nagłówki.
+   Podsumuj wiadomości w zwięzły sposób.
+   \`\`\`
+
+## Najlepsze praktyki integracji API
+
+1. **Obsługa błędów** - Zawsze implementuj obsługę błędów, aby twój przepływ był odporny na awarie API
+2. **Uwierzytelnianie** - Bezpiecznie przechowuj klucze API i tokeny uwierzytelniające
+3. **Rate limiting** - Uwzględniaj ograniczenia API i implementuj mechanizmy opóźniające
+4. **Formaty danych** - Upewnij się, że model rozumie format danych zwracanych przez API
+5. **Testowanie** - Regularnie testuj integracje, aby upewnić się, że działają prawidłowo
+
+## Quest: Integracja z zewnętrznym API
+
+Jako zadanie praktyczne, zaimplementuj asystenta z integracją z zewnętrznym API:
+
+1. Wybierz publiczne API (np. API pogodowe, walutowe, wiadomości)
+2. Stwórz przepływ w Flowise, który:
+   - Analizuje pytania użytkownika
+   - Identyfikuje potrzebę pobrania danych z API
+   - Formułuje odpowiednie zapytanie API
+   - Interpretuje i prezentuje wyniki w przyjazny sposób
+3. Dodaj obsługę błędów i przypadków brzegowych
+4. Udokumentuj proces integracji i potencjalne problemy
+5. Porównaj odpowiedzi asystenta z integracją API z odpowiedziami, które opierają się tylko na wiedzy modelu
+
+Przedstaw wyniki zadania w formie raportu z przykładami interakcji, zrzutami ekranu przepływu oraz analizą skuteczności integracji.
+          `
+        },
+        {
+          id: "flowise-vector-database",
+          title: "Baza wektorowa",
+          displayTitle: "Bazy wektorowe w Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-vector-db.mp4",
+          thumbnailUrl: "/placeholder.svg",
+          completed: false,
+          description: `
+# Bazy wektorowe w Flowise AI
+
+W tej lekcji zagłębimy się w temat baz wektorowych (vector databases), które są fundamentalnym elementem aplikacji opartych na Retrieval Augmented Generation (RAG). Zrozumienie i efektywne wykorzystanie baz wektorowych jest kluczowe dla tworzenia zaawansowanych aplikacji AI z własną bazą wiedzy.
+
+## Czym są bazy wektorowe?
+
+Bazy wektorowe to specjalizowane bazy danych zaprojektowane do przechowywania i efektywnego przeszukiwania wektorów (embeddings) - wielowymiarowych reprezentacji liczbowych tekstu, obrazów lub innych danych. W kontekście Flowise AI, bazy wektorowe pozwalają na:
+
+- Przechowywanie reprezentacji wektorowych dokumentów
+- Szybkie wyszukiwanie podobnych dokumentów
+- Odnajdowanie informacji semantycznie zbliżonych do zapytania użytkownika
+
+## Popularne bazy wektorowe w Flowise
+
+Flowise AI integruje się z wieloma bazami wektorowymi:
+
+1. **FAISS** - biblioteka open-source od Facebooka, wydajna dla dużych zbiorów danych
+2. **Chroma** - prosta, łatwa w użyciu baza wektorowa dla projektów RAG
+3. **Pinecone** - zarządzana usługa bazy wektorowej w chmurze
+4. **Milvus** - rozproszona baza wektorowa o wysokiej wydajności
+5. **Qdrant** - baza wektorowa skupiająca się na filtracji metadanych
+6. **Weaviate** - baza wektorowa z możliwością strukturyzacji i kategoryzacji danych
+
+## Tworzenie bazy wektorowej w Flowise
+
+### Krok 1: Przygotowanie dokumentów
+
+Podobnie jak w lekcji o pierwszym przepływie, zaczynamy od przygotowania dokumentów:
+1. Dodaj komponent ładowania dokumentów
+2. Dodaj komponent dzielenia tekstu na fragmenty (chunks)
+
+### Krok 2: Generowanie embeddingów
+
+1. Wybierz model embeddingów (np. OpenAI Embeddings, HuggingFace Embeddings)
+2. Skonfiguruj komponent embeddingów z odpowiednimi parametrami i kluczami API
+
+### Krok 3: Konfiguracja bazy wektorowej
+
+1. Dodaj komponent wybranej bazy wektorowej (np. "FAISS Vector Store")
+2. Połącz wyjście Text Splitter i Embeddings z wejściami bazy wektorowej
+3. Skonfiguruj parametry specyficzne dla wybranej bazy:
+   - Dla FAISS: format zapisu, ścieżka do pliku
+   - Dla Chroma: katalog przechowywania, kolekcja
+   - Dla usług chmurowych: klucze API, nazwy indeksów
+
+### Krok 4: Implementacja wyszukiwania
+
+1. Dodaj komponent wyszukiwania (np. "Vector Store Retriever")
+2. Połącz bazę wektorową z komponentem wyszukiwania
+3. Skonfiguruj parametry wyszukiwania:
+   - k - liczba najbardziej podobnych dokumentów do pobrania
+   - Próg podobieństwa (score threshold) - minimalny poziom podobieństwa
+   - Filtry metadanych - jeśli chcesz ograniczyć wyszukiwanie
+
+## Zaawansowane techniki pracy z bazami wektorowymi
+
+### Przechowywanie i aktualizacja
+
+Flowise pozwala na:
+- Zapisywanie baz wektorowych na dysku
+- Ładowanie istniejących baz
+- Aktualizację baz nowymi dokumentami
+
+Przykładowa konfiguracja dla FAISS:
+- Ustaw "Save to disk" na true
+- Określ ścieżkę do katalogu przechowywania
+- Użyj opcji "From Existing" aby załadować istniejącą bazę
+
+### Filtry metadanych
+
+Możesz wzbogacić fragmenty dokumentów o metadane i używać ich do filtrowania wyników:
+1. Dodaj metadane podczas ładowania dokumentów (np. autor, data, kategoria)
+2. Skonfiguruj filtry w komponentach wyszukiwania:
+   \`\`\`javascript
+   {
+     "metadata": {
+       "category": "finanse",
+       "date": { "$gte": "2023-01-01" }
+     }
+   }
+   \`\`\`
+
+### Hybrydowe wyszukiwanie
+
+Łączenie wyszukiwania wektorowego z wyszukiwaniem pełnotekstowym:
+1. Skonfiguruj komponent "Hybrid Search"
+2. Połącz go zarówno z bazą wektorową jak i indeksem pełnotekstowym
+3. Ustaw wagi dla obu rodzajów wyszukiwania
+
+## Optymalizacja baz wektorowych
+
+### Wybór odpowiedniej bazy
+
+- **FAISS** - optymalna dla dużych zbiorów danych offline
+- **Chroma** - dobra dla małych i średnich projektów
+- **Pinecone/Weaviate** - idealne dla zastosowań produkcyjnych wymagających skalowalności
+
+### Optymalizacja parametrów
+
+- **Rozmiar chunków** - wpływa na granularność wyszukiwania (mniejsze chunks = większa precyzja, ale więcej szumu)
+- **Liczba wymiarów embeddingów** - balans między dokładnością a wydajnością
+- **Algorytm indeksowania** - różne bazy oferują różne algorytmy
+
+### Monitorowanie wydajności
+
+Śledź metryki jak:
+- Czas wyszukiwania
+- Trafność wyników (relevance)
+- Zużycie pamięci i dysku
+          `
+        },
+        {
+          id: "flowise-agents",
+          title: "Agenci",
+          displayTitle: "Agenci AI w Flowise",
+          videoUrl: "https://example.com/videos/flowise-agents.mp4",
+          thumbnailUrl: "/placeholder.svg",
+          completed: false,
+          description: `
+# Agenci AI w Flowise
+
+W tej lekcji poznasz koncepcję agentów AI w Flowise, która pozwala na tworzenie autonomicznych systemów AI zdolnych do planowania, rozumowania i używania narzędzi. Agenci reprezentują najbardziej zaawansowany sposób wykorzystania modeli językowych w Flowise.
+
+## Czym są agenci AI?
+
+Agenci AI to zaawansowane systemy oparte na modelach językowych, które mogą:
+- Samodzielnie planować działania potrzebne do osiągnięcia celu
+- Wybierać i używać odpowiednich narzędzi
+- Oceniać wyniki swoich działań i dostosowywać strategię
+- Prowadzić złożone rozumowanie wieloetapowe
+
+W Flowise agent jest konstrukcją łączącą model językowy z zestawem narzędzi oraz strategią ich wykorzystania.
+
+## Komponenty agenta w Flowise
+
+### 1. Model Językowy (LLM)
+
+Agent wymaga modelu językowego o wysokich zdolnościach rozumowania:
+- ChatGPT (GPT-3.5/GPT-4)
+- Claude
+- Llama 2
+- Mistral
+- Gemini
+
+### 2. Narzędzia (Tools)
+
+Agent może korzystać z różnych narzędzi:
+- **Narzędzia wyszukiwania** - Vector Stores, Search APIs
+- **Narzędzia obliczeniowe** - kalkulator, parser matematyczny
+- **Narzędzia API** - integracje z zewnętrznymi usługami
+- **Narzędzia niestandardowe** - własne funkcje JavaScript/Python
+
+### 3. Strategia Agenta
+
+Flowise oferuje różne strategie działania agenta:
+- **REACT** (Reasoning and Acting) - najpopularniejsza strategia oparta na cyklu Obserwacja-Myślenie-Działanie
+- **Plan and Execute** - agent najpierw tworzy plan, a potem go realizuje
+- **OpenAI Functions** - dedykowana dla modeli OpenAI wspierających funkcje
+- **ZERO-SHOT-REACT** - prostsza wersja REACT, nie wymagająca przykładów
+
+## Tworzenie agenta w Flowise
+
+### Krok 1: Przygotowanie modelu języka
+
+1. Dodaj komponent modelu języka (np. ChatOpenAI)
+2. Skonfiguruj z odpowiednim kluczem API i modelem
+3. Ustaw wysoki limit tokenów, ponieważ agenci potrzebują dużego kontekstu
+
+### Krok 2: Dodanie narzędzi
+
+1. Dodaj komponenty narzędzi, które agent będzie wykorzystywał:
+   - Search Tool
+   - Calculator Tool
+   - Weather API Tool
+   - Vector Store Retriever
+2. Skonfiguruj każde narzędzie z odpowiednimi parametrami
+
+### Krok 3: Konfiguracja agenta
+
+1. Dodaj komponent "Agent":
+   - Połącz model języka do wejścia "LLM"
+   - Połącz narzędzia do wejścia "Tools"
+2. Wybierz strategię agenta (np. REACT)
+3. Skonfiguruj dodatkowe parametry:
+   - System Message - instrukcje dla agenta
+   - Maksymalna liczba iteracji
+   - Verbose - szczegółowe logi działania
+
+### Krok 4: Dodanie interfejsu
+
+1. Połącz wyjście agenta z komponentem "Chatbot"
+2. Skonfiguruj interfejs chatbota
+
+## Zaawansowane techniki dla agentów
+
+### Pamięć agenta
+
+Aby agent pamiętał wcześniejsze interakcje:
+1. Dodaj komponent pamięci (np. "Buffer Memory")
+2. Połącz pamięć z agentem
+
+### Planowanie hierarchiczne
+
+Dla złożonych zadań możesz stworzyć hierarchię agentów:
+1. Agent-supervisor planuje i deleguje zadania
+2. Wyspecjalizowani agenci wykonują konkretne zadania
+3. Supervisor zbiera i integruje wyniki
+
+### Agenci współpracujący
+
+Możesz stworzyć system wielu agentów współpracujących ze sobą:
+1. Skonfiguruj oddzielne przepływy dla każdego agenta
+2. Użyj komponentów API, aby agenci mogli się komunikować
+3. Ustaw mechanizm koordynacji (np. broker wiadomości)
+
+## Najlepsze praktyki dla agentów
+
+1. **Jasne instrukcje** - precyzyjnie definiuj rolę i cel agenta w System Message
+2. **Odpowiednie narzędzia** - dostarczaj tylko narzędzia istotne dla zadania
+3. **Debugowanie** - używaj trybu verbose, aby śledzić proces rozumowania
+4. **Limity iteracji** - ustaw rozsądny limit iteracji, aby uniknąć pętli
+5. **Obsługa błędów** - implementuj mechanizmy obsługi błędów narzędzi
+
+## Quest: Stworzenie zaawansowanego asystenta z agentami
+
+Jako zadanie praktyczne, stwórz zaawansowany system asystenta używający agentów:
+
+1. Zaprojektuj i zaimplementuj co najmniej trzech specjalistycznych agentów:
+   - Agent analityczny do pracy z danymi
+   - Agent badawczy do wyszukiwania informacji
+   - Agent kreatywny do generowania treści
+
+2. Stwórz agenta-koordynatora, który:
+   - Analizuje zapytanie użytkownika
+   - Decyduje, który specjalistyczny agent powinien zająć się zadaniem
+   - Deleguje zadania i zbiera wyniki
+   - Prezentuje użytkownikowi spójną odpowiedź
+
+3. Przetestuj system na złożonych zapytaniach wymagających:
+   - Wyszukiwania informacji
+   - Analizy danych
+   - Tworzenia raportów lub treści
+   - Łączenia wyników z różnych źródeł
+
+4. Udokumentuj:
+   - Architekturę systemu (diagram)
+   - Proces delegowania zadań
+   - Przykłady rozwiązanych złożonych zapytań
+   - Analizę mocnych i słabych stron systemu
+          `
+        },
+        {
+          id: "flowise-webhooks",
+          title: "Webhooki",
+          displayTitle: "Webhooki w Flowise AI",
+          videoUrl: "https://example.com/videos/flowise-webhooks.mp4",
+          thumbnailUrl: "/placeholder.svg",
+          completed: false,
+          description: `
+# Webhooki w Flowise AI
+
+W tej lekcji poznasz zaawansowaną funkcjonalność webhooków w Flowise AI. Webhooki pozwalają na integrację przepływów Flowise z zewnętrznymi systemami i aplikacjami, umożliwiając automatyzację procesów i tworzenie bardziej złożonych rozwiązań.
+
+## Czym są webhooki?
+
+Webhooki to mechanizm, który pozwala aplikacjom komunikować się ze sobą w czasie rzeczywistym poprzez HTTP callbacks:
+- Aplikacja A (źródło) wysyła dane do zdefiniowanego URL aplikacji B (odbiorca) gdy nastąpi określone zdarzenie
+- Aplikacja B przyjmuje te dane i przetwarza je według swoich potrzeb
+
+W kontekście Flowise AI, webhooki działają na dwa sposoby:
+1. **Webhooks przychodzące** - Flowise odbiera dane z zewnętrznych systemów
+2. **Webhooks wychodzące** - Flowise wysyła dane do zewnętrznych systemów
+
+## Webhooks przychodzące w Flowise
+
+### Konfiguracja endpointu webhook
+
+1. Wdróż swój przepływ jako API
+2. W panelu "API" skonfiguruj endpoint:
+   - Nazwa endpointu (np. "/webhook-receiver")
+   - Typ: Webhook
+   - Metoda HTTP: zazwyczaj POST
+   - Opcjonalnie: zabezpieczenia (API key, Basic Auth)
+
+### Przetwarzanie danych z webhooka
+
+1. Dodaj komponent "API Webhook Input" do przepływu
+2. Podłącz go do komponentów, które będą przetwarzać otrzymane dane:
+   - Model językowy może analizować treść
+   - Komponent niestandardowy może transformować dane
+   - Komponent Vector Store może zapisywać dane do bazy wiedzy
+
+### Przykłady zastosowań webhooków przychodzących
+
+- Odbieranie powiadomień o nowych dokumentach do indeksowania
+- Aktualizacja bazy wiedzy na podstawie zewnętrznych zdarzeń
+- Integracja z systemami CRM, helpdesk, email
+- Reagowanie na zdarzenia z systemów IoT
+
+## Webhooks wychodzące w Flowise
+
+### Konfiguracja komponentu Webhook Output
+
+1. Dodaj komponent "Webhook" do przepływu
+2. Skonfiguruj parametry:
+   - URL docelowy
+   - Metoda HTTP (zazwyczaj POST)
+   - Nagłówki (w tym uwierzytelnianie)
+   - Format danych wyjściowych (JSON)
+
+### Integracja z przepływem
+
+1. Podłącz wyjście poprzedniego komponentu (np. LLM) do komponentu Webhook
+2. Skonfiguruj transformację danych, aby dopasować format oczekiwany przez system docelowy
+
+### Przykłady zastosowań webhooków wychodzących
+
+- Wysyłanie odpowiedzi AI do zewnętrznych systemów
+- Powiadamianie o zakończonych zadaniach
+- Uruchamianie automatyzacji w innych systemach
+- Zapisywanie wyników analiz do zewnętrznych baz danych
+
+## Zaawansowane scenariusze z webhookami
+
+### Dwukierunkowa komunikacja z zewnętrznymi systemami
+
+Możesz stworzyć przepływ, który:
+1. Odbiera dane przez webhook przychodzący
+2. Przetwarza te dane używając AI
+3. Wysyła wyniki z powrotem do systemu źródłowego przez webhook wychodzący
+
+### Synchronizacja bazy wiedzy
+
+Możesz zautomatyzować aktualizację bazy wiedzy:
+1. Webhook odbiera powiadomienie o nowym dokumencie
+2. Przepływ pobiera dokument, przetwarza go i dzieli na fragmenty
+3. Dokument zostaje dodany do bazy wektorowej
+4. Webhook wychodzący wysyła potwierdzenie do systemu zarządzania dokumentami
+
+### Integracja z platformami automatyzacji
+
+Możesz połączyć Flowise z platformami automatyzacji:
+1. Skonfiguruj webhook Flowise jako endpoint dla Zapier, Make.com lub Power Automate
+2. Utwórz przepływ przetwarzający dane z tych platform
+3. Wyniki analizy zwróć do platformy automatyzacji
+
+## Najlepsze praktyki dla webhooków
+
+1. **Zabezpieczanie webhooków** - zawsze używaj uwierzytelniania dla webhooków (API key, secret token)
+2. **Walidacja danych** - weryfikuj format i poprawność danych przychodzących
+3. **Obsługa błędów** - implementuj mechanizmy retry dla nieudanych wywołań
+4. **Monitorowanie** - śledź aktywność webhooków i czas odpowiedzi
+5. **Dokumentacja** - dokumentuj format danych i przykłady dla zespołów integrujących się z twoimi webhookami
+6. **Idempotentność** - zapewnij, że wielokrotne przetworzenie tego samego webhooka nie powoduje duplikacji
+
+## Implementacja zabezpieczeń webhooków
+
+### Uwierzytelnianie poprzez sekretny token
+
+1. Wygeneruj unikalny token
+2. Skonfiguruj system wysyłający, aby dodawał nagłówek X-Webhook-Secret
+3. W komponentach Flowise weryfikuj ten token przed przetwarzaniem danych
+
+### Weryfikacja poprzez podpisy
+
+Dla bardziej zaawansowanych zabezpieczeń:
+1. System wysyłający tworzy podpis HMAC z treści
+2. Flowise weryfikuje podpis, aby potwierdzić autentyczność danych
+
+Przykładowy kod weryfikujący podpis:
+\`\`\`javascript
+const crypto = require('crypto');
+
+function verifySignature(payload, signature, secret) {
+  const expectedSignature = crypto
+    .createHmac('sha256', secret)
+    .update(payload)
+    .digest('hex');
+  return crypto.timingSafeEqual(
+    Buffer.from(signature),
+    Buffer.from(expectedSignature)
   );
 }
 \`\`\`
-
-### useEffect
-
-\`useEffect\` pozwala wykonywać efekty uboczne w komponentach funkcyjnych:
-
-\`\`\`jsx
-useEffect(() => {
-  // Kod efektu (np. pobieranie danych, subskrypcje)
-  
-  // Opcjonalna funkcja czyszcząca
-  return () => {
-    // Czyszczenie (np. anulowanie subskrypcji)
-  };
-}, [/* tablica zależności */]);
-\`\`\`
-
-### useContext
-
-\`useContext\` upraszcza korzystanie z Context API:
-
-\`\`\`jsx
-const value = useContext(MyContext);
-\`\`\`
-
-## Hooki dodatkowe
-
-- **useReducer** - alternatywa dla useState przy złożonej logice stanu
-- **useCallback** - memoizacja funkcji dla optymalizacji
-- **useMemo** - memoizacja wartości dla optymalizacji
-- **useRef** - dostęp do referencji DOM i przechowywanie wartości pomiędzy renderowaniami
-
-## Quest: Hooki w praktyce
-
-Zbuduj aplikację do śledzenia wydatków, która:
-1. Przechowuje i wyświetla listę wydatków (useState)
-2. Pobiera i aktualizuje dane w lokalnym storage (useEffect)
-3. Zarządza złożoną logiką kategorii i filtrowania (useReducer)
-4. Udostępnia dane dla całej aplikacji (useContext)
-5. Zawiera własny hook \`useExpenseCalculator\` do operacji na wydatkach
-
-Implementacja powinna demonstrować praktyczne zastosowanie różnych hooków.
           `
         }
       ]
