@@ -19,7 +19,7 @@ const blogPosts: BlogPost[] = [
   {
     id: "1",
     title: "Jak zbudować asystenta AI z pamięcią długoterminową",
-    excerpt: "Poznaj techniki implementacji pamięci długoterminowej w asystentach AI wykorzystując Flowise i LangChain.",
+    excerpt: "Poznaj techniki implementacji pamięci długoterminowej w asystentach AI wykorzystując nowoczesne narzędzia.",
     date: "2023-11-15",
     author: "Anna Kowalska",
     image: "/public/lovable-uploads/abedc481-fffb-44d7-b01d-f810315d5fba.png",
@@ -28,23 +28,23 @@ const blogPosts: BlogPost[] = [
   },
   {
     id: "2",
-    title: "5 najczęstszych błędów podczas tworzenia chatbotów w Flowise",
+    title: "5 najczęstszych błędów podczas tworzenia chatbotów AI",
     excerpt: "Dowiedz się, jakich błędów unikać przy tworzeniu chatbotów i jak budować bardziej efektywne rozwiązania.",
     date: "2023-10-28",
     author: "Marcin Nowak",
     image: "/public/lovable-uploads/47b7ddeb-1880-457f-a354-85dfaae75dc0.png",
     category: "Najlepsze praktyki",
-    slug: "5-najczestszych-bledow-chatboty-flowise"
+    slug: "5-najczestszych-bledow-chatboty-ai"
   },
   {
     id: "3",
-    title: "Integracja Flowise AI z zewnętrznymi bazami danych",
+    title: "Integracja AI z zewnętrznymi bazami danych",
     excerpt: "Krok po kroku, jak połączyć swojego chatbota z różnymi źródłami danych i zwiększyć jego możliwości.",
     date: "2023-10-12",
     author: "Paweł Wiśniewski",
     image: "/public/lovable-uploads/2fd49611-13df-49b8-a6fe-2b83183c4e83.png",
     category: "Poradniki",
-    slug: "integracja-flowise-ai-bazy-danych"
+    slug: "integracja-ai-bazy-danych"
   },
   {
     id: "4",
@@ -59,7 +59,7 @@ const blogPosts: BlogPost[] = [
   {
     id: "5",
     title: "Studium przypadku: Jak firma XYZ zwiększyła konwersje o 40% dzięki chatbotowi",
-    excerpt: "Rzeczywisty przykład wdrożenia chatbota zbudowanego na Flowise AI i jego wpływ na wyniki biznesowe.",
+    excerpt: "Rzeczywisty przykład wdrożenia chatbota zbudowanego na nowoczesnych technologiach AI i jego wpływ na wyniki biznesowe.",
     date: "2023-09-15",
     author: "Tomasz Kowalczyk",
     image: "/public/lovable-uploads/af41dcbe-22e6-4e86-a8f3-d5878acd2e55.png",
@@ -104,7 +104,7 @@ const Blog = () => {
               Blog ToKnowAI
             </h1>
             <p className="text-xl text-white/80 mb-8">
-              Najnowsze artykuły, poradniki i studia przypadków na temat Flowise AI, LangChain i tworzenia aplikacji AI bez kodowania.
+              Najnowsze artykuły, poradniki i studia przypadków na temat tworzenia aplikacji AI bez kodowania.
             </p>
 
             {/* Search Bar */}
