@@ -300,21 +300,21 @@ selektor {
 
 ## Główne selektory CSS:
 
-- Selektor elementu: `p {}`
-- Selektor klasy: `.klasa {}`
-- Selektor ID: `#identyfikator {}`
-- Selektor atrybutu: `[type="text"] {}`
-- Selektor pseudoklasy: `a:hover {}`
+- Selektor elementu: \`p {}\`
+- Selektor klasy: \`.klasa {}\`
+- Selektor ID: \`#identyfikator {}\`
+- Selektor atrybutu: \`[type="text"] {}\`
+- Selektor pseudoklasy: \`a:hover {}\`
 
 ## Podstawowe właściwości CSS:
 
-- `color` - kolor tekstu
-- `background-color` - kolor tła
-- `font-size` - rozmiar czcionki
-- `font-family` - rodzina czcionek
-- `margin` - marginesy zewnętrzne
-- `padding` - odstępy wewnętrzne
-- `border` - obramowanie
+- \`color\` - kolor tekstu
+- \`background-color\` - kolor tła
+- \`font-size\` - rozmiar czcionki
+- \`font-family\` - rodzina czcionek
+- \`margin\` - marginesy zewnętrzne
+- \`padding\` - odstępy wewnętrzne
+- \`border\` - obramowanie
           `
         },
         {
@@ -357,15 +357,15 @@ Model pudełkowy (box model) to podstawowa koncepcja w CSS, która opisuje, jak 
 
 ## Ważne właściwości związane z modelem pudełkowym:
 
-- `width` i `height` - określa wymiary obszaru zawartości
-- `padding` - określa dopełnienie (można też używać padding-top, padding-right, itd.)
-- `border` - określa obramowanie (grubość, styl, kolor)
-- `margin` - określa margines zewnętrzny (można też używać margin-top, margin-right, itd.)
-- `box-sizing` - określa, jak obliczana jest całkowita szerokość i wysokość elementu
+- \`width\` i \`height\` - określa wymiary obszaru zawartości
+- \`padding\` - określa dopełnienie (można też używać padding-top, padding-right, itd.)
+- \`border\` - określa obramowanie (grubość, styl, kolor)
+- \`margin\` - określa margines zewnętrzny (można też używać margin-top, margin-right, itd.)
+- \`box-sizing\` - określa, jak obliczana jest całkowita szerokość i wysokość elementu
 
 ## Box-sizing:
 
-Domyślnie `width` i `height` określają tylko rozmiar obszaru zawartości. Aby zmienić to zachowanie, można użyć właściwości `box-sizing`:
+Domyślnie \`width\` i \`height\` określają tylko rozmiar obszaru zawartości. Aby zmienić to zachowanie, można użyć właściwości \`box-sizing\`:
 
 \`\`\`css
 /* Szerokość i wysokość odnoszą się tylko do zawartości */
@@ -401,9 +401,9 @@ Flexbox to potężny system układu (layout) w CSS, który umożliwia elastyczne
 
 ## Podstawowe pojęcia:
 
-- **Kontener flex** - element nadrzędny z `display: flex`
+- **Kontener flex** - element nadrzędny z \`display: flex\`
 - **Elementy flex** - bezpośrednie dzieci kontenera flex
-- **Oś główna** - oś biegnąca zgodnie z `flex-direction`
+- **Oś główna** - oś biegnąca zgodnie z \`flex-direction\`
 - **Oś poprzeczna** - oś prostopadła do osi głównej
 
 ## Właściwości kontenera flex:
@@ -498,10 +498,10 @@ Responsywny design to podejście do tworzenia stron internetowych, które sprawi
 ### 2. Elastyczne jednostki
 
 Zamiast pikseli (px) warto używać:
-- `%` - procent względem elementu nadrzędnego
-- `em` - względem rozmiaru czcionki elementu
-- `rem` - względem rozmiaru czcionki elementu root (html)
-- `vw/vh` - procent szerokości/wysokości viewportu
+- \`%\` - procent względem elementu nadrzędnego
+- \`em\` - względem rozmiaru czcionki elementu
+- \`rem\` - względem rozmiaru czcionki elementu root (html)
+- \`vw/vh\` - procent szerokości/wysokości viewportu
 
 ### 3. Media Queries
 
@@ -854,25 +854,25 @@ button.addEventListener("click", function(event) {
 ## Najważniejsze rodzaje zdarzeń:
 
 ### Zdarzenia myszy:
-- `click` - kliknięcie myszą
-- `dblclick` - podwójne kliknięcie
-- `mousedown` / `mouseup` - wciśnięcie / zwolnienie przycisku myszy
-- `mouseover` / `mouseout` - najechanie kursorem na element / opuszczenie elementu
-- `mousemove` - ruch kursora
+- \`click\` - kliknięcie myszą
+- \`dblclick\` - podwójne kliknięcie
+- \`mousedown\` / \`mouseup\` - wciśnięcie / zwolnienie przycisku myszy
+- \`mouseover\` / \`mouseout\` - najechanie kursorem na element / opuszczenie elementu
+- \`mousemove\` - ruch kursora
 
 ### Zdarzenia klawiatury:
-- `keydown` / `keyup` - wciśnięcie / zwolnienie klawisza
-- `keypress` - wciśnięcie klawisza (tylko znaki)
+- \`keydown\` / \`keyup\` - wciśnięcie / zwolnienie klawisza
+- \`keypress\` - wciśnięcie klawisza (tylko znaki)
 
 ### Zdarzenia formularzy:
-- `submit` - przesłanie formularza
-- `change` - zmiana wartości pola formularza
-- `focus` / `blur` - uzyskanie / utracenie fokusu przez element
-- `input` - każda zmiana wartości pola tekstowego
+- \`submit\` - przesłanie formularza
+- \`change\` - zmiana wartości pola formularza
+- \`focus\` / \`blur\` - uzyskanie / utracenie fokusu przez element
+- \`input\` - każda zmiana wartości pola tekstowego
 
 ### Zdarzenia dokumentu:
-- `DOMContentLoaded` - załadowanie HTML i zbudowanie DOM
-- `load` - załadowanie wszystkich zasobów (w tym obrazów, stylów)
+- \`DOMContentLoaded\` - załadowanie HTML i zbudowanie DOM
+- \`load\` - załadowanie wszystkich zasobów (w tym obrazów, stylów)
 
 ## Quest: Interaktywna galeria zdjęć
 
@@ -948,13 +948,23 @@ function startGame() {
     const userGuess = parseInt(document.getElementById("userGuess").value);
     attempts++;
     
-    if (userGuess === randomNumber) {
-      showMessage(`Gratulacje! Odgadłeś liczbę ${randomNumber} w ${attempts} próbach!`);
+      if (userGuess === randomNumber) {
+      showMessage(\`Gratulacje! Odgadłeś liczbę \${randomNumber} w \${attempts} próbach!\`);
       resetGame();
     } else if (userGuess < randomNumber) {
       showMessage("Za mało! Spróbuj większej liczby.");
     } else {
       showMessage("Za dużo! Spróbuj mniejszej liczby.");
+    }
+  });
+}
+
+function resetGame() {
+  document.getElementById("userGuess").value = "";
+  document.getElementById("guessForm").disabled = true;
+  document.getElementById("newGame").style.display = "block";
+}
+        `
         }
       ]
     },
@@ -1169,61 +1179,5 @@ Aplikacja powinna mieć przyjazny interfejs z wyraźnymi kontrolkami do zmiany u
         }
       ]
     }
-
+  ]
 }
-
-function resetGame() {
-  document.getElementById("userGuess").value = "";
-  document.getElementById("guessForm").disabled = true;
-  document.getElementById("newGame").style.display = "block";
-}
-\`\`\`
-
-## 3. Generator losowych cytatów
-
-Aplikacja wyświetlająca losowe cytaty:
-
-\`\`\`javascript
-const quotes = [
-  { text: "Życie jest tym, co z niego zrobimy.", author: "Eleanor Roosevelt" },
-  { text: "Bądź zmianą, którą chcesz ujrzeć w świecie.", author: "Mahatma Gandhi" },
-  { text: "Wiedza jest potęgą.", author: "Francis Bacon" },
-  { text: "Najlepszym czasem na zasadzenie drzewa było 20 lat temu. Drugim najlepszym czasem jest teraz.", author: "Przysłowie chińskie" }
-];
-
-function displayRandomQuote() {
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  const quote = quotes[randomIndex];
-  
-  document.getElementById("quoteText").textContent = quote.text;
-  document.getElementById("quoteAuthor").textContent = \`— \${quote.author}\`;
-}
-
-document.getElementById("newQuoteBtn").addEventListener("click", displayRandomQuote);
-displayRandomQuote(); // Pokazanie początkowego cytatu
-\`\`\`
-
-## Quest: Twoja własna aplikacja 
-
-Stwórz kompletną aplikację łączącą HTML, CSS i JavaScript. Wybierz jeden z poniższych projektów:
-
-1. **Zaawansowana lista zadań**
-   - Z zapisywaniem zadań do localStorage
-   - Z kategoryzacją zadań
-   - Z możliwością ustawiania priorytetów
-   - Z sortowaniem i filtrowaniem
-
-2. **Quiz wiedzy**
-   - Z bazą pytań i odpowiedzi
-   - Z licznikiem czasu
-   - Z pokazywaniem poprawnych/błędnych odpowiedzi
-   - Z podsumowaniem wyników
-
-3. **Konwerter jednostek**
-   - Konwersja między różnymi jednostkami (długości, wagi, temperatury)
-   - Czytelny interfejs
-   - Historia konwersji
-   - Zapisywanie ulubionych konwersji
-
-Twój projekt powinien mieć estetyczny wygląd (CSS), być responsywny oraz zawierać pełną funkcjonalność JavaScript.
-          `

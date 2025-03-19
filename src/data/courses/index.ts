@@ -1,5 +1,5 @@
 import { Course } from "@/types/course";
-import { webDevCourse } from "./webdev";
+import { webDevCourse } from "./webdev/index";
 
 // Export all courses
 export const userCourses: Course[] = [

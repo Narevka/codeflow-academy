@@ -149,11 +149,17 @@ const CourseView = () => {
                     >
                       {course.id === "webdev-fundamentals" ? (
                         <QuestSidebar
-                          modules={course.modules}
-                          courseId={course.id}
-                          activeModuleId={activeModule?.id}
-                          activeLessonId={activeLesson?.id}
-                          noProvider={true}
+                          course={course}
+                          currentLessonId={activeLesson?.id}
+                          onLessonSelect={(lessonId) => {
+                            // Find the module containing this lesson
+                            const module = course.modules.find(m => 
+                              m.lessons.some(l => l.id === lessonId)
+                            );
+                            if (module && lessonId) {
+                              window.location.href = `/courses/${course.id}/${module.id}/${lessonId}`;
+                            }
+                          }}
                         />
                       ) : (
                         <CoursesSidebar

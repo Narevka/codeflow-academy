@@ -1,184 +1,100 @@
-import { Module, Lesson } from "@/types/course";
-import { 
-  Sidebar, 
-  SidebarBody, 
-  SidebarLink,
-  SidebarProvider
-} from "@/components/ui/sidebar";
-import { useState } from "react";
-import { BookOpen, Award, ChevronDown, ChevronRight } from "lucide-react";
-
-interface QuestItem {
-  id: string;
-  title: string;
-  moduleId: string;
-  afterLessonIndex: number; // Po której lekcji pojawia się quest
-  completed: boolean;
-}
+import React, { useState } from 'react';
+import { Course } from '@/types/course';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, ChevronUp, CheckCircle, Circle } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface QuestSidebarProps {
-  modules: Module[];
-  courseId: string;
-  activeModuleId?: string;
-  activeLessonId?: string;
-  noProvider?: boolean;
+  course: Course;
+  currentLessonId?: string;
+  onLessonSelect: (lessonId: string) => void;
 }
 
-const QuestSidebar = ({ 
-  modules, 
-  courseId, 
-  activeModuleId, 
-  activeLessonId,
-  noProvider = false
-}: QuestSidebarProps) => {
-  // Stan dla zwijania/rozwijania sidebara
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  
-  // Stan dla zwijania/rozwijania poszczególnych modułów
-  const [expandedModules, setExpandedModules] = useState<{[key: string]: boolean}>({});
+const QuestSidebar: React.FC<QuestSidebarProps> = ({ 
+  course, 
+  currentLessonId,
+  onLessonSelect
+}) => {
+  const [openModules, setOpenModules] = useState<Record<string, boolean>>({});
 
-  // Domyślnie rozwiń pierwszy moduł
-  useState(() => {
-    if (modules && modules.length > 0) {
-      setExpandedModules(prev => ({
-        ...prev,
-        [modules[0].id]: true
-      }));
-    }
-  });
-
-  // Generowanie questów co 2 lekcje
-  const generateQuests = (): QuestItem[] => {
-    let quests: QuestItem[] = [];
-    let lessonCounter = 0;
-    
-    modules.forEach((module, moduleIndex) => {
-      module.lessons.forEach((lesson, lessonIndex) => {
-        lessonCounter++;
-        // Dodaj quest po każdych 2 lekcjach
-        if (lessonCounter % 2 === 0) {
-          quests.push({
-            id: `quest-after-${lesson.id}`,
-            title: `Quest ${Math.floor(lessonCounter / 2)}: Praktyczne zadanie`,
-            moduleId: module.id,
-            afterLessonIndex: lessonIndex,
-            completed: false // Możemy to później powiązać ze stanem ukończenia
-          });
-        }
-      });
-    });
-    
-    return quests;
-  };
-
-  const quests = generateQuests();
-  
-  // Funkcja przełączająca zwinięcie/rozwinięcie modułu
-  const toggleModuleExpansion = (moduleId: string) => {
-    setExpandedModules(prev => ({
+  const toggleModule = (moduleId: string) => {
+    setOpenModules(prev => ({
       ...prev,
       [moduleId]: !prev[moduleId]
     }));
   };
 
-  if (!modules || modules.length === 0) {
-    return <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 w-full">No lessons available</div>;
-  }
+  const isQuestLesson = (lessonIndex: number) => {
+    // Display a quest every 2 lessons (0-indexed: lesson 1, 3, 5, etc.)
+    return lessonIndex % 2 === 1;
+  };
 
-  // Zawartość sidebar
-  const sidebarContent = (
-    <Sidebar className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 w-full transition-all duration-300">
-      <SidebarBody className="sticky top-24">
-        <div className="space-y-1 relative">
-          <h3 className={`font-semibold text-gray-800 text-lg mb-4 ${!sidebarOpen ? 'opacity-0' : ''}`}>
-            Zawartość kursu
-          </h3>
-          
-          {modules.map((module, moduleIndex) => {
-            const isModuleExpanded = expandedModules[module.id] || false;
-            const moduleQuests = quests.filter(quest => quest.moduleId === module.id);
-            
-            return (
-              <div key={module.id} className="mb-4">
-                {/* Nagłówek modułu */}
-                <div 
-                  className="flex items-center cursor-pointer py-2 px-2 hover:bg-gray-100 rounded-md"
-                  onClick={() => toggleModuleExpansion(module.id)}
-                >
-                  {isModuleExpanded ? 
-                    <ChevronDown className="h-4 w-4 mr-2 text-gray-500" /> : 
-                    <ChevronRight className="h-4 w-4 mr-2 text-gray-500" />
-                  }
-                  <h4 className="font-medium text-gray-700">{module.title}</h4>
+  return (
+    <div className="w-full max-w-xs p-4 h-full overflow-y-auto bg-background border-r">
+      <h2 className="text-2xl font-bold mb-6">{course.title}</h2>
+      
+      <div className="space-y-4">
+        {course.modules.map((module, moduleIndex) => (
+          <Collapsible 
+            key={module.id} 
+            open={openModules[module.id]} 
+            onOpenChange={() => toggleModule(module.id)}
+            className="border rounded-md overflow-hidden"
+          >
+            <CollapsibleTrigger asChild>
+              <Button 
+                variant="ghost" 
+                className="w-full flex items-center justify-between p-3 rounded-none"
+              >
+                <div className="flex items-center">
+                  <span>{moduleIndex + 1}. {module.title}</span>
                 </div>
-                
-                {/* Zawartość modułu */}
-                {isModuleExpanded && (
-                  <div className="ml-4 border-l-2 border-gray-200 pl-2 mt-2">
-                    {module.lessons.map((lesson, lessonIndex) => {
-                      const isActive = lesson.id === activeLessonId;
-                      const lessonNumber = lessonIndex + 1;
-                      
-                      // Ikona bazująca na statusie ukończenia
-                      const icon = lesson.completed ? 
-                        <div className="w-6 h-6 bg-green-500 rounded-full z-10 flex-shrink-0 border-2 border-white flex items-center justify-center text-xs font-bold text-white">{lessonNumber}</div> : 
-                        <div className="w-6 h-6 border-2 border-gray-300 rounded-full z-10 flex-shrink-0 bg-white flex items-center justify-center text-xs font-bold text-gray-700">{lessonNumber}</div>;
-
-                      // Czy po tej lekcji jest quest
-                      const questAfterThisLesson = moduleQuests.find(q => q.afterLessonIndex === lessonIndex);
-                      
-                      return (
-                        <div key={lesson.id}>
-                          <SidebarLink
-                            link={{
-                              label: `${lesson.title}`,
-                              href: `/my-courses/${courseId}/${module.id}/${lesson.id}`,
-                              icon: icon
-                            }}
-                            isActive={isActive}
-                            completed={lesson.completed}
-                            className={`rounded-md py-3 pl-10 relative ${
-                              isActive
-                                ? "bg-magenta/10 text-magenta font-medium active-lesson"
-                                : "hover:bg-gray-100 text-gray-700 inactive-lesson"
-                            }`}
-                          />
-                          
-                          {/* Quest po lekcji */}
-                          {questAfterThisLesson && (
-                            <div className="ml-2 my-2 border-l-2 border-amber-400 pl-2">
-                              <SidebarLink
-                                link={{
-                                  label: questAfterThisLesson.title,
-                                  href: `/my-courses/${courseId}/${module.id}/${lesson.id}?quest=true`,
-                                  icon: <Award className="h-5 w-5 text-amber-500" />
-                                }}
-                                isActive={false}
-                                completed={questAfterThisLesson.completed}
-                                className="rounded-md py-2 px-2 text-amber-700 hover:bg-amber-50 text-sm font-medium"
-                              />
-                            </div>
+                {openModules[module.id] ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </Button>
+            </CollapsibleTrigger>
+            
+            <CollapsibleContent>
+              <div className="p-2 space-y-1">
+                {module.lessons.map((lesson, lessonIndex) => {
+                  const isQuest = isQuestLesson(lessonIndex);
+                  const isSelected = currentLessonId === lesson.id;
+                  
+                  return (
+                    <div key={lesson.id}>
+                      <Button
+                        variant={isSelected ? "secondary" : "ghost"}
+                        className={`w-full text-left justify-start py-2 px-3 ${isSelected ? 'bg-secondary/50' : ''}`}
+                        onClick={() => onLessonSelect(lesson.id)}
+                      >
+                        <div className="flex items-center gap-2">
+                          {lesson.completed ? (
+                            <CheckCircle size={16} className="text-green-500" />
+                          ) : (
+                            <Circle size={16} />
                           )}
+                          <span>
+                            {moduleIndex + 1}.{lessonIndex + 1} {lesson.title}
+                          </span>
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
+                      </Button>
+                      
+                      {isQuest && (
+                        <div className="ml-6 mt-1 mb-3 border-l-2 border-primary pl-3 py-1">
+                          <div className="text-sm font-medium text-primary">Quest</div>
+                          <div className="text-xs text-muted-foreground">
+                            Zastosuj wiedzę w praktyce
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            );
-          })}
-        </div>
-      </SidebarBody>
-    </Sidebar>
-  );
-
-  // Warunkowe zawijanie w SidebarProvider
-  return noProvider ? (
-    sidebarContent
-  ) : (
-    <SidebarProvider open={sidebarOpen} setOpen={setSidebarOpen}>
-      {sidebarContent}
-    </SidebarProvider>
+            </CollapsibleContent>
+          </Collapsible>
+        ))}
+      </div>
+    </div>
   );
 };
 
