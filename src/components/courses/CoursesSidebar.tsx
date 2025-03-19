@@ -70,8 +70,8 @@ const CoursesSidebar = ({
                 completed={lesson.completed}
                 className={`rounded-md py-3 pl-8 ${
                   isActive
-                    ? "bg-magenta/10 border-l-4 border-magenta -ml-4 pl-12 text-magenta font-medium"
-                    : "hover:bg-gray-100 border-l-4 border-transparent -ml-4 pl-12 text-gray-700"
+                    ? "bg-magenta/10 text-magenta font-medium active-lesson"
+                    : "hover:bg-gray-100 text-gray-700 inactive-lesson"
                 }`}
               />
             );

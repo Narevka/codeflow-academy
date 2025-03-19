@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { Link, LinkProps } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -41,6 +40,30 @@ export const Sidebar = ({
         onMouseEnter={() => actualSetOpen(true)}
         onMouseLeave={() => actualSetOpen(false)}
       >
+        <style>
+          {`
+            .active-lesson {
+              position: relative;
+              border-left: 4px solid #cf0e81; /* Magenta color */
+              margin-left: -16px;
+              padding-left: 20px;
+            }
+            
+            .inactive-lesson {
+              position: relative;
+              border-left: 4px solid transparent;
+              margin-left: -16px;
+              padding-left: 20px;
+            }
+            
+            /* Ensure the active indicator is visible even when collapsed */
+            [data-sidebar-collapsed="true"] .active-lesson {
+              border-left-width: 4px;
+              margin-left: -16px; 
+              padding-left: 20px;
+            }
+          `}
+        </style>
         {children}
       </motion.div>
     </SidebarProvider>
