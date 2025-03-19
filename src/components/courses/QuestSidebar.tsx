@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Course } from '@/types/course';
 import { Button } from '@/components/ui/button';
@@ -46,10 +45,10 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
               <CollapsibleTrigger asChild>
                 <Button 
                   variant="ghost" 
-                  className="w-full flex items-center justify-between p-3 group hover:bg-magenta/5"
+                  className="w-full flex items-center justify-between p-3 group hover:bg-primary/5"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-magenta/20 text-magenta font-medium group-hover:scale-110 transition-transform">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary font-medium group-hover:scale-110 transition-transform">
                       {moduleIndex + 1}
                     </div>
                     <span className="font-medium group-hover:translate-x-1 transition-transform">
@@ -58,7 +57,7 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
                   </div>
                   <div className="transform transition-transform duration-300">
                     {openModules[module.id] ? 
-                      <ChevronUp size={18} className="text-magenta animate-pulse-slow" /> : 
+                      <ChevronUp size={18} className="text-primary animate-pulse-slow" /> : 
                       <ChevronDown size={18} className="text-foreground/70" />
                     }
                   </div>
@@ -80,9 +79,9 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
                         >
                           <div className="flex items-center gap-2">
                             {lesson.completed ? (
-                              <CheckCircle size={16} className="text-magenta transition-transform" />
+                              <CheckCircle size={16} className="text-primary transition-transform" />
                             ) : (
-                              <Circle size={16} className="text-foreground/70 group-hover:text-magenta transition-colors" />
+                              <Circle size={16} className="text-foreground/70 group-hover:text-primary transition-colors" />
                             )}
                             <span className="group-hover:translate-x-1 transition-transform">
                               {moduleIndex + 1}.{lessonIndex + 1} {lesson.title}
@@ -93,10 +92,10 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
                         {isQuest && (
                           <div className="quest-item">
                             <div className="relative pl-3 py-2">
-                              <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-magenta via-purple to-purple"></div>
+                              <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary via-accent to-secondary"></div>
                               <div className="flex items-center gap-2">
-                                <Sparkles size={16} className="text-magenta animate-pulse" />
-                                <div className="text-sm font-medium text-magenta">Quest</div>
+                                <Sparkles size={16} className="text-primary animate-pulse" />
+                                <div className="text-sm font-medium text-primary">Quest</div>
                               </div>
                               <div className="text-xs text-foreground/70 mt-1">
                                 Zastosuj wiedzę w praktyce
