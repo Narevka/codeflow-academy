@@ -32,7 +32,7 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
               <div className="w-full flex items-center p-3 text-foreground/90 bg-primary/5 rounded-t-md">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center justify-center w-7 h-7 rounded-full bg-primary/20 text-primary font-medium text-sm">
-                    {moduleIndex + 1}
+                    ★
                   </div>
                   <span className="font-medium">
                     {module.title}
@@ -61,7 +61,7 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
                               <Circle size={14} className="text-muted-foreground" />
                             )}
                             <span className="text-sm">
-                              {moduleIndex + 1}.{lessonIndex + 1} {lesson.title}
+                              {lessonIndex + 1} {lesson.title}
                             </span>
                           </div>
                         </Button>

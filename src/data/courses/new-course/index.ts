@@ -2,7 +2,7 @@ import { Course } from "@/types/course";
 
 export const newCourse: Course = {
   id: "flowise-ai",
-  title: "Flowise AI - Tworzenie Przepływów AI",
+  title: "Flowise AI",
   description: "Kompletny kurs wprowadzający do tworzenia zaawansowanych przepływów AI przy pomocy platformy Flowise AI.",
   progress: 0,
   modules: [
