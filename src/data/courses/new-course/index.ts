@@ -16,6 +16,8 @@ export const newCourse: Course = {
           title: "Wprowadzenie",
           displayTitle: "Wprowadzenie do Flowise AI",
           completed: false,
+          videoUrl: "https://stream.mux.com/V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw.m3u8",
+          thumbnailUrl: "/placeholder.svg",
           additionalVideos: [
             {
               title: "Film 1",
