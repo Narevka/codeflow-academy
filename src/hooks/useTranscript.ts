@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
@@ -16,7 +17,7 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   let currentSentence = "";
   let sentenceStartTime = 0;
   let wordCount = 0;
-  const MAX_WORDS_PER_SEGMENT = 15; // Maximum words per segment for readability
+  const MAX_WORDS_PER_SEGMENT = 7; // Reduced from 15 to 7 to create more segments
   
   // Process only word type entries (skip spacing)
   muxTranscript.words.forEach((item: any, index: number) => {
