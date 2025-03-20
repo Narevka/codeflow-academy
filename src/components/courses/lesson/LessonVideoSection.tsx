@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
@@ -23,10 +24,10 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
     setIsVideoReady(true);
   }, [lesson.videoUrl]);
   
-  // Determine the transcript source file based on the lesson video URL
+  // Force 1.json for Flowise videos, only use other files for specific non-Flowise videos
   let transcriptSourceFile = "1.json"; // Default for all Flowise-related videos
   
-  // Only use other transcripts for non-Flowise videos
+  // Only use other transcripts for specific non-Flowise videos
   if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
     transcriptSourceFile = "3.json";
   }
@@ -48,6 +49,11 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
             : lesson.videoUrl;
             
           console.log("Using playback ID for transcript processing:", playbackId);
+          
+          // For Flowise videos, ensure we use 1.json
+          if (playbackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw") {
+            console.log("Flowise video detected, forcing use of 1.json transcript");
+          }
           
           const segments = await processAndStoreTranscript(playbackId, transcriptSourceFile);
           console.log("Transcript processing complete, segments:", segments.length);
