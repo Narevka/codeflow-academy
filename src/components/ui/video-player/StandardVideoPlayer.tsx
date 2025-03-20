@@ -7,11 +7,10 @@ interface StandardVideoPlayerProps {
   poster?: string;
   onTimeUpdate: (event: any) => void;
   isFullscreen: boolean;
-  onError?: (error: any) => void;
 }
 
 const StandardVideoPlayer = forwardRef<HTMLVideoElement, StandardVideoPlayerProps>(
-  ({ src, poster, onTimeUpdate, isFullscreen, onError }, ref) => {
+  ({ src, poster, onTimeUpdate, isFullscreen }, ref) => {
     return (
       <video
         ref={ref}
@@ -23,7 +22,6 @@ const StandardVideoPlayer = forwardRef<HTMLVideoElement, StandardVideoPlayerProp
         )}
         poster={poster}
         onTimeUpdate={onTimeUpdate}
-        onError={onError}
         controlsList="nodownload nofullscreen noremoteplayback"
         disablePictureInPicture
         onContextMenu={(e) => e.preventDefault()}

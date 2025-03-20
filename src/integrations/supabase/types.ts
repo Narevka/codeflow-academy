@@ -39,7 +39,6 @@ export type Database = {
           id: string
           language: string | null
           playback_id: string
-          raw_data: Json | null
           segments: Json
           updated_at: string
         }
@@ -48,7 +47,6 @@ export type Database = {
           id?: string
           language?: string | null
           playback_id: string
-          raw_data?: Json | null
           segments?: Json
           updated_at?: string
         }
@@ -57,7 +55,6 @@ export type Database = {
           id?: string
           language?: string | null
           playback_id?: string
-          raw_data?: Json | null
           segments?: Json
           updated_at?: string
         }
