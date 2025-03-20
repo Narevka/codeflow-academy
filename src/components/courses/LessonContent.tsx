@@ -2,7 +2,6 @@
 import { Lesson } from "@/types/course";
 import { useState, useEffect } from "react";
 import { LessonVideoSection, AdditionalVideosSection, TextFormatter } from "./lesson";
-import { AITermsAccordion } from "./ai-terms";
 
 interface LessonContentProps {
   lesson: Lesson;
@@ -26,6 +25,10 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     <div className="space-y-6 w-full">
       <h1 className="text-2xl md:text-3xl font-bold text-gray-800">{lesson.displayTitle || lesson.title}</h1>
       
+      {lesson.additionalVideos && lesson.additionalVideos.length > 0 && (
+        <AdditionalVideosSection videos={lesson.additionalVideos} />
+      )}
+      
       {lesson.videoUrl && <LessonVideoSection lesson={lesson} />}
       
       {lesson.description && (
@@ -33,13 +36,6 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
           <TextFormatter text={lesson.description} />
         </div>
       )}
-
-      {lesson.additionalVideos && lesson.additionalVideos.length > 0 && (
-        <AdditionalVideosSection videos={lesson.additionalVideos} />
-      )}
-      
-      {/* Sekcja z terminami AI w formacie akordeonu */}
-      <AITermsAccordion />
     </div>
   );
 };
