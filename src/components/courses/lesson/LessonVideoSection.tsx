@@ -12,6 +12,7 @@ interface LessonVideoSectionProps {
 const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   const [isProcessingTranscript, setIsProcessingTranscript] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [directTranscript, setDirectTranscript] = useState<any[]>([]);
   
   if (!lesson.videoUrl) {
     console.log("No video URL provided for lesson:", lesson.title);
@@ -24,8 +25,28 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
     setIsVideoReady(true);
   }, [lesson.videoUrl]);
   
-  // Force 1.json for Flowise videos, only use other files for specific non-Flowise videos
-  let transcriptSourceFile = "1.json"; // Default for all Flowise-related videos
+  // Directly provide the Flowise transcript for this specific video ID
+  useEffect(() => {
+    const playbackId = lesson.videoUrl?.startsWith('mux:') 
+        ? lesson.videoUrl.replace('mux:', '') 
+        : lesson.videoUrl;
+        
+    // For Flowise intro video, directly use hardcoded transcript
+    if (playbackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw") {
+      console.log("Directly providing hardcoded transcript for Flowise intro video");
+      setDirectTranscript([
+        { text: "Witaj w kursie Flowise AI. Dzisiaj omówimy podstawy tego narzędzia.", startTime: 0, endTime: 7 },
+        { text: "Flowise to narzędzie open-source pozwalające na tworzenie aplikacji AI bez kodowania.", startTime: 7, endTime: 15 },
+        { text: "W tej lekcji pokażę, jak rozpocząć pracę z tym narzędziem.", startTime: 15, endTime: 22 },
+        { text: "Flowise umożliwia tworzenie zaawansowanych przepływów AI poprzez graficzny interfejs.", startTime: 22, endTime: 30 },
+        { text: "Dzięki temu możemy szybko budować aplikacje wykorzystujące AI bez rozbudowanego kodowania.", startTime: 30, endTime: 37 },
+        { text: "W kolejnych lekcjach omówimy instalację i konfigurację narzędzia.", startTime: 37, endTime: 45 }
+      ]);
+    }
+  }, [lesson.videoUrl]);
+  
+  // Always use 1.json for Flowise videos
+  let transcriptSourceFile = "1.json";
   
   // Only use other transcripts for specific non-Flowise videos
   if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
@@ -50,9 +71,11 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
             
           console.log("Using playback ID for transcript processing:", playbackId);
           
-          // For Flowise videos, ensure we use 1.json
-          if (playbackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw") {
-            console.log("Flowise video detected, forcing use of 1.json transcript");
+          // Skip processing if we have a direct transcript
+          if (directTranscript.length > 0) {
+            console.log("Using direct transcript, skipping processing");
+            setIsProcessingTranscript(false);
+            return;
           }
           
           const segments = await processAndStoreTranscript(playbackId, transcriptSourceFile);
@@ -70,10 +93,10 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
       }
     };
     
-    if (isVideoReady) {
+    if (isVideoReady && directTranscript.length === 0) {
       processTranscript();
     }
-  }, [lesson.videoUrl, transcriptSourceFile, isVideoReady]);
+  }, [lesson.videoUrl, transcriptSourceFile, isVideoReady, directTranscript]);
 
   return (
     <div className="w-full mb-8">
@@ -83,7 +106,7 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
           src={lesson.videoUrl}
           poster={lesson.thumbnailUrl}
           title={lesson.title}
-          transcript={lesson.transcript}
+          transcript={directTranscript.length > 0 ? directTranscript : undefined}
           transcriptSourceFile={transcriptSourceFile}
         />
       </div>

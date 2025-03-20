@@ -29,14 +29,23 @@ const VideoPlayerWithTranscript = ({
   const [transcriptVisible, setTranscriptVisible] = useState(showTranscript);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   
+  // Check if this is the Flowise intro video
+  const isFlowiseIntro = src?.includes("V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw");
+  
   useEffect(() => {
     console.log("VideoPlayerWithTranscript mounted with:", { 
       src, 
       transcriptLength: providedTranscript?.length || 0,
       showTranscript, 
-      transcriptSourceFile
+      transcriptSourceFile,
+      isFlowiseIntro
     });
-  }, [src, providedTranscript, showTranscript, transcriptSourceFile]);
+    
+    // If this is Flowise intro but we don't have a transcript, create one
+    if (isFlowiseIntro && (!providedTranscript || providedTranscript.length === 0)) {
+      console.log("This is the Flowise intro video but no transcript provided, will use fallback");
+    }
+  }, [src, providedTranscript, showTranscript, transcriptSourceFile, isFlowiseIntro]);
   
   const {
     isMuxVideo,

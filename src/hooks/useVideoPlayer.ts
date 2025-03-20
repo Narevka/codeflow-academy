@@ -54,6 +54,13 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
 
   // Set the transcript from provided or auto-loaded transcript
   useEffect(() => {
+    // Special case for Flowise intro video - use hardcoded transcript
+    if (normalizedPlaybackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw" && providedTranscript && providedTranscript.length > 0) {
+      console.log("Found provided transcript for Flowise video, using it:", providedTranscript.length);
+      setTranscript(providedTranscript);
+      return;
+    }
+    
     if (providedTranscript && providedTranscript.length > 0) {
       console.log("Using provided transcript with length:", providedTranscript.length);
       setTranscript(providedTranscript);
@@ -61,7 +68,7 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
       console.log("Using auto transcript with length:", autoTranscript.length);
       setTranscript(autoTranscript);
     } else {
-      console.log("No transcript available yet");
+      console.log("No transcript available yet, checking for fallback");
       
       // Add fallback transcript for known videos
       if (normalizedPlaybackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw") {
@@ -139,13 +146,14 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
   // Fallback transcript generator for known videos
   const generateFallbackTranscript = (videoId: string): TranscriptSegment[] => {
     if (videoId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw") {
+      console.log("Generating fallback transcript for Flowise intro video");
       return [
-        { text: "Witaj w kursie Flowise AI. Dzisiaj omówimy podstawy tego narzędzia.", startTime: 0, endTime: 5 },
-        { text: "Flowise to narzędzie open-source pozwalające na tworzenie aplikacji AI bez kodowania.", startTime: 5, endTime: 10 },
-        { text: "W tej lekcji pokażę, jak rozpocząć pracę z tym narzędziem.", startTime: 10, endTime: 15 },
-        { text: "Flowise umożliwia tworzenie zaawansowanych przepływów AI poprzez graficzny interfejs.", startTime: 15, endTime: 20 },
-        { text: "Dzięki temu możemy szybko budować aplikacje wykorzystujące AI bez rozbudowanego kodowania.", startTime: 20, endTime: 25 },
-        { text: "W kolejnych lekcjach omówimy instalację i konfigurację narzędzia.", startTime: 25, endTime: 30 },
+        { text: "Witaj w kursie Flowise AI. Dzisiaj omówimy podstawy tego narzędzia.", startTime: 0, endTime: 7 },
+        { text: "Flowise to narzędzie open-source pozwalające na tworzenie aplikacji AI bez kodowania.", startTime: 7, endTime: 15 },
+        { text: "W tej lekcji pokażę, jak rozpocząć pracę z tym narzędziem.", startTime: 15, endTime: 22 },
+        { text: "Flowise umożliwia tworzenie zaawansowanych przepływów AI poprzez graficzny interfejs.", startTime: 22, endTime: 30 },
+        { text: "Dzięki temu możemy szybko budować aplikacje wykorzystujące AI bez rozbudowanego kodowania.", startTime: 30, endTime: 37 },
+        { text: "W kolejnych lekcjach omówimy instalację i konfigurację narzędzia.", startTime: 37, endTime: 45 }
       ];
     }
     return [];
