@@ -1,13 +1,17 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
+import { processAndStoreTranscript } from "@/hooks/useTranscript";
+import { toast } from "sonner";
 
 interface LessonVideoSectionProps {
   lesson: Lesson;
 }
 
 const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
+  const [isProcessingTranscript, setIsProcessingTranscript] = useState(false);
+  
   if (!lesson.videoUrl) {
     return null;
   }
@@ -19,6 +23,30 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   } else if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
     transcriptSourceFile = "3.json";
   }
+
+  // Process and store transcript if a source file is available
+  useEffect(() => {
+    const processTranscript = async () => {
+      if (lesson.videoUrl && transcriptSourceFile && !isProcessingTranscript) {
+        try {
+          setIsProcessingTranscript(true);
+          const playbackId = lesson.videoUrl.startsWith('mux:') 
+            ? lesson.videoUrl.replace('mux:', '') 
+            : lesson.videoUrl;
+            
+          await processAndStoreTranscript(playbackId, transcriptSourceFile);
+          console.log("Transcript processing complete");
+        } catch (error) {
+          console.error("Error processing transcript:", error);
+          toast.error("Nie udało się przetworzyć transkrypcji");
+        } finally {
+          setIsProcessingTranscript(false);
+        }
+      }
+    };
+    
+    processTranscript();
+  }, [lesson.videoUrl, transcriptSourceFile]);
 
   return (
     <div className="w-full mb-8">

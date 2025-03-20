@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
@@ -81,6 +82,61 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
   
   return refinedSegments;
 };
+
+// Process and store transcript in the database
+export async function processAndStoreTranscript(playbackId: string, transcriptSourceFile: string): Promise<TranscriptSegment[]> {
+  try {
+    console.log(`Processing transcript for playback ID: ${playbackId} from source: ${transcriptSourceFile}`);
+    
+    // Try to fetch from the database first
+    const { data: existingData, error: fetchError } = await supabase
+      .from("transcripts")
+      .select("*")
+      .eq("playback_id", playbackId)
+      .single();
+    
+    // If transcript already exists in database, return its segments
+    if (existingData && existingData.segments && Array.isArray(existingData.segments) && existingData.segments.length > 0) {
+      console.log("Transcript already exists in database, returning segments");
+      return existingData.segments.map((segment: any) => ({
+        text: segment.text || "",
+        startTime: Number(segment.startTime) || 0,
+        endTime: Number(segment.endTime) || 0
+      }));
+    }
+    
+    // If not in database, try to load from local file
+    try {
+      // Dynamic import of the transcript file
+      const response = await fetch(`/src/components/trans/${transcriptSourceFile}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch transcript file: ${response.statusText}`);
+      }
+      
+      const rawData = await response.json();
+      console.log("Loaded raw transcript data from file");
+      
+      // Process the transcript data
+      const segments = convertMuxTranscriptToSegments(rawData);
+      console.log(`Processed ${segments.length} transcript segments`);
+      
+      if (segments.length > 0) {
+        // Store in database
+        const result = await updateTranscript(playbackId, segments, rawData, "pl");
+        console.log("Stored transcript in database:", result);
+        
+        return segments;
+      }
+    } catch (fileError) {
+      console.error("Error loading transcript file:", fileError);
+    }
+    
+    return [];
+  } catch (error) {
+    console.error("Error in processAndStoreTranscript:", error);
+    return [];
+  }
+}
 
 // Function to get local transcript from src/trans/*.json files
 const getLocalTranscript = (playbackId: string | undefined, sourceFile?: string): TranscriptSegment[] => {
