@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
@@ -108,7 +107,7 @@ export async function processAndStoreTranscript(playbackId: string, transcriptSo
     // If not in database, try to load from local file
     try {
       // Dynamic import of the transcript file
-      const response = await fetch(`/src/components/trans/${transcriptSourceFile}`);
+      const response = await fetch(`/components/trans/${transcriptSourceFile}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch transcript file: ${response.statusText}`);
       }
