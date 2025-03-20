@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Course } from '@/types/course';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, CheckCircle, Circle, Sparkles, BookOpen } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { CheckCircle, Circle, Sparkles } from 'lucide-react';
 
 interface QuestSidebarProps {
   course: Course;
@@ -15,14 +14,6 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
   currentLessonId,
   onLessonSelect
 }) => {
-  const [openModules, setOpenModules] = useState<Record<string, boolean>>({});
-
-  const toggleModule = (moduleId: string) => {
-    setOpenModules(prev => ({
-      ...prev,
-      [moduleId]: !prev[moduleId]
-    }));
-  };
 
   const isQuestLesson = (lessonIndex: number) => {
     // Display quests after specific lessons (0-indexed: lessons 2, 5, 7, 9)
@@ -37,33 +28,19 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
         
         <div className="space-y-3">
           {course.modules.map((module, moduleIndex) => (
-            <Collapsible 
-              key={module.id} 
-              open={openModules[module.id]} 
-              onOpenChange={() => toggleModule(module.id)}
-              className="course-module"
-            >
-              <CollapsibleTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className="w-full flex items-center justify-between p-3 text-foreground/90 hover:bg-muted"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 text-primary font-medium text-sm">
-                      {moduleIndex + 1}
-                    </div>
-                    <span className="font-medium">
-                      {module.title}
-                    </span>
+            <div key={module.id} className="course-module">
+              <div className="w-full flex items-center p-3 text-foreground/90 bg-primary/5 rounded-t-md">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center w-7 h-7 rounded-full bg-primary/20 text-primary font-medium text-sm">
+                    {moduleIndex + 1}
                   </div>
-                  {openModules[module.id] ? 
-                    <ChevronUp size={16} className="text-primary/70" /> : 
-                    <ChevronDown size={16} className="text-foreground/50" />
-                  }
-                </Button>
-              </CollapsibleTrigger>
+                  <span className="font-medium">
+                    {module.title}
+                  </span>
+                </div>
+              </div>
               
-              <CollapsibleContent className="animate-slide-down">
+              <div className="border-l border-r border-b rounded-b-md">
                 <div className="p-2 space-y-1">
                   {module.lessons.map((lesson, lessonIndex) => {
                     const isQuest = isQuestLesson(lessonIndex);
@@ -104,8 +81,8 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
                     );
                   })}
                 </div>
-              </CollapsibleContent>
-            </Collapsible>
+              </div>
+            </div>
           ))}
         </div>
       </div>
