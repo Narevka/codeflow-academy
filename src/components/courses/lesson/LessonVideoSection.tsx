@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Lesson } from "@/types/course";
 import { VideoPlayerWithTranscript } from "@/components/ui/video-player";
@@ -25,13 +24,11 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   }, [lesson.videoUrl]);
   
   // Determine the transcript source file based on the lesson video URL
-  let transcriptSourceFile = "1.json"; // Default for Flowise intro video
+  let transcriptSourceFile = "1.json"; // Default for all Flowise-related videos
   
+  // Only use other transcripts for non-Flowise videos
   if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
     transcriptSourceFile = "3.json";
-  } else if (lesson.videoUrl.includes("DvS00xCCQJzWvBSQKKdHNl8sszgX7hXlVjFjAA8AJtA")) {
-    // For Flowise AI videos
-    transcriptSourceFile = "2.json";
   }
 
   useEffect(() => {
