@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
@@ -273,9 +272,11 @@ export function useTranscript(playbackId: string | undefined, sourceFile?: strin
     enabled: !!playbackId,
     staleTime: 1000 * 60 * 5, // 5 minutes
     retry: 2,
-    onError: (error) => {
-      console.error("Error fetching transcript:", error);
-      toast.error("Nie udało się załadować transkrypcji");
+    meta: {
+      onError: (error: Error) => {
+        console.error("Error fetching transcript:", error);
+        toast.error("Nie udało się załadować transkrypcji");
+      }
     }
   });
 }
