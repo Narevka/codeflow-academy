@@ -14,7 +14,9 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   
   // Determine the transcript source file based on the lesson video URL
   let transcriptSourceFile;
-  if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
+  if (lesson.videoUrl.includes("V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw")) {
+    transcriptSourceFile = "1.json";
+  } else if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
     transcriptSourceFile = "3.json";
   }
 

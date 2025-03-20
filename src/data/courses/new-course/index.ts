@@ -16,6 +16,7 @@ export const newCourse: Course = {
           title: "Wprowadzenie",
           displayTitle: "Wprowadzenie do Flowise AI",
           completed: false,
+          videoUrl: "mux:V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw",
           additionalVideos: [
             {
               title: "Film 1",
@@ -498,7 +499,7 @@ Teraz przekształcimy dokumenty w wektory i zapiszemy je:
 3. **Debugowanie**:
    - Jeśli odpowiedzi nie są satysfakcjonujące, wróć do edycji przepływu
    - Sprawdź logi i wartości pośrednie (debugMode)
-   - Dostosuj parametry jak liczba odzyskiwanych dokumentów, chunk size lub instrukcje systemowe
+   - Dostosuj parametry jak liczba odzyskanych dokumentów, chunk size lub instrukcje systemowe
 
 ## Wskazówki dla lepszych wyników
 
@@ -908,7 +909,7 @@ Agent wymaga modelu językowego o wysokich zdolnościach rozumowania:
 
 Agent może korzystać z różnych narzędzi:
 - **Narzędzia wyszukiwania** - Vector Stores, Search APIs
-- **Narzędzia obliczeniowe** - kalkulator, parser matematyczny
+- **Narzędzia obliczeniowi** - kalkulator, parser matematyczny
 - **Narzędzia API** - integracje z zewnętrznymi usługami
 - **Narzędzia niestandardowe** - własne funkcje JavaScript/Python
 
