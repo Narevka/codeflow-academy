@@ -11,15 +11,16 @@ const TextFormatter = ({ text, className }: { text: string; className?: string }
   return (
     <div className={cn("lesson-text", className)}>
       {paragraphs.map((paragraph, index) => {
-        // Check if the paragraph is a heading (starting with # or ##)
+        // Check if the paragraph is a main heading (starting with #)
         if (paragraph.startsWith('# ')) {
           return (
-            <h1 key={index} className="text-2xl md:text-3xl font-bold mb-6 text-magenta">
+            <h2 key={index} className="text-xl md:text-2xl font-semibold mt-8 mb-4 gradient-text">
               {paragraph.substring(2)}
-            </h1>
+            </h2>
           );
         }
         
+        // Check if the paragraph is a secondary heading (starting with ##)
         if (paragraph.startsWith('## ')) {
           return (
             <h2 key={index} className="text-xl md:text-2xl font-semibold mt-8 mb-4 gradient-text">
