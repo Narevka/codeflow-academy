@@ -18,47 +18,84 @@ export const newCourse: Course = {
           videoUrl: "https://example.com/videos/flowise-intro.mp4",
           thumbnailUrl: "/placeholder.svg",
           completed: false,
+          additionalVideos: [
+            {
+              title: "Film 1",
+              videoUrl: "https://example.com/videos/flowise-intro-1.mp4",
+              thumbnailUrl: "/placeholder.svg"
+            },
+            {
+              title: "Film 2",
+              videoUrl: "https://example.com/videos/flowise-intro-2.mp4",
+              thumbnailUrl: "/placeholder.svg"
+            }
+          ],
           description: `
 # Wprowadzenie do Flowise AI
 
-Flowise AI to open-source'owa platforma typu no-code/low-code, która umożliwia łatwe tworzenie niestandardowych przepływów pracy AI przy użyciu LangChain w przyjaznym interfejsie graficznym.
+Flowise to narzędzie, które rewolucjonizuje tworzenie aplikacji opartych na sztucznej inteligencji, szczególnie tych korzystających z dużych modeli językowych (LLM). Dzięki niemu, osoby bez zaawansowanej wiedzy programistycznej mogą budować interaktywne chatboty, systemy analizy tekstu oraz aplikacje oparte na konwersacjach AI. Flowise pozwala na projektowanie interfejsów graficznych, integrację z różnymi modelami oraz efektywne zarządzanie danymi wejściowymi i wyjściowymi.
 
-## Czym jest Flowise AI?
+## Wprowadzenie do Dużych Modeli Językowych (LLM)
 
-Flowise AI to narzędzie, które pozwala na:
-- Wizualne budowanie przepływów AI bez znajomości kodu
-- Łączenie różnych modeli językowych (LLM) z własnymi danymi
-- Tworzenie chatbotów, asystentów i innych aplikacji AI
-- Łatwe integrowanie z istniejącymi systemami
+Duże modele językowe, takie jak GPT-3, GPT-4 czy Gemini od Google, są rdzeniem współczesnych technologii przetwarzania języka naturalnego (NLP). Te modele są trenowane na ogromnych zbiorach danych językowych, co pozwala im generować odpowiedzi na pytania, analizować teksty, a nawet prowadzić rozbudowane konwersacje, zbliżone do interakcji z człowiekiem.
 
-## Kluczowe możliwości
+Jednym z kluczowych aspektów działania LLM są tokeny. Tokeny to jednostki tekstu – mogą to być słowa, znaki lub fragmenty zdań – które są analizowane przez model. Kiedy wpisujemy zdanie, jest ono rozbijane na tokeny, które model przetwarza, aby odpowiedzieć w sposób spójny i zrozumiały.
 
-- **Intuicyjny interfejs użytkownika** - przeciągaj i upuszczaj komponenty, aby tworzyć złożone przepływy AI
-- **Gotowe komponenty** - korzystaj z predefiniowanych bloków do łączenia modeli, pamięci, baz wiedzy i innych funkcji
-- **Zarządzanie przepływami** - zapisuj, eksportuj i importuj swoje przepływy do ponownego wykorzystania
-- **Wdrażanie jako API** - udostępniaj swoje przepływy jako API REST
-- **Integracja z popularnymi modelami** - GPT-4, Mistral, Llama, Claude i wiele innych
+Aby lepiej zrozumieć, czym są tokeny i jak działają, warto odwiedzić narzędzia takie jak strona OpenAI, gdzie można zobaczyć, jak GPT przetwarza tekst na tokeny i w jaki sposób analizuje je, aby wygenerować odpowiedzi.
 
-## Dlaczego warto używać Flowise AI?
+## Przetwarzanie Kontekstu przez Modele Językowe
 
-Flowise AI eliminuje barierę techniczną związaną z tworzeniem aplikacji opartych na sztucznej inteligencji. Zamiast pisać setki linii kodu, możesz wizualnie projektować przepływy pracy, które:
+Ważne jest zrozumienie, że modele językowe, mimo zaawansowania, nie "pamiętają" poprzednich rozmów w taki sposób, jak moglibyśmy to sobie wyobrażać. Każda nowa odpowiedź jest generowana na podstawie nowego zapytania (promptu), który może zawierać skrótową historię wcześniejszej konwersacji.
 
-- Odpowiadają na pytania na podstawie własnych danych
-- Analizują i streszczają dokumenty
-- Tworzą spersonalizowane treści
-- Automatyzują procesy decyzyjne
+Na przykład, w modelach takich jak GPT-4, istnieje ograniczenie liczby tokenów, które można przetworzyć jednocześnie. GPT-4 może obsłużyć do 128 tysięcy tokenów (około 300 stron tekstu), podczas gdy GPT-3.5 – jedynie 16 tysięcy tokenów (około 14 stron). Choć nowszy model GPT-4 oferuje większe możliwości, nie zawsze jest konieczne jego użycie. GPT-3.5, mimo mniejszej liczby tokenów, działa szybciej i jest wystarczający do prostszych zadań.
 
-## Jak działa Flowise AI?
+## Wybór Modelu do Twojej Aplikacji
 
-Flowise AI jest zbudowany na bazie frameworka LangChain, który został stworzony do łączenia modeli językowych z zewnętrznymi źródłami danych i aplikacjami. Flowise dodaje do tego warstwę wizualną, umożliwiając:
+Wybór odpowiedniego modelu zależy od specyfiki zadania. Do zadań prostszych, gdzie kluczowa jest szybkość odpowiedzi, GPT-3.5 jest często lepszym wyborem. Z kolei przy bardziej skomplikowanych zagadnieniach, wymagających dogłębnej analizy czy szczegółowej wiedzy, warto sięgnąć po GPT-4. Warto też pamiętać, że istnieją inne modele, takie jak Falcon 40B, które oferują jeszcze większe możliwości przetwarzania języka.
 
-1. Wybór odpowiednich komponentów (modeli, narzędzi, pamięci)
-2. Połączenie ich w logiczny przepływ
-3. Skonfigurowanie parametrów każdego komponentu
-4. Testowanie i optymalizację przepływu
-5. Wdrożenie jako API
+## Dogłębniejsze objaśnienie terminów:
 
-W kolejnych lekcjach dowiesz się, jak zainstalować Flowise AI, stworzyć swoje pierwsze przepływy i wykorzystać pełen potencjał tej platformy.
+### 1. Duże Modele Językowe (LLM)
+
+LLM to rodzaj sztucznej inteligencji, który został wytrenowany na ogromnych zbiorach danych tekstowych. Modele te analizują miliardy zdań i fragmentów tekstu, aby nauczyć się wzorców językowych, które pozwalają im generować spójne i kontekstowo adekwatne odpowiedzi. Przykłady LLM to GPT-3, GPT-4 oraz Gemini od Google. W kontekście Flowise, te modele są wykorzystywane jako podstawowe jednostki do przetwarzania tekstu i generowania odpowiedzi.
+
+### 2. Tokeny
+
+Tokeny to podstawowe jednostki tekstu wykorzystywane przez modele językowe. Można je zrozumieć jako słowa, znaki lub fragmenty zdań, na które model dzieli wejściowy tekst. Przykładowo, zdanie "ChatGPT to świetne narzędzie" może zostać podzielone na kilka tokenów: "Chat", "GPT", "to", "świetne", "narzędzie". Modele takie jak GPT-3 czy GPT-4 operują właśnie na tych tokenach, analizując je i na tej podstawie generując odpowiedzi.
+
+GPT-4: Obsługuje do 128 tysięcy tokenów (ok. 300 stron tekstu).
+
+GPT-3.5: Obsługuje do 16 tysięcy tokenów (ok. 14 stron tekstu).
+
+Rozumienie liczby tokenów jest ważne przy budowaniu aplikacji, ponieważ wpływa to na długość konwersacji, którą model może „zapamiętać" oraz przetworzyć.
+
+![Lesson Image](/placeholder.svg)
+
+### 3. Prompt (Zapytanie)
+
+Prompt to zapytanie lub wejściowy tekst, który wysyłamy do modelu językowego w celu uzyskania odpowiedzi. Może to być proste pytanie ("Jaka jest stolica Francji?") lub bardziej skomplikowana instrukcja, która zawiera historię rozmowy. W Flowise prompty są podstawowym sposobem komunikacji z modelem i sterowania jego działaniem.
+
+### 4. Konwersacja i Kontekst
+
+Modele językowe, takie jak GPT, generują odpowiedzi na podstawie przesłanych do nich promptów. Jednakże nie mają one rzeczywistej "pamięci" – każdy nowy prompt traktowany jest jako oddzielne zapytanie. Aby kontynuować konwersację w sposób spójny, historia rozmowy jest zwykle zawierana w treści promptu. Dlatego im dłuższa konwersacja, tym więcej tokenów potrzeba na zachowanie kontekstu.
+
+### 5. Wydajność a Skomplikowanie Modelu
+
+W kontekście wyboru modelu do aplikacji warto znać różnice między różnymi wersjami:
+
+GPT-3.5: Szybszy, ale obsługuje mniejszą liczbę tokenów. Idealny do prostszych zadań.
+
+GPT-4: Wolniejszy, ale bardziej precyzyjny i obsługujący większą ilość tokenów. Lepszy do zaawansowanych analiz i długich konwersacji.
+
+Oprócz modeli GPT, istnieją także inne modele, takie jak Falcon 40B, które oferują różne zalety w zależności od specyfiki aplikacji.
+
+### 6. Model Falcon 40B
+
+Falcon 40B to jeden z zaawansowanych modeli językowych o dużych możliwościach. Został zaprojektowany do przetwarzania jeszcze większej liczby tokenów niż GPT-4, co pozwala na generowanie bardziej rozbudowanych i kontekstowo bogatych odpowiedzi. Tego typu modele są szczególnie przydatne w aplikacjach wymagających dużej precyzji oraz złożonych analiz tekstu.
+
+## Podsumowanie
+
+Flowise daje użytkownikom możliwość tworzenia zaawansowanych aplikacji konwersacyjnych w oparciu o LLM, bez potrzeby znajomości programowania. Zrozumienie działania tokenów oraz wyboru odpowiedniego modelu pozwala na lepsze dostosowanie aplikacji do konkretnych potrzeb. Ostatecznie, wybór narzędzi i modelu zależy od celu aplikacji – czy to szybkie odpowiedzi, czy bardziej skomplikowane analizy. Dzięki takim rozwiązaniom, jak Flowise, tworzenie aplikacji AI staje się bardziej dostępne niż kiedykolwiek.
           `
         },
         {
