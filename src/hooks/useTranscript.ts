@@ -86,9 +86,16 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
 const getLocalTranscript = async (playbackId: string | undefined, sourceFile?: string): Promise<TranscriptSegment[]> => {
   if (sourceFile) {
     try {
-      const response = await import(`../components/trans/${sourceFile}`);
-      const data = response.default;
-      return convertMuxTranscriptToSegments(data);
+      const response = await fetch(`/src/components/trans/${sourceFile}`);
+      if (!response.ok) {
+        console.error(`Failed to fetch transcript: ${response.statusText}`);
+        return [];
+      }
+      const data = await response.json();
+      console.log("Loaded transcript data:", data);
+      const segments = convertMuxTranscriptToSegments(data);
+      console.log("Converted segments:", segments);
+      return segments;
     } catch (error) {
       console.error("Error loading local transcript:", error);
       return [];
