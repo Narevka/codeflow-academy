@@ -11,10 +11,10 @@ const TextFormatter = ({ text, className }: { text: string; className?: string }
   return (
     <div className={cn("lesson-text", className)}>
       {paragraphs.map((paragraph, index) => {
-        // Check if the paragraph is a main heading (starting with # or ##)
+        // Check if the paragraph is a heading (starting with # or ##)
         if (paragraph.startsWith('# ')) {
           return (
-            <h1 key={index} className="text-3xl md:text-4xl font-bold mb-6 text-magenta border-b border-magenta/20 pb-2">
+            <h1 key={index} className="text-2xl md:text-3xl font-bold mb-6 text-magenta">
               {paragraph.substring(2)}
             </h1>
           );
@@ -22,7 +22,7 @@ const TextFormatter = ({ text, className }: { text: string; className?: string }
         
         if (paragraph.startsWith('## ')) {
           return (
-            <h2 key={index} className="text-xl md:text-2xl font-semibold mt-8 mb-4 bg-gray-100 p-2 rounded-md gradient-text">
+            <h2 key={index} className="text-xl md:text-2xl font-semibold mt-8 mb-4 gradient-text">
               {paragraph.substring(3)}
             </h2>
           );
@@ -31,7 +31,7 @@ const TextFormatter = ({ text, className }: { text: string; className?: string }
         // Check if paragraph is a numbered list item (starts with a number followed by a dot)
         if (/^\d+\.\s/.test(paragraph)) {
           return (
-            <div key={index} className="mb-6 pl-4 border-l-2 border-magenta/20">
+            <div key={index} className="mb-6">
               <p className="mb-2 text-base leading-relaxed text-gray-800">{paragraph}</p>
             </div>
           );
