@@ -157,7 +157,7 @@ const CourseView = () => {
                               m.lessons.some(l => l.id === lessonId)
                             );
                             if (module && lessonId) {
-                              window.location.href = `/courses/${course.id}/${module.id}/${lessonId}`;
+                              window.location.href = `/my-courses/${course.id}/${module.id}/${lessonId}`;
                             }
                           }}
                         />
