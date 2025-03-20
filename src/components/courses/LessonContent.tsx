@@ -32,20 +32,10 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
     }
   }, [lesson.videoUrl]);
 
-  // Process the lesson content
-  const processLessonContent = () => {
-    if (!lesson.description) return null;
-    
-    // For the flowise-introduction lesson, split at the terms section
-    if (showDetailedTerms) {
-      const parts = lesson.description.split('## Dogłębniejsze objaśnienie terminów:');
-      return parts[0];
-    }
-    
-    return lesson.description;
-  };
-
-  const mainContent = processLessonContent();
+  // Extract main content (before the detailed terms section)
+  const mainContent = showDetailedTerms && lesson.description
+    ? lesson.description.split('## Dogłębniejsze objaśnienie terminów:')[0]
+    : lesson.description;
 
   return (
     <div className="space-y-6 w-full">
