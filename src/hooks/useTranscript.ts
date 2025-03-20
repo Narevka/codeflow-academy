@@ -83,9 +83,17 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
 };
 
 // Function to get local transcript from src/trans/*.json files
-const getLocalTranscript = (playbackId: string | undefined, sourceFile?: string): TranscriptSegment[] => {
-  // Local transcripts have been removed
-  console.log("Local transcripts are no longer available");
+const getLocalTranscript = async (playbackId: string | undefined, sourceFile?: string): Promise<TranscriptSegment[]> => {
+  if (sourceFile) {
+    try {
+      const response = await import(`../components/trans/${sourceFile}`);
+      const data = response.default;
+      return convertMuxTranscriptToSegments(data);
+    } catch (error) {
+      console.error("Error loading local transcript:", error);
+      return [];
+    }
+  }
   return [];
 };
 
@@ -96,10 +104,17 @@ const fetchTranscript = async (playbackId: string | undefined, sourceFile?: stri
   }
 
   try {
-    // Skip local transcript check as files have been removed
+    // First try to get local transcript if sourceFile is provided
+    if (sourceFile) {
+      const localTranscript = await getLocalTranscript(playbackId, sourceFile);
+      if (localTranscript.length > 0) {
+        console.log("Using local transcript from file:", sourceFile);
+        return localTranscript;
+      }
+    }
 
-    // Otherwise try database or other fallback methods
-    console.log("No local transcript available, checking database...");
+    // If no local transcript, try database
+    console.log("No local transcript found, checking database...");
     
     const { data: dbData, error } = await supabase
       .from("transcripts")
