@@ -24,8 +24,6 @@ const QuestSidebar: React.FC<QuestSidebarProps> = ({
   return (
     <div className="sidebar-simple w-full max-w-xs h-full overflow-hidden">
       <div className="sidebar-content">
-        <h2 className="text-xl font-bold mb-5 heading-primary">{course.title}</h2>
-        
         <div className="space-y-3">
           {course.modules.map((module, moduleIndex) => (
             <div key={module.id} className="course-module">
