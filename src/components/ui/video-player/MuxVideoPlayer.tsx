@@ -1,6 +1,6 @@
 
 import MuxPlayer from "@mux/mux-player-react";
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 
 interface MuxVideoPlayerProps {
   playbackId: string;
@@ -12,11 +12,18 @@ interface MuxVideoPlayerProps {
 
 const MuxVideoPlayer = forwardRef<any, MuxVideoPlayerProps>(
   ({ playbackId, title, poster, onTimeUpdate, isFullscreen }, ref) => {
+    // Normalize the playbackId
+    const normalizedPlaybackId = playbackId.replace('mux:', '');
+    
+    useEffect(() => {
+      console.log("MuxVideoPlayer mounted with playbackId:", normalizedPlaybackId);
+    }, [normalizedPlaybackId]);
+    
     return (
       <MuxPlayer
         ref={ref}
         streamType="on-demand"
-        playbackId={playbackId.replace('mux:', '')}
+        playbackId={normalizedPlaybackId}
         metadata={{
           video_title: title || "Video",
           player_name: "Mux Player",

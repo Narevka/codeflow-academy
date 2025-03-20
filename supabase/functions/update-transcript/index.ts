@@ -20,7 +20,14 @@ serve(async (req) => {
 
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-    const { playbackId, segments, rawData, language } = await req.json();
+    
+    const requestBody = await req.json();
+    const { playbackId, segments, rawData, language } = requestBody;
+
+    console.log(`Updating transcript for playbackId: ${playbackId}`);
+    console.log(`Segments: ${segments ? segments.length : 'null'}`);
+    console.log(`Raw data present: ${rawData ? 'yes' : 'no'}`);
+    console.log(`Language: ${language || 'pl'}`);
 
     if (!playbackId) {
       return new Response(
@@ -32,8 +39,6 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Updating transcript for playbackId: ${playbackId}`);
-
     // Check if transcript already exists
     const { data: existingData, error: fetchError } = await supabase
       .from("transcripts")
@@ -41,13 +46,19 @@ serve(async (req) => {
       .eq("playback_id", playbackId)
       .single();
 
+    if (fetchError && fetchError.code !== "PGRST116") {
+      console.error("Error fetching existing transcript:", fetchError);
+    }
+
     let result;
     if (existingData) {
       // Update existing transcript
       const updateData: any = {};
-      if (segments) updateData.segments = segments;
-      if (rawData) updateData.raw_data = rawData;
+      if (segments !== undefined && segments !== null) updateData.segments = segments;
+      if (rawData !== undefined && rawData !== null) updateData.raw_data = rawData;
       if (language) updateData.language = language;
+      
+      console.log("Updating existing transcript record");
       
       const { data, error } = await supabase
         .from("transcripts")
@@ -56,14 +67,19 @@ serve(async (req) => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error updating transcript:", error);
+        throw error;
+      }
       result = { data, operation: "update" };
     } else {
       // Create new transcript
       const insertData: any = { playback_id: playbackId };
-      if (segments) insertData.segments = segments;
-      if (rawData) insertData.raw_data = rawData;
-      if (language) insertData.language = language || "pl";
+      if (segments !== undefined && segments !== null) insertData.segments = segments;
+      if (rawData !== undefined && rawData !== null) insertData.raw_data = rawData;
+      insertData.language = language || "pl";
+      
+      console.log("Creating new transcript record");
       
       const { data, error } = await supabase
         .from("transcripts")
@@ -71,10 +87,15 @@ serve(async (req) => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error inserting transcript:", error);
+        throw error;
+      }
       result = { data, operation: "insert" };
     }
 
+    console.log(`Operation successful: ${result.operation}`);
+    
     return new Response(
       JSON.stringify(result),
       {
@@ -83,7 +104,7 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error("Error in update-transcript function:", error.message);
     return new Response(
       JSON.stringify({ error: error.message }),
       {

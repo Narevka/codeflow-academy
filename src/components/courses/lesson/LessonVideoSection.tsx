@@ -13,8 +13,12 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   const [isProcessingTranscript, setIsProcessingTranscript] = useState(false);
   
   if (!lesson.videoUrl) {
+    console.log("No video URL provided for lesson:", lesson.title);
     return null;
   }
+  
+  // Debug log to see what videos we're working with
+  console.log("Video URL for lesson:", lesson.videoUrl);
   
   // Determine the transcript source file based on the lesson video URL
   let transcriptSourceFile;
@@ -22,7 +26,15 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
     transcriptSourceFile = "1.json";
   } else if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
     transcriptSourceFile = "3.json";
+  } else if (lesson.videoUrl.includes("DvS00xCCQJzWvBSQKKdHNl8sszgX7hXlVjFjAA8AJtA")) {
+    // For Flowise AI videos
+    transcriptSourceFile = "2.json";
+  } else {
+    // Default transcript file for other videos
+    transcriptSourceFile = "2.json";
   }
+
+  console.log("Selected transcript source file:", transcriptSourceFile);
 
   // Process and store transcript if a source file is available
   useEffect(() => {
@@ -30,12 +42,20 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
       if (lesson.videoUrl && transcriptSourceFile && !isProcessingTranscript) {
         try {
           setIsProcessingTranscript(true);
+          console.log("Starting transcript processing");
+          
           const playbackId = lesson.videoUrl.startsWith('mux:') 
             ? lesson.videoUrl.replace('mux:', '') 
             : lesson.videoUrl;
             
-          await processAndStoreTranscript(playbackId, transcriptSourceFile);
-          console.log("Transcript processing complete");
+          console.log("Using playback ID for transcript processing:", playbackId);
+          
+          const segments = await processAndStoreTranscript(playbackId, transcriptSourceFile);
+          console.log("Transcript processing complete, segments:", segments.length);
+          
+          if (segments.length === 0) {
+            console.warn("No transcript segments were generated");
+          }
         } catch (error) {
           console.error("Error processing transcript:", error);
           toast.error("Nie udało się przetworzyć transkrypcji");

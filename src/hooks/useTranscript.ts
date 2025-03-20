@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TranscriptSegment } from "@/types/course";
@@ -85,13 +86,18 @@ const convertMuxTranscriptToSegments = (muxTranscript: any): TranscriptSegment[]
 // Process and store transcript in the database
 export async function processAndStoreTranscript(playbackId: string, transcriptSourceFile: string): Promise<TranscriptSegment[]> {
   try {
-    console.log(`Processing transcript for playback ID: ${playbackId} from source: ${transcriptSourceFile}`);
+    // Normalize playbackId to ensure we're using the correct format
+    const normalizedPlaybackId = playbackId.startsWith('mux:') 
+      ? playbackId.replace('mux:', '') 
+      : playbackId;
+    
+    console.log(`Processing transcript for playback ID: ${normalizedPlaybackId} from source: ${transcriptSourceFile}`);
     
     // Try to fetch from the database first
     const { data: existingData, error: fetchError } = await supabase
       .from("transcripts")
       .select("*")
-      .eq("playback_id", playbackId)
+      .eq("playback_id", normalizedPlaybackId)
       .single();
     
     // If transcript already exists in database, return its segments
@@ -106,9 +112,10 @@ export async function processAndStoreTranscript(playbackId: string, transcriptSo
     
     // If not in database, try to load from local file
     try {
-      // Dynamic import of the transcript file
+      // Fix: Use the correct path to the transcript files
       const response = await fetch(`/components/trans/${transcriptSourceFile}`);
       if (!response.ok) {
+        console.error(`Failed to fetch transcript file: ${response.statusText}`);
         throw new Error(`Failed to fetch transcript file: ${response.statusText}`);
       }
       
@@ -121,8 +128,13 @@ export async function processAndStoreTranscript(playbackId: string, transcriptSo
       
       if (segments.length > 0) {
         // Store in database
-        const result = await updateTranscript(playbackId, segments, rawData, "pl");
-        console.log("Stored transcript in database:", result);
+        try {
+          const result = await updateTranscript(normalizedPlaybackId, segments, rawData, "pl");
+          console.log("Stored transcript in database:", result);
+        } catch (storageError) {
+          console.error("Error storing transcript in database:", storageError);
+          // Continue with the processed segments even if storing failed
+        }
         
         return segments;
       }
@@ -137,13 +149,6 @@ export async function processAndStoreTranscript(playbackId: string, transcriptSo
   }
 }
 
-// Function to get local transcript from src/trans/*.json files
-const getLocalTranscript = (playbackId: string | undefined, sourceFile?: string): TranscriptSegment[] => {
-  // Local transcripts have been removed
-  console.log("Local transcripts are no longer available");
-  return [];
-};
-
 // Function to fetch transcript
 const fetchTranscript = async (playbackId: string | undefined, sourceFile?: string): Promise<TranscriptSegment[]> => {
   if (!playbackId) {
@@ -151,19 +156,29 @@ const fetchTranscript = async (playbackId: string | undefined, sourceFile?: stri
   }
 
   try {
-    // Skip local transcript check as files have been removed
-
-    // Otherwise try database or other fallback methods
-    console.log("No local transcript available, checking database...");
+    // Normalize playbackId
+    const normalizedPlaybackId = playbackId.startsWith('mux:') 
+      ? playbackId.replace('mux:', '') 
+      : playbackId;
     
+    console.log(`Fetching transcript for normalized playback ID: ${normalizedPlaybackId}`);
+    
+    // Check database
     const { data: dbData, error } = await supabase
       .from("transcripts")
       .select("*")
-      .eq("playback_id", playbackId)
+      .eq("playback_id", normalizedPlaybackId)
       .single();
 
     if (error) {
       console.log("Error or no data in database:", error);
+      
+      // If we have a source file, try to process it
+      if (sourceFile) {
+        console.log(`Attempting to process transcript from source file: ${sourceFile}`);
+        return processAndStoreTranscript(normalizedPlaybackId, sourceFile);
+      }
+      
       return [];
     }
 
@@ -173,14 +188,22 @@ const fetchTranscript = async (playbackId: string | undefined, sourceFile?: stri
       
       // Make sure segments is an array
       if (Array.isArray(segments) && segments.length > 0) {
-        console.log("Using transcript from database");
+        console.log("Using transcript from database, found segments:", segments.length);
         // Ensure the data matches our TranscriptSegment type
         return segments.map((segment: any) => ({
           text: segment.text || "",
           startTime: Number(segment.startTime) || 0,
           endTime: Number(segment.endTime) || 0
         }));
+      } else {
+        console.log("No valid segments in database data");
       }
+    }
+
+    // If we get here and have a source file, try to process it as a fallback
+    if (sourceFile) {
+      console.log(`No transcript found in database, attempting to process from source file: ${sourceFile}`);
+      return processAndStoreTranscript(normalizedPlaybackId, sourceFile);
     }
 
     console.log("No transcript found anywhere");
@@ -209,9 +232,16 @@ export async function updateTranscript(
   language: string = "pl"
 ) {
   try {
+    // Normalize playbackId before sending to the Edge Function
+    const normalizedPlaybackId = playbackId.startsWith('mux:') 
+      ? playbackId.replace('mux:', '') 
+      : playbackId;
+    
+    console.log(`Updating transcript for normalized playback ID: ${normalizedPlaybackId}`);
+    
     const { data, error } = await supabase.functions.invoke("update-transcript", {
       body: { 
-        playbackId, 
+        playbackId: normalizedPlaybackId, 
         segments, 
         rawData,
         language 

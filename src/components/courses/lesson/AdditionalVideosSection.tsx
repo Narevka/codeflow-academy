@@ -29,7 +29,12 @@ const AdditionalVideosSection = ({ videos }: AdditionalVideosSectionProps) => {
         // Check the video URL to determine the correct transcript file
         if (video.videoUrl.includes("ti1ULAh6YUlpwAPWh3FWEyYWN6QIMWInsoA6WCpmdd4")) {
           transcriptSourceFile = "4.json";
+        } else if (video.videoUrl.includes("DvS00xCCQJzWvBSQKKdHNl8sszgX7hXlVjFjAA8AJtA")) {
+          transcriptSourceFile = "2.json";
         }
+        
+        console.log(`Additional video ${index} URL:`, video.videoUrl);
+        console.log(`Additional video ${index} transcript file:`, transcriptSourceFile);
         
         return (
           <div key={index} className="space-y-4">

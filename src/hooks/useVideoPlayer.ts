@@ -14,23 +14,39 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
   const muxPlayerRef = useRef<any>(null);
   const transcriptRef = useRef<HTMLDivElement>(null);
   
+  // Log initial props
+  console.log("useVideoPlayer initial props:", {
+    src,
+    providedTranscriptLength: providedTranscript?.length || 0,
+    transcriptSourceFile
+  });
+  
+  const normalizedPlaybackId = src?.startsWith('mux:') 
+    ? src.replace('mux:', '') 
+    : src;
+  
+  // Parse and use the transcript from the API
   const { 
     data: autoTranscript, 
     isLoading: isLoadingTranscript 
   } = useTranscript(
-    isMuxVideo ? playbackId : undefined,
+    isMuxVideo ? normalizedPlaybackId : undefined,
     transcriptSourceFile
   );
   
+  // Determine if this is a Mux video
   useEffect(() => {
     if (src?.startsWith('mux:')) {
+      console.log("Detected Mux video:", src);
       setIsMuxVideo(true);
       setPlaybackId(src);
     } else {
+      console.log("Using standard video player for:", src);
       setIsMuxVideo(false);
     }
   }, [src]);
 
+  // Set the transcript from provided or auto-loaded transcript
   useEffect(() => {
     if (providedTranscript && providedTranscript.length > 0) {
       console.log("Using provided transcript with length:", providedTranscript.length);
@@ -38,9 +54,12 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
     } else if (autoTranscript && autoTranscript.length > 0) {
       console.log("Using auto transcript with length:", autoTranscript.length);
       setTranscript(autoTranscript);
+    } else {
+      console.log("No transcript available yet");
     }
   }, [providedTranscript, autoTranscript]);
 
+  // Handle fullscreen change
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -52,12 +71,17 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
     };
   }, []);
 
+  // Handle time update from the video player
   const handleTimeUpdate = (event: any) => {
     const time = isMuxVideo 
       ? muxPlayerRef.current?.currentTime || 0
       : event.target.currentTime || 0;
     
     setCurrentTime(time);
+    
+    if (transcript.length === 0) {
+      return; // No transcript available
+    }
     
     const index = transcript.findIndex(
       segment => time >= segment.startTime && time <= segment.endTime
@@ -78,7 +102,9 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
     }
   };
 
+  // Handle click on transcript segment
   const handleTranscriptClick = (startTime: number) => {
+    console.log("Transcript segment clicked, seeking to:", startTime);
     if (isMuxVideo && muxPlayerRef.current) {
       muxPlayerRef.current.currentTime = startTime;
     } else if (videoRef.current) {
