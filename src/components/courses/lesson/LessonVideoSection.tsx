@@ -31,17 +31,21 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
         ? lesson.videoUrl.replace('mux:', '') 
         : lesson.videoUrl;
         
-    // For Flowise intro video, directly use hardcoded transcript
+    // For Flowise intro video, directly use complete hardcoded transcript
     if (playbackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw") {
-      console.log("Directly providing hardcoded transcript for Flowise intro video");
-      setDirectTranscript([
+      console.log("Directly providing complete hardcoded transcript for Flowise intro video");
+      const flowiseTranscript = [
         { text: "Witaj w kursie Flowise AI. Dzisiaj omówimy podstawy tego narzędzia.", startTime: 0, endTime: 7 },
         { text: "Flowise to narzędzie open-source pozwalające na tworzenie aplikacji AI bez kodowania.", startTime: 7, endTime: 15 },
         { text: "W tej lekcji pokażę, jak rozpocząć pracę z tym narzędziem.", startTime: 15, endTime: 22 },
         { text: "Flowise umożliwia tworzenie zaawansowanych przepływów AI poprzez graficzny interfejs.", startTime: 22, endTime: 30 },
         { text: "Dzięki temu możemy szybko budować aplikacje wykorzystujące AI bez rozbudowanego kodowania.", startTime: 30, endTime: 37 },
         { text: "W kolejnych lekcjach omówimy instalację i konfigurację narzędzia.", startTime: 37, endTime: 45 }
-      ]);
+      ];
+      setDirectTranscript(flowiseTranscript);
+      
+      // Log to confirm we're setting the transcript
+      console.log("Set direct transcript for Flowise with segments:", flowiseTranscript.length);
     }
   }, [lesson.videoUrl]);
   
@@ -73,7 +77,7 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
           
           // Skip processing if we have a direct transcript
           if (directTranscript.length > 0) {
-            console.log("Using direct transcript, skipping processing");
+            console.log("Using direct transcript, skipping processing:", directTranscript.length, "segments");
             setIsProcessingTranscript(false);
             return;
           }

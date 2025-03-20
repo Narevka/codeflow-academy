@@ -41,9 +41,10 @@ const VideoPlayerWithTranscript = ({
       isFlowiseIntro
     });
     
-    // If this is Flowise intro but we don't have a transcript, create one
-    if (isFlowiseIntro && (!providedTranscript || providedTranscript.length === 0)) {
-      console.log("This is the Flowise intro video but no transcript provided, will use fallback");
+    // Log the actual transcript content to debug
+    if (providedTranscript && providedTranscript.length > 0) {
+      console.log("Provided transcript segments:", providedTranscript.length);
+      console.log("First segment:", providedTranscript[0]);
     }
   }, [src, providedTranscript, showTranscript, transcriptSourceFile, isFlowiseIntro]);
   
@@ -60,6 +61,14 @@ const VideoPlayerWithTranscript = ({
     handleTimeUpdate,
     handleTranscriptClick
   } = useVideoPlayer(src, providedTranscript, transcriptSourceFile);
+
+  // Log what transcript is being used by the component
+  useEffect(() => {
+    console.log("Current active transcript has segments:", transcript.length);
+    if (transcript.length > 0) {
+      console.log("First segment text:", transcript[0].text);
+    }
+  }, [transcript]);
 
   const toggleTranscript = () => {
     setTranscriptVisible(prev => !prev);

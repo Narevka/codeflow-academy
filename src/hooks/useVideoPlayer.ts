@@ -54,13 +54,16 @@ export function useVideoPlayer(src: string, providedTranscript: TranscriptSegmen
 
   // Set the transcript from provided or auto-loaded transcript
   useEffect(() => {
-    // Special case for Flowise intro video - use hardcoded transcript
-    if (normalizedPlaybackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw" && providedTranscript && providedTranscript.length > 0) {
-      console.log("Found provided transcript for Flowise video, using it:", providedTranscript.length);
-      setTranscript(providedTranscript);
-      return;
+    // Special case for Flowise intro video - prioritize provided transcript
+    if (normalizedPlaybackId === "V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw") {
+      if (providedTranscript && providedTranscript.length > 0) {
+        console.log("Found provided transcript for Flowise video, using it:", providedTranscript.length, "segments");
+        setTranscript(providedTranscript);
+        return;
+      }
     }
     
+    // Priority order: provided transcript > auto transcript > fallback
     if (providedTranscript && providedTranscript.length > 0) {
       console.log("Using provided transcript with length:", providedTranscript.length);
       setTranscript(providedTranscript);
