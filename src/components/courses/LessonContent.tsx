@@ -39,7 +39,7 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
 
   return (
     <div className="space-y-6 w-full">
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-800">{lesson.displayTitle || lesson.title}</h1>
+      {/* We don't display the title here anymore as it will be handled by TextFormatter */}
       
       {lesson.additionalVideos && lesson.additionalVideos.length > 0 && (
         <AdditionalVideosSection videos={lesson.additionalVideos} />
@@ -56,17 +56,15 @@ const LessonContent = ({ lesson }: LessonContentProps) => {
       )}
       
       {showDetailedTerms && (
-        <>
-          <div className="my-8">
-            <h2 className="text-xl font-semibold mb-4 text-center gradient-text">
-              Dogłębniejsze objaśnienie terminów AI
-            </h2>
-            <p className="text-center text-gray-600 mb-6">
-              Rozwiń sekcje poniżej, aby zapoznać się ze szczegółowymi opisami kluczowych terminów związanych z AI.
-            </p>
-            <AITermsAccordion />
-          </div>
-        </>
+        <div className="my-8 rounded-lg border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-6 shadow-sm">
+          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center gradient-text">
+            Dogłębniejsze objaśnienie terminów AI
+          </h2>
+          <p className="text-center text-gray-600 mb-6">
+            Rozwiń sekcje poniżej, aby zapoznać się ze szczegółowymi opisami kluczowych terminów związanych z AI.
+          </p>
+          <AITermsAccordion />
+        </div>
       )}
     </div>
   );
