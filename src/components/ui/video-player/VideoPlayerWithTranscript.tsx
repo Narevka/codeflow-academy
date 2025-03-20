@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { TranscriptSegment } from "@/types/course";
 import TranscriptPanel from "./TranscriptPanel";
@@ -27,6 +27,16 @@ const VideoPlayerWithTranscript = ({
   transcriptSourceFile,
 }: VideoPlayerWithTranscriptProps) => {
   const [transcriptVisible, setTranscriptVisible] = useState(showTranscript);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  
+  useEffect(() => {
+    console.log("VideoPlayerWithTranscript mounted with:", { 
+      src, 
+      transcriptLength: providedTranscript?.length || 0,
+      showTranscript, 
+      transcriptSourceFile
+    });
+  }, [src, providedTranscript, showTranscript, transcriptSourceFile]);
   
   const {
     isMuxVideo,
@@ -45,6 +55,12 @@ const VideoPlayerWithTranscript = ({
   const toggleTranscript = () => {
     setTranscriptVisible(prev => !prev);
   };
+  
+  // Handle video errors
+  const handleVideoError = (error: any) => {
+    console.error("Video playback error:", error);
+    setErrorMessage("Nie udało się załadować wideo. Sprawdź połączenie internetowe lub spróbuj ponownie później.");
+  };
 
   return (
     <div 
@@ -58,10 +74,22 @@ const VideoPlayerWithTranscript = ({
         isFullscreen ? "w-full h-full flex items-center" : 
         transcriptVisible ? "w-full lg:w-3/5" : "w-full"
       )}>
-        {isMuxVideo ? (
+        {errorMessage ? (
+          <div className="w-full h-full flex items-center justify-center bg-gray-900 text-white p-4 text-center">
+            <div>
+              <p className="mb-2">{errorMessage}</p>
+              <button 
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => setErrorMessage(null)}
+              >
+                Spróbuj ponownie
+              </button>
+            </div>
+          </div>
+        ) : isMuxVideo ? (
           <MuxVideoPlayer
             ref={muxPlayerRef}
-            playbackId={playbackId.replace('mux:', '')}
+            playbackId={playbackId}
             title={title || "Video"}
             poster={poster}
             onTimeUpdate={handleTimeUpdate}
@@ -73,6 +101,7 @@ const VideoPlayerWithTranscript = ({
             src={src}
             poster={poster}
             onTimeUpdate={handleTimeUpdate}
+            onError={handleVideoError}
             isFullscreen={isFullscreen}
           />
         )}

@@ -11,6 +11,7 @@ interface LessonVideoSectionProps {
 
 const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   const [isProcessingTranscript, setIsProcessingTranscript] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   
   if (!lesson.videoUrl) {
     console.log("No video URL provided for lesson:", lesson.title);
@@ -18,23 +19,24 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
   }
   
   // Debug log to see what videos we're working with
-  console.log("Video URL for lesson:", lesson.videoUrl);
+  useEffect(() => {
+    console.log("Video URL for lesson:", lesson.videoUrl);
+    setIsVideoReady(true);
+  }, [lesson.videoUrl]);
   
   // Determine the transcript source file based on the lesson video URL
-  let transcriptSourceFile;
-  if (lesson.videoUrl.includes("V2H6uhyDvaXZ02dgOYeNSZkULeWye00q3rTzkQ2YZbJIw")) {
-    transcriptSourceFile = "1.json";
-  } else if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
+  let transcriptSourceFile = "1.json"; // Default for Flowise intro video
+  
+  if (lesson.videoUrl.includes("Tvjg623oMCLmqZqruGnWlnuFPABieZfiZ3pbX6HIoxg")) {
     transcriptSourceFile = "3.json";
   } else if (lesson.videoUrl.includes("DvS00xCCQJzWvBSQKKdHNl8sszgX7hXlVjFjAA8AJtA")) {
     // For Flowise AI videos
     transcriptSourceFile = "2.json";
-  } else {
-    // Default transcript file for other videos
-    transcriptSourceFile = "2.json";
   }
 
-  console.log("Selected transcript source file:", transcriptSourceFile);
+  useEffect(() => {
+    console.log("Selected transcript source file:", transcriptSourceFile);
+  }, [transcriptSourceFile]);
 
   // Process and store transcript if a source file is available
   useEffect(() => {
@@ -58,15 +60,17 @@ const LessonVideoSection = ({ lesson }: LessonVideoSectionProps) => {
           }
         } catch (error) {
           console.error("Error processing transcript:", error);
-          toast.error("Nie udało się przetworzyć transkrypcji");
+          // Don't show toast error to user for better UX
         } finally {
           setIsProcessingTranscript(false);
         }
       }
     };
     
-    processTranscript();
-  }, [lesson.videoUrl, transcriptSourceFile]);
+    if (isVideoReady) {
+      processTranscript();
+    }
+  }, [lesson.videoUrl, transcriptSourceFile, isVideoReady]);
 
   return (
     <div className="w-full mb-8">

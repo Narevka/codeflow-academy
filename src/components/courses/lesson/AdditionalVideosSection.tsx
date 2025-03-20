@@ -31,6 +31,9 @@ const AdditionalVideosSection = ({ videos }: AdditionalVideosSectionProps) => {
           transcriptSourceFile = "4.json";
         } else if (video.videoUrl.includes("DvS00xCCQJzWvBSQKKdHNl8sszgX7hXlVjFjAA8AJtA")) {
           transcriptSourceFile = "2.json";
+        } else if (video.videoUrl.includes("flowise-intro-1.mp4") || 
+                 video.videoUrl.includes("flowise-intro-2.mp4")) {
+          transcriptSourceFile = "2.json";
         }
         
         console.log(`Additional video ${index} URL:`, video.videoUrl);
@@ -48,6 +51,7 @@ const AdditionalVideosSection = ({ videos }: AdditionalVideosSectionProps) => {
                 title={video.title || `Dodatkowe wideo ${index + 1}`}
                 transcript={video.transcript}
                 transcriptSourceFile={transcriptSourceFile}
+                showTranscript={true}
               />
             )}
             {cleanedDescription && (
